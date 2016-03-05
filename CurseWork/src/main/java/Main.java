@@ -21,7 +21,7 @@ public class Main {
             server.start();
             server.join();
         } catch (Exception e) {
-            logger.error("Ошибка запуска сервера", e);
+            logger.error("Ошибка запуска сервера: ", e);
         }
     }
 }
