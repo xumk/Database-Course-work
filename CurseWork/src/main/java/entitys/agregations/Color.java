@@ -1,4 +1,4 @@
-package entitys;
+package entitys.agregations;
 
 /**
  * Created by Алексей on 30.04.2016.

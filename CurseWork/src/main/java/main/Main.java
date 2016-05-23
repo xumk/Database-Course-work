@@ -8,7 +8,8 @@ import org.slf4j.LoggerFactory;
 import servlets.Frontend;
 
 /**
- * Created by Алексей on 05.03.2016.
+ * @author  Алексей
+ * создано 05.03.2016.
  */
 public class Main {
     private static Logger logger = LoggerFactory.getLogger(Main.class);

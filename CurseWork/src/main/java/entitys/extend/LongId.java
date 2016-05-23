@@ -1,4 +1,4 @@
-package entitys;
+package entitys.extend;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -8,7 +8,7 @@ import javax.persistence.Id;
 /**
  * Id для всех сущностей базы
  */
-public interface LongIdRootBean {
+public interface LongId {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")

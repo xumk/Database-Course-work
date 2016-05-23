@@ -1,5 +1,8 @@
 package entitys;
 
+import entitys.extend.LongId;
+import entitys.extend.Named;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
@@ -11,7 +14,7 @@ import java.util.List;
  */
 @Entity(name = "fish")
 @Table(name = "b_fish")
-public interface Fish extends LongIdRootBean, Named {
+public interface Fish extends LongId, Named {
     /**
      * семейство рыбы (пока строкой)
      */

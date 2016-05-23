@@ -1,5 +1,9 @@
 package entitys;
 
+import entitys.agregations.Color;
+import entitys.extend.LongId;
+import entitys.extend.Named;
+
 import javax.persistence.*;
 import java.math.BigDecimal;
 
@@ -8,7 +12,7 @@ import java.math.BigDecimal;
  */
 @Entity(name = "bait")
 @Table(name = "b_bait")
-public interface Bait extends LongIdRootBean, Named {
+public interface Bait extends LongId, Named {
 
     /**
      * Количество крючков на наживке

@@ -1,5 +1,9 @@
 package entitys;
 
+import entitys.agregations.Gender;
+import entitys.extend.LongId;
+import entitys.extend.Named;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -8,7 +12,7 @@ import java.util.Date;
  */
 @Entity(name = "fisher")
 @Table(name = "b_fisher")
-public interface Fisher extends LongIdRootBean, Named {
+public interface Fisher extends LongId, Named {
 
     /**
      * Имя рыбака
