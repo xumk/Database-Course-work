@@ -4,7 +4,6 @@ import controllers.ConvertionHelper;
 import controllers.UserLogicController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
@@ -53,12 +52,12 @@ public class RegistryController implements Initializable {
         this.gender.setItems(this.genders);
     }
 
-    public void backAction(ActionEvent actionEvent) {
+    public void backAction() {
         STAGE.close();
         parentPane.setDisable(false);
     }
 
-    public void resetAction(ActionEvent actionEvent) {
+    public void resetAction() {
         this.userName.clear();
         this.firstName.clear();
         this.lastName.clear();
@@ -67,7 +66,7 @@ public class RegistryController implements Initializable {
         this.birthDate.setValue(null);
     }
 
-    public void singUpAction(ActionEvent actionEvent) {
+    public void singUpAction() {
         String login = userName.getText();
         User user = userDAO.getUserByLogin(login);
         if (user == null) {
@@ -85,6 +84,7 @@ public class RegistryController implements Initializable {
             user = new User();
             user.setPassword(this.password.getText());
             user.setLogin(userName.getText());
+            user.setAdmin(false);
             try {
                 fisherDAO.addFisher(fisher);
                 user.setFisherman(fisher);

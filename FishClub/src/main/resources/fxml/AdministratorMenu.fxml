@@ -65,7 +65,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tableBait" editable="true" prefHeight="148.0" prefWidth="692.0" tableMenuButtonVisible="true">
+                        <TableView fx:id="tableBait" editable="true" layoutY="25.0" prefHeight="148.0" prefWidth="692.0" tableMenuButtonVisible="true">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
@@ -77,6 +77,9 @@
                               <TableColumn fx:id="isLive" prefWidth="131.0" text="Вид&#10;наживки" />
                            </columns>
                         </TableView>
+                        <Button fx:id="editLureButton" layoutX="93.0" mnemonicParsing="false" text="edit" />
+                        <Button fx:id="deleteLureButton" layoutX="44.0" mnemonicParsing="false" text="delete" />
+                        <Button fx:id="addLureButton" layoutX="7.0" mnemonicParsing="false" text="add" />
                      </children>
                   </AnchorPane>
                </content>
@@ -85,7 +88,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <TableView fx:id="tableFish" layoutX="7.0" prefHeight="200.0" prefWidth="686.0" tableMenuButtonVisible="true">
+                        <TableView fx:id="tableFish" layoutX="3.0" layoutY="25.0" prefHeight="200.0" prefWidth="686.0" tableMenuButtonVisible="true">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
@@ -101,6 +104,9 @@
                               <TableColumn fx:id="fishDepth" prefWidth="75.0" text="Глубина&#10;обитания" />
                            </columns>
                         </TableView>
+                        <Button fx:id="addFishButton" mnemonicParsing="false" text="add" />
+                        <Button fx:id="deleteFishButton" layoutX="74.0" mnemonicParsing="false" text="delete" />
+                        <Button fx:id="editFishButton" layoutX="37.0" mnemonicParsing="false" text="edit" />
                      </children>
                   </AnchorPane>
                </content>
@@ -109,7 +115,7 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="412.0">
                      <children>
-                        <TableView fx:id="lakeTable" layoutX="6.0" prefHeight="200.0" prefWidth="686.0" tableMenuButtonVisible="true">
+                        <TableView fx:id="lakeTable" layoutX="3.0" layoutY="25.0" prefHeight="200.0" prefWidth="686.0" tableMenuButtonVisible="true">
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                            </columnResizePolicy>
@@ -118,6 +124,9 @@
                               <TableColumn fx:id="lakeDepth" prefWidth="75.0" text="Глубин озера" />
                            </columns>
                         </TableView>
+                        <Button fx:id="addLakeButton" mnemonicParsing="false" text="add" />
+                        <Button fx:id="deleteLakeButton2" layoutX="74.0" mnemonicParsing="false" text="delete" />
+                        <Button fx:id="editLakeButton" layoutX="37.0" mnemonicParsing="false" text="edit" />
                      </children>
                   </AnchorPane>
                </content>

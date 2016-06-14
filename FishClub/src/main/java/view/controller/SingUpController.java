@@ -50,7 +50,11 @@ public class SingUpController implements Initializable {
         User user = userDAO.getUserByLogin(userName);
         if(user != null) {
             if(user.getPassword().equals(password)) {
-                this.controller.openUserMenuScene(STAGE, "Любительский клуб рыбаловов", "/fxml/UserMenu.fxml", user);
+                if (user.isAdmin()) {
+                    controller.openAdministratorMenuScene(STAGE, "Любительский клуб рыбаловов", "/fxml/AdministratorMenu.fxml", user);
+                } else {
+                    this.controller.openUserMenuScene(STAGE, "Любительский клуб рыбаловов", "/fxml/UserMenu.fxml", user);
+                }
             } else {
                 this.errorText.setText("Не верный пароль");
             }

@@ -36,6 +36,17 @@ public class User implements Serializable {
     )
     private Fisher fisherman;
 
+    @Column(name="isAdmin")
+    private Boolean admin;
+
+    public boolean isAdmin() {
+        return admin;
+    }
+
+    public void setAdmin(Boolean admin) {
+        this.admin = admin;
+    }
+
     public User() {
     }
 

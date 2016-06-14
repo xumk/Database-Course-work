@@ -11,55 +11,22 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImpl implements UserDAO {
+public class UserDAOImpl extends GeneralDAO implements UserDAO {
     private SessionFactory sessionFactory;
 
     public UserDAOImpl(SessionFactory sessionFactory) {
+        super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
     @Override
     public void addUser(User user) throws SQLException {
-        Session session = null;
-        try {
-            session = this.sessionFactory.openSession();
-            Transaction e = session.beginTransaction();
-            session.save(user);
-            e.commit();
-        } catch (Exception var7) {
-            new AlertMessage(
-                    "Ошибка",
-                    "Ошибка при вставке" + user.toString(),
-                    var7.getMessage(),
-                    Alert.AlertType.ERROR
-            );
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+        addObject(user);
     }
 
     @Override
     public void updateUser(User user) throws SQLException {
-        Session session = null;
-        try {
-            session = this.sessionFactory.openSession();
-            Transaction e = session.beginTransaction();
-            session.update(user);
-            e.commit();
-        } catch (Exception var7) {
-            new AlertMessage(
-                    "Ошибка",
-                    "Ошибка при обновлении",
-                    var7.getMessage(),
-                    Alert.AlertType.ERROR
-            );
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+        updateObject(user);
     }
 
     @Override
@@ -93,7 +60,7 @@ public class UserDAOImpl implements UserDAO {
             session = this.sessionFactory.openSession();
             Criteria e = session.createCriteria(User.class);
             user = (User) e.add(Restrictions.eq("login", login)).uniqueResult();
-            if ( user != null) {
+            if (user != null) {
                 this.initializeFisherCollections(user);
             }
         } catch (Exception var8) {
@@ -137,31 +104,12 @@ public class UserDAOImpl implements UserDAO {
             if (session != null && session.isOpen()) {
                 session.close();
             }
-
         }
-
         return users;
     }
 
     @Override
     public void deleteUsers(User user) throws SQLException {
-        Session session = null;
-        try {
-            session = this.sessionFactory.openSession();
-            Transaction e = session.beginTransaction();
-            session.delete(user);
-            e.commit();
-        } catch (Exception var7) {
-            new AlertMessage(
-                    "Ошибка",
-                    "Ошибка при удалении",
-                    var7.getMessage(),
-                    Alert.AlertType.ERROR
-            );
-        } finally {
-            if (session != null && session.isOpen()) {
-                session.close();
-            }
-        }
+        deleteObject(user);
     }
 }

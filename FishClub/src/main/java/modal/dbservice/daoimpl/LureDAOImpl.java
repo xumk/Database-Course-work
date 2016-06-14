@@ -1,8 +1,8 @@
 package modal.dbservice.daoimpl;
 
 import javafx.scene.control.Alert;
-import modal.dbservice.dao.FisherDAO;
-import modal.entity.Fisher;
+import modal.dbservice.dao.LureDAO;
+import modal.entity.Lure;
 import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -13,38 +13,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Алексей on 13.06.2016.
+ * Created by Алексей on 15.06.2016.
  */
-public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
+public class LureDAOImpl extends GeneralDAO implements LureDAO {
     private SessionFactory sessionFactory;
 
-    public FisherDAOImpl(SessionFactory sessionFactory) {
+    public LureDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
-    @Override
-    public void addFisher(Fisher fisher) throws SQLException {
-        addObject(fisher);
+    public void addLure(Lure lure) throws SQLException {
+        addObject(lure);
     }
 
     @Override
-    public void updateFisher(Fisher fisher) throws SQLException {
-      updateObject(fisher);
+    public void updateLure(Lure lure) throws SQLException {
+        updateObject(lure);
     }
 
     @Override
-    public Fisher getFisherById(Long id) throws SQLException {
+    public Lure getLureById(Long lureId) throws SQLException {
         Session session = null;
-        Fisher fisher = null;
+        Lure lure = null;
         try {
             session = this.sessionFactory.openSession();
-            fisher = session.load(Fisher.class, id);
-            this.initializeFisherCollections(fisher);
+            lure = session.load(Lure.class, lureId);
+            this.initializeFisherCollections(lure);
         } catch (Exception var8) {
             new AlertMessage(
                     "Ошибка",
-                    "Ошибка получения",
+                    "Ошибка получения: " + lureId,
                     var8.getMessage(),
                     Alert.AlertType.ERROR
             );
@@ -52,25 +51,22 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
             if (session != null && session.isOpen()) {
                 session.close();
             }
-
         }
-        return fisher;
+        return lure;
     }
 
-    private void initializeFisherCollections(Fisher fisher) {
-        Hibernate.initialize(fisher.getFishs());
-        Hibernate.initialize(fisher.getLakes());
-        Hibernate.initialize(fisher.getLures());
+    private void initializeFisherCollections(Lure fish) {
+        Hibernate.initialize(fish.getFishs());
+        Hibernate.initialize(fish.getFishers());
     }
 
-    @Override
-    public List getAllFishers() throws SQLException {
+    public List<Lure> getAllLures() throws SQLException {
         Session session = null;
-        List<Fisher> fishers = new ArrayList<>();
+        List<Lure> lures = new ArrayList<>();
         try {
             session = this.sessionFactory.openSession();
-            fishers = session.createCriteria(Fisher.class).list();
-            fishers.stream().forEach(this::initializeFisherCollections);
+            lures = session.createCriteria(Lure.class).list();
+            lures.stream().forEach(this::initializeFisherCollections);
         } catch (Exception var7) {
             new AlertMessage(
                     "Ошибка",
@@ -82,12 +78,14 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
             if (session != null && session.isOpen()) {
                 session.close();
             }
+
         }
-        return fishers;
+
+        return lures;
     }
 
     @Override
-    public void deleteFisher(Fisher fisher) throws SQLException {
-        deleteObject(fisher);
+    public void deleteLure(Lure lure) throws SQLException {
+        deleteObject(lure);
     }
 }
