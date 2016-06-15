@@ -35,17 +35,8 @@ public class UserMenuController implements Initializable {
     public TableColumn lakeDistance;
     public TableColumn lakeName;
     public TableView lakeTable;
-    public TableColumn fishDepth;
-    public TableColumn fishMaxWeight;
-    public TableColumn fishMinWeight;
-    public TableColumn fishWeight;
-    public TableColumn fsihFamily;
     public TableColumn fishName;
     public TableView tableFish;
-    public TableColumn isLive;
-    public TableColumn baitDepth;
-    public TableColumn bairWeight;
-    public TableColumn baitCountHooks;
     public TableColumn baitName;
     public TableView tableBait;
     public DatePicker birthDate;
@@ -69,6 +60,7 @@ public class UserMenuController implements Initializable {
     public Button editLakeButton;
     public Button deleteLakeButton;
     public Button addLakeButton;
+    public TableColumn baitCount;
 
     private ObservableList<String> genders = FXCollections.observableArrayList("Мужской", "Женский");
     private UserDAO userDAO;

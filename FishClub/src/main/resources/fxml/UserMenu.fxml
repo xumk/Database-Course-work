@@ -68,10 +68,7 @@
                         <TableView fx:id="tableBait" editable="true" layoutX="7.0" layoutY="45.0" prefHeight="148.0" prefWidth="692.0" tableMenuButtonVisible="true">
                           <columns>
                             <TableColumn fx:id="baitName" prefWidth="104.0" text="Название&#10;наживки" />
-                            <TableColumn fx:id="baitCountHooks" prefWidth="103.0" text="Количество&#10;крючков" />
-                              <TableColumn fx:id="bairWeight" prefWidth="50.0" text="Вес" />
-                              <TableColumn fx:id="baitDepth" prefWidth="140.0" text="Глубина&#10;погружения" />
-                              <TableColumn fx:id="isLive" prefWidth="131.0" text="Вид&#10;наживки" />
+                            <TableColumn fx:id="baitCount" prefWidth="103.0" text="Количество&#10;наживки" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -91,15 +88,7 @@
                      <children>
                         <TableView fx:id="tableFish" layoutX="3.0" layoutY="49.0" prefHeight="200.0" prefWidth="686.0" tableMenuButtonVisible="true">
                           <columns>
-                            <TableColumn fx:id="fishName" prefWidth="75.0" text="Название&#10;рыбы" />
-                            <TableColumn fx:id="fsihFamily" prefWidth="75.0" text="Семейство" />
-                              <TableColumn fx:id="fishWeight" prefWidth="205.0" text="Вес">
-                                 <columns>
-                                    <TableColumn fx:id="fishMinWeight" prefWidth="75.0" text="Минимальный" />
-                                    <TableColumn fx:id="fishMaxWeight" prefWidth="75.0" text="Максимальный" />
-                                 </columns>
-                              </TableColumn>
-                              <TableColumn fx:id="fishDepth" prefWidth="75.0" text="Глубина&#10;обитания" />
+                            <TableColumn fx:id="fishName" prefWidth="75.0" text="Название рыбы" />
                           </columns>
                            <columnResizePolicy>
                               <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
