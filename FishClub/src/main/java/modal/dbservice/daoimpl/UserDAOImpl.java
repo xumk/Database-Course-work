@@ -3,11 +3,13 @@ package modal.dbservice.daoimpl;
 import javafx.scene.control.Alert;
 import modal.dbservice.dao.UserDAO;
 import modal.entity.User;
-import org.hibernate.*;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import view.AlertMessage;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,17 +22,17 @@ public class UserDAOImpl extends GeneralDAO implements UserDAO {
     }
 
     @Override
-    public void addUser(User user) throws SQLException {
+    public void addUser(User user) {
         addObject(user);
     }
 
     @Override
-    public void updateUser(User user) throws SQLException {
+    public void updateUser(User user){
         updateObject(user);
     }
 
     @Override
-    public User getUserById(Long userId) throws SQLException {
+    public User getUserById(Long userId) {
         Session session = null;
         User user = null;
         try {
@@ -86,7 +88,7 @@ public class UserDAOImpl extends GeneralDAO implements UserDAO {
     }
 
     @Override
-    public List<User> getAllUsers() throws SQLException {
+    public List<User> getAllUsers() {
         Session session = null;
         List<User> users = new ArrayList<>();
         try {
@@ -109,7 +111,7 @@ public class UserDAOImpl extends GeneralDAO implements UserDAO {
     }
 
     @Override
-    public void deleteUsers(User user) throws SQLException {
+    public void deleteUsers(User user) {
         deleteObject(user);
     }
 }

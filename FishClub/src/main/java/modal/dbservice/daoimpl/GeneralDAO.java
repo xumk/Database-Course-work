@@ -6,8 +6,6 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import view.AlertMessage;
 
-import java.sql.SQLException;
-
 /**
  * Created by Алексей on 15.06.2016.
  */
@@ -18,7 +16,7 @@ public class GeneralDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    public void addObject(Object object) throws SQLException {
+    public void addObject(Object object) {
         Session session = null;
         try {
             session = this.sessionFactory.openSession();
@@ -39,7 +37,7 @@ public class GeneralDAO {
         }
     }
 
-    public void updateObject(Object object) throws SQLException {
+    public void updateObject(Object object) {
         Session session = null;
         try {
             session = this.sessionFactory.openSession();
@@ -60,7 +58,7 @@ public class GeneralDAO {
         }
     }
 
-    public void deleteObject(Object object) throws SQLException {
+    public void deleteObject(Object object) {
         Session session = null;
         try {
             session = this.sessionFactory.openSession();

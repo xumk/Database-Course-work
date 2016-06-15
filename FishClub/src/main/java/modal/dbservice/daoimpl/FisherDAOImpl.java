@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import view.AlertMessage;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +23,17 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
     }
 
     @Override
-    public void addFisher(Fisher fisher) throws SQLException {
+    public void addFisher(Fisher fisher) {
         addObject(fisher);
     }
 
     @Override
-    public void updateFisher(Fisher fisher) throws SQLException {
+    public void updateFisher(Fisher fisher) {
       updateObject(fisher);
     }
 
     @Override
-    public Fisher getFisherById(Long id) throws SQLException {
+    public Fisher getFisherById(Long id) {
         Session session = null;
         Fisher fisher = null;
         try {
@@ -64,7 +63,7 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
     }
 
     @Override
-    public List getAllFishers() throws SQLException {
+    public List getAllFishers() {
         Session session = null;
         List<Fisher> fishers = new ArrayList<>();
         try {
@@ -87,7 +86,7 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
     }
 
     @Override
-    public void deleteFisher(Fisher fisher) throws SQLException {
+    public void deleteFisher(Fisher fisher) {
         deleteObject(fisher);
     }
 }

@@ -20,11 +20,10 @@ import view.AlertMessage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
 
-import static javafx.scene.control.Alert.*;
+import static javafx.scene.control.Alert.AlertType;
 
 /**
  * Created by Алексей on 13.06.2016.
@@ -134,7 +133,7 @@ public class UserMenuController implements Initializable {
         if (lastName.isEditable()) {
             Fisher fisher = user.getFisherman();
             Date birthDate = ConvertionHelper.convertLocalDateToDate(this.birthDate.getValue());
-            Gender gender = genderComboBox.getValue().equals("Мужской")? Gender.MAN : Gender.WOMAN;
+            Gender gender = genderComboBox.getValue().equals("Мужской") ? Gender.MAN : Gender.WOMAN;
             if (!user.getLogin().equals(userName.getText())
                     || !user.getPassword().equals(password.getText())
                     || !fisher.getName().equals(firstName.getText())
@@ -149,18 +148,11 @@ public class UserMenuController implements Initializable {
                 fisher.setLastName(lastName.getText());
                 fisher.setBirthDay(birthDate);
                 fisher.setGender(gender);
-                try {
-                    fisherDAO.updateFisher(fisher);
-                    user.setFisherman(fisher);
-                    userDAO.updateUser(user);
-                } catch (SQLException e) {
-                    new AlertMessage(
-                            "Ошибка",
-                            "Ошибка при обновлении",
-                            e.getMessage(),
-                            Alert.AlertType.ERROR
-                    );
-                }
+
+                fisherDAO.updateFisher(fisher);
+                user.setFisherman(fisher);
+                userDAO.updateUser(user);
+
                 this.lastName.setEditable(false);
                 this.userName.setEditable(false);
                 this.firstName.setEditable(false);

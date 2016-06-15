@@ -1,22 +1,8 @@
 package modal.entity;
 
-import java.math.BigDecimal;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-
-import modal.entity.Fish;
-import modal.entity.Fisher;
-import modal.entity.agregation.Color;
-import modal.entity.agregation.TypeBait;
 
 @Entity(
         name = "lure"
@@ -49,20 +35,12 @@ public class Lure {
             name = "diving_depth"
     )
     private Double divingDepth;
-    @Column(
-            name = "color"
-    )
-    @Enumerated(EnumType.STRING)
-    private Color color;
+
     @Column(
             name = "is_imitation"
     )
-    @Enumerated(EnumType.ORDINAL)
-    private TypeBait typeBait;
-    @Column(
-            name = "price"
-    )
-    private BigDecimal price;
+    private Boolean isImitation;
+
     @ManyToMany(
             mappedBy = "lures"
     )
@@ -99,28 +77,12 @@ public class Lure {
         this.divingDepth = divignDepth;
     }
 
-    public TypeBait Imitation() {
-        return this.typeBait;
+    public Boolean isImitation() {
+        return this.isImitation;
     }
 
-    public void setImitation(TypeBait typeBait) {
-        this.typeBait = typeBait;
-    }
-
-    public Color getColor() {
-        return this.color;
-    }
-
-    public void setColor(Color color) {
-        this.color = color;
-    }
-
-    public BigDecimal getPrice() {
-        return this.price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setImitation(Boolean isImitation) {
+        this.isImitation = isImitation;
     }
 
     public Long getId() {

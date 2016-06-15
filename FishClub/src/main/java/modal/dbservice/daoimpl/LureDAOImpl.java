@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import view.AlertMessage;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,17 +22,17 @@ public class LureDAOImpl extends GeneralDAO implements LureDAO {
         this.sessionFactory = sessionFactory;
     }
 
-    public void addLure(Lure lure) throws SQLException {
+    public void addLure(Lure lure) {
         addObject(lure);
     }
 
     @Override
-    public void updateLure(Lure lure) throws SQLException {
+    public void updateLure(Lure lure) {
         updateObject(lure);
     }
 
     @Override
-    public Lure getLureById(Long lureId) throws SQLException {
+    public Lure getLureById(Long lureId) {
         Session session = null;
         Lure lure = null;
         try {
@@ -60,7 +59,7 @@ public class LureDAOImpl extends GeneralDAO implements LureDAO {
         Hibernate.initialize(fish.getFishers());
     }
 
-    public List<Lure> getAllLures() throws SQLException {
+    public List<Lure> getAllLures() {
         Session session = null;
         List<Lure> lures = new ArrayList<>();
         try {
@@ -85,7 +84,7 @@ public class LureDAOImpl extends GeneralDAO implements LureDAO {
     }
 
     @Override
-    public void deleteLure(Lure lure) throws SQLException {
+    public void deleteLure(Lure lure) {
         deleteObject(lure);
     }
 }

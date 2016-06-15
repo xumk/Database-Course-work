@@ -16,7 +16,6 @@ import modal.entity.agregation.Gender;
 import view.AlertMessage;
 
 import java.net.URL;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
 
@@ -85,13 +84,9 @@ public class RegistryController implements Initializable {
             user.setPassword(this.password.getText());
             user.setLogin(userName.getText());
             user.setAdmin(false);
-            try {
-                fisherDAO.addFisher(fisher);
-                user.setFisherman(fisher);
-                userDAO.addUser(user);
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
+            fisherDAO.addFisher(fisher);
+            user.setFisherman(fisher);
+            userDAO.addUser(user);
         } else {
             new AlertMessage(
                     "Информационное окно",

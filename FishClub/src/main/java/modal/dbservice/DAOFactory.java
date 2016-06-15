@@ -52,10 +52,10 @@ public class DAOFactory {
         return lureDAO;
     }
 
-    public FisherDAO getFishDAO() {
+    public FishDAO getFishDAO() {
         if (fishDAO == null) {
             fishDAO = new FishDAOImpl(sessionFactory);
         }
-        return fisherDAO;
+        return fishDAO;
     }
 }

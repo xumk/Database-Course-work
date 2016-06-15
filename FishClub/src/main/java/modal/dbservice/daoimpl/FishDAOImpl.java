@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import view.AlertMessage;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +23,17 @@ public class FishDAOImpl extends GeneralDAO implements FishDAO {
     }
 
     @Override
-    public void addFish(Fish fish) throws SQLException {
+    public void addFish(Fish fish) {
         addObject(fish);
     }
 
     @Override
-    public void updateFish(Fish fish) throws SQLException {
+    public void updateFish(Fish fish) {
         updateObject(fish);
     }
 
     @Override
-    public Fish getFishById(Long fishId) throws SQLException {
+    public Fish getFishById(Long fishId) {
         Session session = null;
         Fish fish = null;
         try {
@@ -62,7 +61,7 @@ public class FishDAOImpl extends GeneralDAO implements FishDAO {
         Hibernate.initialize(fish.getFishers());
     }
 
-    public List<Fish> getAllFishs() throws SQLException {
+    public List<Fish> getAllFishs() {
         Session session = null;
         List<Fish> fishs = new ArrayList<>();
         try {
@@ -87,7 +86,7 @@ public class FishDAOImpl extends GeneralDAO implements FishDAO {
     }
 
     @Override
-    public void deleteFish(Fish fish) throws SQLException {
+    public void deleteFish(Fish fish) {
         deleteObject(fish);
     }
 }

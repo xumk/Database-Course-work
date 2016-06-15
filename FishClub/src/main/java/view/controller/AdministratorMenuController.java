@@ -2,26 +2,27 @@ package view.controller;
 
 import controllers.ConvertionHelper;
 import controllers.UserLogicController;
-import javafx.collections.FXCollections;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.CheckBoxTableCell;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import modal.dbservice.dao.FisherDAO;
-import modal.dbservice.dao.UserDAO;
-import modal.entity.Fisher;
-import modal.entity.User;
+import modal.dbservice.dao.*;
+import modal.entity.*;
 import modal.entity.agregation.Gender;
 import view.AlertMessage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.util.Date;
 import java.util.ResourceBundle;
+
+import static javafx.collections.FXCollections.observableArrayList;
 
 /**
  * Created by Алексей on 14.06.2016.
@@ -39,22 +40,23 @@ public class AdministratorMenuController implements Initializable {
     public Button editButton;
     public ComboBox genderComboBox;
     public Button saveButton;
-    public TableView tableBait;
-    public TableColumn baitName;
-    public TableColumn baitCountHooks;
-    public TableColumn bairWeight;
-    public TableColumn baitDepth;
-    public TableColumn isLive;
-    public TableView tableFish;
-    public TableColumn fishName;
-    public TableColumn fsihFamily;
+    public TableView<Lure> tableBait;
+    public TableColumn<Lure, String> baitName;
+    public TableColumn<Lure, Integer> baitCountHooks;
+    public TableColumn<Lure, Double> bairWeight;
+    public TableColumn<Lure, Double> baitDepth;
+    public TableColumn<Lure, Boolean> isLive;
+    public TableView<Fish> tableFish;
+    public TableColumn<Fish, String> fishName;
+    public TableColumn<Fish, String> fishFamily;
     public TableColumn fishWeight;
-    public TableColumn fishMinWeight;
-    public TableColumn fishMaxWeight;
-    public TableColumn fishDepth;
-    public TableView lakeTable;
-    public TableColumn lakeName;
-    public TableColumn lakeDepth;
+    public TableColumn<Fish, Double> fishMinWeight;
+    public TableColumn<Fish, Double> fishMaxWeight;
+    public TableColumn<Fish, Double> fishDepth;
+    public TableView<Lake> lakeTable;
+    public TableColumn<Lake, String> lakeName;
+    public TableColumn<Lake, Double> lakeDepth;
+    public TableColumn<Lake, Double> lakeArea;
     public Button exit;
     public Button logOut;
     public Button editLureButton;
@@ -67,9 +69,15 @@ public class AdministratorMenuController implements Initializable {
     public Button deleteLakeButton2;
     public Button editLakeButton;
 
-    private ObservableList<String> genders = FXCollections.observableArrayList("Мужской", "Женский");
+    private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
     private UserDAO userDAO;
     private FisherDAO fisherDAO;
+    private LakeDAO lakeDAO;
+    private LureDAO lureDAO;
+    private FishDAO fishDAO;
+    private ObservableList<Lake> lakeData;
+    private ObservableList<Lure> lureData;
+    private ObservableList<Fish> fishData;
 
     private void fillInformationOnUserData(User user) {
         Fisher fisher = user.getFisherman();
@@ -104,7 +112,7 @@ public class AdministratorMenuController implements Initializable {
         if (lastName.isEditable()) {
             Fisher fisher = user.getFisherman();
             Date birthDate = ConvertionHelper.convertLocalDateToDate(this.birthDate.getValue());
-            Gender gender = genderComboBox.getValue().equals("Мужской")? Gender.MAN : Gender.WOMAN;
+            Gender gender = genderComboBox.getValue().equals("Мужской") ? Gender.MAN : Gender.WOMAN;
             if (!user.getLogin().equals(userName.getText())
                     || !user.getPassword().equals(password.getText())
                     || !fisher.getName().equals(firstName.getText())
@@ -119,18 +127,11 @@ public class AdministratorMenuController implements Initializable {
                 fisher.setLastName(lastName.getText());
                 fisher.setBirthDay(birthDate);
                 fisher.setGender(gender);
-                try {
-                    fisherDAO.updateFisher(fisher);
-                    user.setFisherman(fisher);
-                    userDAO.updateUser(user);
-                } catch (SQLException e) {
-                    new AlertMessage(
-                            "Ошибка",
-                            "Ошибка при обновлении",
-                            e.getMessage(),
-                            Alert.AlertType.ERROR
-                    );
-                }
+
+                fisherDAO.updateFisher(fisher);
+                user.setFisherman(fisher);
+                userDAO.updateUser(user);
+
                 this.lastName.setEditable(false);
                 this.userName.setEditable(false);
                 this.firstName.setEditable(false);
@@ -153,8 +154,14 @@ public class AdministratorMenuController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         userDAO = UserLogicController.factory.getUserDAO();
         fisherDAO = UserLogicController.factory.getFisherDAO();
+        lakeDAO = UserLogicController.factory.getLakeDAO();
+        lureDAO = UserLogicController.factory.getLureDAO();
+        fishDAO = UserLogicController.factory.getFishDAO();
         this.genderComboBox.setItems(this.genders);
 
+        initializeTableLake();
+        initializeTableLure();
+        initializeTableFish();
         this.fillInformationOnUserData(user);
         this.logOut.setOnAction((event) -> {
             Parent root = null;
@@ -171,5 +178,36 @@ public class AdministratorMenuController implements Initializable {
                 var5.printStackTrace();
             }
         });
+    }
+
+    private void initializeTableFish() {
+        fishName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        fishFamily.setCellValueFactory(new PropertyValueFactory<>("family"));
+        fishMinWeight.setCellValueFactory(new PropertyValueFactory<>("minWeight"));
+        fishMaxWeight.setCellValueFactory(new PropertyValueFactory<>("maxWeight"));
+        fishDepth.setCellValueFactory(new PropertyValueFactory<>("depthLiving"));
+        fishData = observableArrayList(fishDAO.getAllFishs());
+        tableFish.setItems(fishData);
+    }
+
+    private void initializeTableLure() {
+        baitName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        baitCountHooks.setCellValueFactory(new PropertyValueFactory<>("countHooks"));
+        bairWeight.setCellValueFactory(new PropertyValueFactory<>("weight"));
+        baitDepth.setCellValueFactory(new PropertyValueFactory<>("divingDepth"));
+        isLive.setCellValueFactory(
+                param -> new SimpleBooleanProperty(param.getValue().isImitation())
+        );
+        isLive.setCellFactory( CheckBoxTableCell.forTableColumn(isLive));
+        lureData = observableArrayList(lureDAO.getAllLures());
+        tableBait.setItems(lureData);
+    }
+
+    private void initializeTableLake() {
+        lakeName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        lakeDepth.setCellValueFactory(new PropertyValueFactory<>("depth"));
+        lakeArea.setCellValueFactory(new PropertyValueFactory<>("area"));
+        lakeData = observableArrayList(lakeDAO.getAllLake());
+        lakeTable.setItems(lakeData);
     }
 }

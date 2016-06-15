@@ -8,7 +8,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import view.AlertMessage;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,17 +23,17 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
     }
 
     @Override
-    public void addLake(Lake lake) throws SQLException {
+    public void addLake(Lake lake) {
         addObject(lake);
     }
 
     @Override
-    public void updateLake(Lake lake) throws SQLException {
+    public void updateLake(Lake lake) {
         updateObject(lake);
     }
 
     @Override
-    public Lake getLakeById(Long lakeId) throws SQLException {
+    public Lake getLakeById(Long lakeId) {
         Session session = null;
         Lake lake = null;
         try {
@@ -57,7 +56,7 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
     }
 
     @Override
-    public List<Lake> getAllLake() throws SQLException {
+    public List<Lake> getAllLake() {
         Session session = null;
         List<Lake> lakes = new ArrayList<>();
         try {
@@ -84,7 +83,7 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
         Hibernate.initialize(lake.getFishers());
     }
     @Override
-    public void deleteLake(Lake lake) throws SQLException {
+    public void deleteLake(Lake lake) {
         deleteObject(lake);
     }
 }
