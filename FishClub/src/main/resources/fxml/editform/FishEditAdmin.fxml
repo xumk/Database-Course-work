@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="316.0" prefWidth="216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="349.0" prefWidth="216.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.editcontroller.FishEditController">
    <children>
-      <TextField layoutX="34.0" layoutY="67.0" />
-      <TextField layoutX="34.0" layoutY="114.0" />
-      <TextField layoutX="35.0" layoutY="164.0" />
-      <TextField layoutX="35.0" layoutY="216.0" />
-      <TextField layoutX="35.0" layoutY="272.0" />
+      <TextField fx:id="fishName" layoutX="34.0" layoutY="67.0" />
+      <TextField fx:id="fishFamily" layoutX="34.0" layoutY="114.0" />
+      <TextField fx:id="fishMin" layoutX="35.0" layoutY="164.0" />
+      <TextField fx:id="fishMax" layoutX="35.0" layoutY="216.0" />
+      <TextField fx:id="fishDepth" layoutX="35.0" layoutY="272.0" />
       <Label layoutX="35.0" layoutY="50.0" text="Назваине рыбы">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -38,10 +38,12 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <Text layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Окно добавления рыбы">
+      <Text fx:id="headerEditFish" layoutX="14.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Окно добавления рыбы">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
+      <Button fx:id="okButton" defaultButton="true" layoutX="14.0" layoutY="310.0" mnemonicParsing="false" onAction="#okAction" text="Завершить" />
+      <Button fx:id="closeButton" layoutX="140.0" layoutY="310.0" mnemonicParsing="false" text="Закрыть" onAction="#closeAction" />
    </children>
 </Pane>

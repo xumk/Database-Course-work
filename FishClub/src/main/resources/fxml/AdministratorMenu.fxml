@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.AdministratorMenuController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.AdministratorMenuController">
     <children>
         <TabPane layoutX="7.0" layoutY="48.0" prefHeight="400.0" prefWidth="692.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -74,13 +74,13 @@
                                         <TableColumn fx:id="baitCountHooks" prefWidth="103.0" text="Количество&#10;крючков" />
                                         <TableColumn fx:id="bairWeight" prefWidth="50.0" text="Вес" />
                                         <TableColumn fx:id="baitDepth" prefWidth="140.0" text="Глубина&#10;погружения" />
-                                        <TableColumn fx:id="isLive" editable="false" prefWidth="131.0" text="Вид&#10;наживки">
+                                        <TableColumn fx:id="isLive" editable="false" prefWidth="131.0" text="Не живая">
                                         </TableColumn>
                                     </columns>
                                 </TableView>
-                                <Button fx:id="editLureButton" layoutX="93.0" mnemonicParsing="false" text="edit" />
-                                <Button fx:id="deleteLureButton" layoutX="44.0" mnemonicParsing="false" text="delete" />
-                                <Button fx:id="addLureButton" layoutX="7.0" mnemonicParsing="false" text="add" />
+                                <Button fx:id="editLureButton" onAction="#editLureAction" layoutX="93.0" mnemonicParsing="false" text="edit" />
+                                <Button fx:id="deleteLureButton" layoutX="44.0" onAction="#deleteLureAction" mnemonicParsing="false" text="delete" />
+                                <Button fx:id="addLureButton" layoutX="7.0" onAction="#addLureAction" mnemonicParsing="false" text="add" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -105,9 +105,9 @@
                                         <TableColumn fx:id="fishDepth" prefWidth="75.0" text="Глубина&#10;обитания" />
                                     </columns>
                                 </TableView>
-                                <Button fx:id="addFishButton" mnemonicParsing="false" text="add" />
-                                <Button fx:id="deleteFishButton" layoutX="74.0" mnemonicParsing="false" text="delete" />
-                                <Button fx:id="editFishButton" layoutX="37.0" mnemonicParsing="false" text="edit" />
+                                <Button fx:id="addFishButton" mnemonicParsing="false" onAction="#addFishAction" text="add" />
+                                <Button fx:id="deleteFishButton" layoutX="74.0" mnemonicParsing="false" onAction="#deleteFishAction" text="delete" />
+                                <Button fx:id="editFishButton" layoutX="37.0" mnemonicParsing="false" onAction="#editFishAction" text="edit" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -126,9 +126,9 @@
                                         <TableColumn fx:id="lakeArea" prefWidth="75.0" text="Площадь озера" />
                                     </columns>
                                 </TableView>
-                                <Button fx:id="addLakeButton" mnemonicParsing="false" text="add" />
-                                <Button fx:id="deleteLakeButton2" layoutX="74.0" mnemonicParsing="false" text="delete" />
-                                <Button fx:id="editLakeButton" layoutX="37.0" mnemonicParsing="false" text="edit" />
+                                <Button fx:id="addLakeButton" mnemonicParsing="false" onAction="#addLakeAction" text="add" />
+                                <Button fx:id="deleteLakeButton2" layoutX="74.0" mnemonicParsing="false" onAction="#deleteLakeAction" text="delete" />
+                                <Button fx:id="editLakeButton" layoutX="37.0" mnemonicParsing="false" onAction="#editLakeAction" text="edit" />
                             </children>
                         </AnchorPane>
                     </content>

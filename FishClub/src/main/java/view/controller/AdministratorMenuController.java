@@ -11,11 +11,16 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import modal.dbservice.dao.*;
 import modal.entity.*;
 import modal.entity.agregation.Gender;
 import view.AlertMessage;
+import view.controller.editcontroller.FishEditController;
+import view.controller.editcontroller.LakeEditController;
+import view.controller.editcontroller.LureEditController;
 
 import java.io.IOException;
 import java.net.URL;
@@ -68,6 +73,7 @@ public class AdministratorMenuController implements Initializable {
     public Button addLakeButton;
     public Button deleteLakeButton2;
     public Button editLakeButton;
+    public Pane pane;
 
     private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
     private UserDAO userDAO;
@@ -78,6 +84,7 @@ public class AdministratorMenuController implements Initializable {
     private ObservableList<Lake> lakeData;
     private ObservableList<Lure> lureData;
     private ObservableList<Fish> fishData;
+    private UserLogicController controller;
 
     private void fillInformationOnUserData(User user) {
         Fisher fisher = user.getFisherman();
@@ -95,7 +102,10 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void exitProgramm() {
-        stage.close();
+        stage.fireEvent(new WindowEvent(
+                stage,
+                WindowEvent.WINDOW_CLOSE_REQUEST
+        ));
     }
 
     public void editAction() {
@@ -158,6 +168,11 @@ public class AdministratorMenuController implements Initializable {
         lureDAO = UserLogicController.factory.getLureDAO();
         fishDAO = UserLogicController.factory.getFishDAO();
         this.genderComboBox.setItems(this.genders);
+        this.controller = UserLogicController.instance();
+
+        stage.setOnCloseRequest(we ->
+                UserLogicController.service.closeSessionFactory()
+        );
 
         initializeTableLake();
         initializeTableLure();
@@ -166,11 +181,11 @@ public class AdministratorMenuController implements Initializable {
         this.logOut.setOnAction((event) -> {
             Parent root = null;
             try {
+                Stage stage = new Stage();
+                SingUpController.stage = stage;
                 root = FXMLLoader.load(this.getClass().getResource("/fxml/SingUp.fxml"));
                 Scene e = new Scene(root, 550.0D, 400.0D);
-                Stage stage = new Stage();
                 AdministratorMenuController.stage.close();
-                SingUpController.STAGE = stage;
                 stage.setTitle("Окно авторизации");
                 stage.setScene(e);
                 stage.show();
@@ -210,4 +225,80 @@ public class AdministratorMenuController implements Initializable {
         lakeData = observableArrayList(lakeDAO.getAllLake());
         lakeTable.setItems(lakeData);
     }
+
+    public void addFishAction() {
+        FishEditController.data = fishData;
+        controller.openAddAndEditFishTable(
+                null, pane, "Окно добавления рыбы",
+                "/fxml/editform/FishEditAdmin.fxml"
+        );
+    }
+
+    public void deleteFishAction() {
+        Fish fish = tableFish.getSelectionModel().getSelectedItem();
+        if (fish != null) {
+            fishData.remove(fish);
+            fishDAO.deleteFish(fish);
+        }
+    }
+
+    public void editFishAction() {
+        Fish fish = tableFish.getSelectionModel().getSelectedItem();
+        FishEditController.data = fishData;
+        controller.openAddAndEditFishTable(
+                fish, pane, "Окно редактирования рыбы",
+                "/fxml/editform/FishEditAdmin.fxml"
+        );
+    }
+
+    public void editLakeAction() {
+        Lake lake = lakeTable.getSelectionModel().getSelectedItem();
+        LakeEditController.data = lakeData;
+        controller.openAddAndEditLakeTable(
+                lake, pane, "Окно редактирования озера",
+                "/fxml/editform/LakeEditAdmin.fxml"
+        );
+    }
+
+    public void addLakeAction() {
+        LakeEditController.data = lakeData;
+        controller.openAddAndEditLakeTable(
+                null, pane, "Окно добавления рыбы",
+                "/fxml/editform/LakeEditAdmin.fxml"
+        );
+    }
+
+    public void deleteLakeAction() {
+        Lake lake = lakeTable.getSelectionModel().getSelectedItem();
+        if (lake != null) {
+            lakeData.remove(lake);
+            lakeDAO.deleteLake(lake);
+        }
+    }
+
+    public void editLureAction() {
+        Lure lure = tableBait.getSelectionModel().getSelectedItem();
+        LureEditController.data = lureData;
+        controller.openAddAndEditLureTable(
+                lure, pane, "Окно редактирования наживки",
+                "/fxml/editform/LureEditAdmin.fxml"
+        );
+    }
+
+    public void addLureAction() {
+        LureEditController.data = lureData;
+        controller.openAddAndEditLureTable(
+                null, pane, "Окно добавления наживки",
+                "/fxml/editform/LureEditAdmin.fxml"
+        );
+    }
+
+    public void deleteLureAction() {
+        Lure lure = tableBait.getSelectionModel().getSelectedItem();
+        if (lure != null) {
+            lureData.remove(lure);
+            lureDAO.deleteLure(lure);
+        }
+    }
+
 }

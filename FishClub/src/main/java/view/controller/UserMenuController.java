@@ -11,6 +11,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import modal.dbservice.dao.FisherDAO;
 import modal.dbservice.dao.UserDAO;
 import modal.entity.Fisher;
@@ -29,7 +30,7 @@ import static javafx.scene.control.Alert.AlertType;
  * Created by Алексей on 13.06.2016.
  */
 public class UserMenuController implements Initializable {
-    public static Stage STAGE;
+    public static Stage stage;
     public static User user;
     public Button exit;
     public TableColumn lakeDistance;
@@ -73,16 +74,18 @@ public class UserMenuController implements Initializable {
         userDAO = UserLogicController.factory.getUserDAO();
         fisherDAO = UserLogicController.factory.getFisherDAO();
         this.genderComboBox.setItems(this.genders);
-
+        stage.setOnCloseRequest(we ->
+                UserLogicController.service.closeSessionFactory()
+        );
         this.fillInformationOnUserData(user);
         this.logOut.setOnAction((event) -> {
             Parent root = null;
             try {
+                Stage stage = new Stage();
+                SingUpController.stage = stage;
                 root = FXMLLoader.load(this.getClass().getResource("/fxml/SingUp.fxml"));
                 Scene e = new Scene(root, 550.0D, 400.0D);
-                Stage stage = new Stage();
-                STAGE.close();
-                SingUpController.STAGE = stage;
+                UserMenuController.stage.close();
                 stage.setTitle("Окно авторизации");
                 stage.setScene(e);
                 stage.show();
@@ -107,8 +110,11 @@ public class UserMenuController implements Initializable {
         }
     }
 
-    public void exitProgramm(ActionEvent actionEvent) {
-        STAGE.close();
+    public void exitProgramm() {
+        stage.fireEvent(new WindowEvent(
+                stage,
+                WindowEvent.WINDOW_CLOSE_REQUEST
+        ));
     }
 
     public void editAction(ActionEvent actionEvent) {

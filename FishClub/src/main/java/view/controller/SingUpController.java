@@ -1,7 +1,6 @@
 package view.controller;
 
 import controllers.UserLogicController;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
@@ -25,7 +24,7 @@ import java.util.ResourceBundle;
  * Created by Алексей on 13.06.2016.
  */
 public class SingUpController implements Initializable {
-    public static Stage STAGE;
+    public static Stage stage;
     public static UserDAO userDAO;
     public Button signUp;
     public Button authorize;
@@ -40,10 +39,13 @@ public class SingUpController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         userDAO = UserLogicController.factory.getUserDAO();
-        this.controller = new UserLogicController();
+        stage.setOnCloseRequest(we ->
+                UserLogicController.service.closeSessionFactory()
+        );
+        this.controller = UserLogicController.instance();
     }
 
-    public void authorizationAction(ActionEvent actionEvent) {
+    public void authorizationAction() {
         this.errorText.setFill(Color.FIREBRICK);
         String userName = this.userName.getText();
         String password = this.password.getText();
@@ -51,9 +53,15 @@ public class SingUpController implements Initializable {
         if(user != null) {
             if(user.getPassword().equals(password)) {
                 if (user.isAdmin()) {
-                    controller.openAdministratorMenuScene(STAGE, "Любительский клуб рыбаловов", "/fxml/AdministratorMenu.fxml", user);
+                    controller.openAdministratorMenuScene(
+                            stage, "Любительский клуб рыбаловов",
+                            "/fxml/AdministratorMenu.fxml", user
+                    );
                 } else {
-                    this.controller.openUserMenuScene(STAGE, "Любительский клуб рыбаловов", "/fxml/UserMenu.fxml", user);
+                    this.controller.openUserMenuScene(
+                            stage, "Любительский клуб рыбаловов",
+                            "/fxml/UserMenu.fxml", user
+                    );
                 }
             } else {
                 this.errorText.setText("Не верный пароль");
@@ -68,7 +76,7 @@ public class SingUpController implements Initializable {
 
     }
 
-    public void registryAction(ActionEvent actionEvent) {
+    public void registryAction() {
         Stage stage = new Stage();
         Parent root = null;
 

@@ -5,13 +5,12 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="352.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="397.0" prefWidth="271.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.editcontroller.LureEditController">
    <children>
-      <TextField layoutX="61.0" layoutY="86.0" />
-      <TextField layoutX="61.0" layoutY="151.0" />
-      <TextField layoutX="61.0" layoutY="217.0" />
-      <TextField layoutX="61.0" layoutY="278.0" />
+      <TextField fx:id="lureName" layoutX="61.0" layoutY="86.0" />
+      <TextField fx:id="lureCountHooks" layoutX="61.0" layoutY="151.0" />
+      <TextField fx:id="lureWeight" layoutX="61.0" layoutY="217.0" />
+      <TextField fx:id="lureDepth" layoutX="61.0" layoutY="278.0" />
       <Label layoutX="61.0" layoutY="69.0" text="Название наживки">
          <font>
             <Font name="System Bold" size="12.0" />
@@ -32,15 +31,17 @@
             <Font name="System Bold" size="12.0" />
          </font>
       </Label>
-      <CheckBox layoutX="73.0" layoutY="321.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="125.0" text="Живая наживка">
+      <CheckBox fx:id="lureIsLive" layoutX="64.0" layoutY="321.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="142.0" text="Не живая наживка">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
       </CheckBox>
-      <Text layoutX="28.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Окно добавления наживки">
+      <Text fx:id="headerLureEdit" layoutX="28.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Окно добавления наживки">
          <font>
             <Font name="System Bold" size="16.0" />
          </font>
       </Text>
+      <Button defaultButton="true" layoutX="43.0" layoutY="358.0" mnemonicParsing="false" onAction="#okAction" text="Завершить" />
+      <Button layoutX="167.0" layoutY="358.0" mnemonicParsing="false" onAction="#closeAction" text="Закрыть" />
    </children>
 </Pane>

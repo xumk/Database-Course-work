@@ -26,9 +26,9 @@ public class RunApplication extends Application {
 
     public void start(Stage primaryStage) {
         try {
+            SingUpController.stage = primaryStage;
             Parent e = FXMLLoader.load(this.getClass().getResource("/fxml/SingUp.fxml"));
             Scene scene = new Scene(e, 550.0D, 400.0D);
-            SingUpController.STAGE = primaryStage;
             primaryStage.setTitle("Окно авторизации");
             primaryStage.setScene(scene);
             primaryStage.show();
