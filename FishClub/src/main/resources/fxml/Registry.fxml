@@ -18,7 +18,7 @@
       <Button fx:id="signUp" defaultButton="true" layoutX="62.0" layoutY="349.0" mnemonicParsing="false" onAction="#singUpAction" text="Зарегистрироваться" />
       <TextField fx:id="userName" layoutX="276.0" layoutY="54.0" prefHeight="26.0" prefWidth="236.0" />
       <PasswordField fx:id="password" alignment="TOP_LEFT" layoutX="275.0" layoutY="93.0" prefHeight="26.0" prefWidth="236.0" />
-      <Label layoutX="16.0" layoutY="59.0" text="Имя пользователя">
+      <Label layoutX="16.0" layoutY="59.0" text="Логин">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>

@@ -71,9 +71,15 @@ public class AdministratorMenuController implements Initializable {
     public Button deleteFishButton;
     public Button editFishButton;
     public Button addLakeButton;
-    public Button deleteLakeButton2;
+    public Button deleteLakeButton;
     public Button editLakeButton;
     public Pane pane;
+    public Pane fishLinkLurePane;
+    public Button deleteFishLinkLureButton;
+    public Button addFishBLinkLureutton;
+    public Pane lakeLinkFishPane;
+    public Button deleteLakeLinkFishButton;
+    public Button addLakeLinkFishButton;
 
     private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
     private UserDAO userDAO;

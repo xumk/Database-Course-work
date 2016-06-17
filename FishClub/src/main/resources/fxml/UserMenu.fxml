@@ -15,7 +15,7 @@
                      <children>
                         <TextField fx:id="userName" editable="false" layoutX="14.0" layoutY="37.0" prefHeight="26.0" prefWidth="236.0" />
                         <PasswordField fx:id="password" alignment="TOP_LEFT" editable="false" layoutX="290.0" layoutY="37.0" prefHeight="26.0" prefWidth="236.0" />
-                        <Label layoutX="20.0" layoutY="21.0" text="Имя пользователя">
+                        <Label layoutX="20.0" layoutY="21.0" text="Логин">
                            <font>
                               <Font name="System Bold" size="13.0" />
                            </font>

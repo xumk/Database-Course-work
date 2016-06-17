@@ -14,7 +14,7 @@
       <Button fx:id="authorize" defaultButton="true" layoutX="128.0" layoutY="249.0" mnemonicParsing="false" onAction="#authorizationAction" text="Авторизоваться" />
       <TextField fx:id="userName" layoutX="129.0" layoutY="125.0" prefHeight="26.0" prefWidth="335.0" />
       <PasswordField fx:id="password" alignment="TOP_LEFT" layoutX="129.0" layoutY="187.0" prefHeight="26.0" prefWidth="335.0" />
-      <Label layoutX="129.0" layoutY="109.0" text="Имя пользователя">
+      <Label layoutX="129.0" layoutY="109.0" text="Логин">
          <font>
             <Font name="System Bold" size="13.0" />
          </font>
