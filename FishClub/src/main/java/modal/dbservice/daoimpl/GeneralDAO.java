@@ -9,8 +9,8 @@ import view.AlertMessage;
 /**
  * Created by Алексей on 15.06.2016.
  */
-public class GeneralDAO {
-    private SessionFactory sessionFactory;
+public abstract class GeneralDAO {
+    protected SessionFactory sessionFactory;
 
     public GeneralDAO(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;

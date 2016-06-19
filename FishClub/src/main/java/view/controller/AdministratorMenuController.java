@@ -17,6 +17,7 @@ import javafx.stage.WindowEvent;
 import modal.dbservice.dao.*;
 import modal.entity.*;
 import modal.entity.agregation.Gender;
+import modal.helpmodal.LivedFishLake;
 import view.AlertMessage;
 import view.controller.editcontroller.FishEditController;
 import view.controller.editcontroller.LakeEditController;
@@ -80,6 +81,16 @@ public class AdministratorMenuController implements Initializable {
     public Pane lakeLinkFishPane;
     public Button deleteLakeLinkFishButton;
     public Button addLakeLinkFishButton;
+    public TableColumn<Lure, Long> idLureLink;
+    public TableColumn<Lure, String> nameLureLink;
+    public ToggleButton openMasterDetailFishGridButton;
+    public TableView<LivedFishLake> fishLivedTable;
+    public TableColumn<LivedFishLake, Long> idFishLink;
+    public TableColumn<LivedFishLake, String> nameFishLink;
+    public TableColumn<LivedFishLake, Integer> countFishiLake;
+    public Button editLakeLinkFishButton;
+    public ToggleButton openMasterDetailLakeGridButton;
+    public TableView<Lure> linkTableLure;
 
     private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
     private UserDAO userDAO;
@@ -90,7 +101,11 @@ public class AdministratorMenuController implements Initializable {
     private ObservableList<Lake> lakeData;
     private ObservableList<Lure> lureData;
     private ObservableList<Fish> fishData;
+    private ObservableList<Lure> linkLureData;
+    private ObservableList<LivedFishLake> linkFishData;
     private UserLogicController controller;
+    private Fish currentFish;
+    private Lake currentLake;
 
     private void fillInformationOnUserData(User user) {
         Fisher fisher = user.getFisherman();
@@ -176,6 +191,35 @@ public class AdministratorMenuController implements Initializable {
         this.genderComboBox.setItems(this.genders);
         this.controller = UserLogicController.instance();
 
+        openMasterDetailFishGridButton.setOnAction(evt -> {
+            if (openMasterDetailFishGridButton.isSelected()
+                    && tableFish.getSelectionModel().getSelectedItem() != null) {
+                currentFish = tableFish.getSelectionModel().getSelectedItem();
+                linkLureData = observableArrayList(currentFish.getLures());
+                idLureLink.setCellValueFactory(new PropertyValueFactory<>("id"));
+                nameLureLink.setCellValueFactory(new PropertyValueFactory<>("name"));
+                linkTableLure.setItems(linkLureData);
+                fishLinkLurePane.setVisible(true);
+            } else {
+                fishLinkLurePane.setVisible(false);
+            }
+        });
+
+        openMasterDetailLakeGridButton.setOnAction(evt -> {
+            if (openMasterDetailLakeGridButton.isSelected()
+                    && lakeTable.getSelectionModel().getSelectedItem() != null) {
+                currentLake = lakeTable.getSelectionModel().getSelectedItem();
+                linkFishData = controller.createLinkFish(currentLake.getFishs(), currentLake);
+                idFishLink.setCellValueFactory(new PropertyValueFactory<>("idFish"));
+                nameFishLink.setCellValueFactory(new PropertyValueFactory<>("nameFish"));
+                countFishiLake.setCellValueFactory(new PropertyValueFactory<>("countFishLived"));
+                fishLivedTable.setItems(linkFishData);
+                lakeLinkFishPane.setVisible(true);
+            } else {
+                lakeLinkFishPane.setVisible(false);
+            }
+        });
+
         stage.setOnCloseRequest(we ->
                 UserLogicController.service.closeSessionFactory()
         );
@@ -219,7 +263,7 @@ public class AdministratorMenuController implements Initializable {
         isLive.setCellValueFactory(
                 param -> new SimpleBooleanProperty(param.getValue().isImitation())
         );
-        isLive.setCellFactory( CheckBoxTableCell.forTableColumn(isLive));
+        isLive.setCellFactory(CheckBoxTableCell.forTableColumn(isLive));
         lureData = observableArrayList(lureDAO.getAllLures());
         tableBait.setItems(lureData);
     }

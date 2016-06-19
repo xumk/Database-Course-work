@@ -1,5 +1,7 @@
 package controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -7,10 +9,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modal.dbservice.DAOFactory;
 import modal.dbservice.DBService;
+import modal.dbservice.daoimpl.joindao.LivedDAO;
 import modal.entity.Fish;
 import modal.entity.Lake;
 import modal.entity.Lure;
 import modal.entity.User;
+import modal.entity.joinentity.Lived;
+import modal.helpmodal.LivedFishLake;
 import view.controller.AdministratorMenuController;
 import view.controller.UserMenuController;
 import view.controller.editcontroller.FishEditController;
@@ -18,6 +23,8 @@ import view.controller.editcontroller.LakeEditController;
 import view.controller.editcontroller.LureEditController;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserLogicController {
     public static DBService service;
@@ -48,7 +55,7 @@ public class UserLogicController {
         Stage stage = new Stage();
         AdministratorMenuController.stage = stage;
         AdministratorMenuController.user = user;
-        openScene(parentStage, stage, title, url, 700, 400);
+        openScene(parentStage, stage, title, url, 700, 450);
     }
 
     public void openAddAndEditFishTable(Fish fish, Pane parentPane, String title, String url) {
@@ -93,5 +100,23 @@ public class UserLogicController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public ObservableList<LivedFishLake> createLinkFish(List<Fish> fishs, Lake currentLake) {
+        List<LivedFishLake> livedFishLakes = new ArrayList<>();
+        LivedDAO dao = factory.getLivedDAO();
+        for (Fish fish: fishs) {
+            LivedFishLake link = new LivedFishLake();
+            link.setNameFish(fish.getName());
+            link.setIdFish(fish.getId());
+            Lived lived = dao.getLivedByFishAndLakeId(
+                    fish.getId(),
+                    currentLake.getId()
+            );
+            link.setCountFishLived(lived.getCountFish());
+            livedFishLakes.add(link);
+        }
+        ObservableList<LivedFishLake> result = FXCollections.observableArrayList(livedFishLakes);
+        return result;
     }
 }

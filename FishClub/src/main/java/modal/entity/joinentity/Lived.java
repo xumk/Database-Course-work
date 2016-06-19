@@ -1,9 +1,13 @@
 package modal.entity.joinentity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
+@Entity
+@Embeddable
+@Table(
+        name = "lived"
+)
 public class Lived implements Serializable {
     @Id
     @Column(
@@ -18,7 +22,7 @@ public class Lived implements Serializable {
     @Column(
             name = "count_fish"
     )
-    private Long countFish;
+    private Integer countFish;
 
     public Lived() {
     }
@@ -42,5 +46,13 @@ public class Lived implements Serializable {
 
     public void setLakeId(Long lakeId) {
         this.lakeId = lakeId;
+    }
+
+    public Integer getCountFish() {
+        return countFish;
+    }
+
+    public void setCountFish(Integer countFish) {
+        this.countFish = countFish;
     }
 }

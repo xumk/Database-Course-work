@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDAOImpl extends GeneralDAO implements UserDAO {
-    private SessionFactory sessionFactory;
 
     public UserDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory);

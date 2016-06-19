@@ -110,10 +110,10 @@
                                 <Button fx:id="editFishButton" layoutX="37.0" mnemonicParsing="false" onAction="#editFishAction" text="edit" />
                         <Pane fx:id="fishLinkLurePane" layoutX="3.0" layoutY="228.0" prefHeight="143.0" prefWidth="685.0" visible="false">
                            <children>
-                              <TableView layoutY="25.0" prefHeight="118.0" prefWidth="692.0">
+                              <TableView fx:id="linkTableLure" layoutY="25.0" prefHeight="111.0" prefWidth="684.0">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="Идентификатор&#10;наживки" visible="false" />
-                                  <TableColumn prefWidth="75.0" text="Название наживки" />
+                                  <TableColumn fx:id="idLureLink" prefWidth="75.0" text="Идентификатор&#10;наживки" visible="false" />
+                                  <TableColumn fx:id="nameLureLink" prefWidth="75.0" text="Название наживки" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
@@ -123,6 +123,7 @@
                               <Button fx:id="addFishBLinkLureutton" layoutY="-1.0" mnemonicParsing="false" text="add" />
                            </children>
                         </Pane>
+                        <ToggleButton fx:id="openMasterDetailFishGridButton" layoutX="123.0" mnemonicParsing="false" text="MDGrid" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -144,22 +145,24 @@
                                 <Button fx:id="addLakeButton" mnemonicParsing="false" onAction="#addLakeAction" text="add" />
                                 <Button fx:id="deleteLakeButton" layoutX="74.0" mnemonicParsing="false" onAction="#deleteLakeAction" text="delete" />
                                 <Button fx:id="editLakeButton" layoutX="37.0" mnemonicParsing="false" onAction="#editLakeAction" text="edit" />
-                        <Pane fx:id="lakeLinkFishPane" layoutX="5.0" layoutY="225.0" prefHeight="140.0" prefWidth="682.0">
+                        <Pane fx:id="lakeLinkFishPane" layoutX="5.0" layoutY="225.0" prefHeight="140.0" prefWidth="682.0" visible="false">
                            <children>
-                              <TableView layoutY="27.0" prefHeight="114.0" prefWidth="682.0">
+                              <TableView fx:id="fishLivedTable" layoutY="27.0" prefHeight="114.0" prefWidth="682.0">
                                 <columns>
-                                  <TableColumn prefWidth="75.0" text="Идентификатор рыбы" visible="false" />
-                                  <TableColumn prefWidth="351.0" text="Название рыбы" />
-                                    <TableColumn prefWidth="329.0" text="Количество рыбы&#10;в озере" />
+                                  <TableColumn fx:id="idFishLink" prefWidth="75.0" text="Идентификатор рыбы" visible="false" />
+                                  <TableColumn fx:id="nameFishLink" prefWidth="351.0" text="Название рыбы" />
+                                    <TableColumn fx:id="countFishiLake" prefWidth="329.0" text="Количество рыбы&#10;в озере" />
                                 </columns>
                                  <columnResizePolicy>
                                     <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                  </columnResizePolicy>
                               </TableView>
-                              <Button fx:id="deleteLakeLinkFishButton" layoutX="41.0" layoutY="1.0" mnemonicParsing="false" text="delete" />
+                              <Button fx:id="deleteLakeLinkFishButton" layoutX="76.0" layoutY="1.0" mnemonicParsing="false" text="delete" />
                               <Button fx:id="addLakeLinkFishButton" layoutX="4.0" layoutY="1.0" mnemonicParsing="false" text="add" />
+                              <Button fx:id="editLakeLinkFishButton" layoutX="40.0" layoutY="1.0" mnemonicParsing="false" onAction="#editLakeAction" text="edit" />
                            </children>
                         </Pane>
+                        <ToggleButton fx:id="openMasterDetailLakeGridButton" layoutX="123.0" mnemonicParsing="false" text="MDGrid" />
                             </children>
                         </AnchorPane>
                     </content>

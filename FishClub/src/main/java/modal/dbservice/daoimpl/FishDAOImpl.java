@@ -15,7 +15,6 @@ import java.util.List;
  * Created by Алексей on 15.06.2016.
  */
 public class FishDAOImpl extends GeneralDAO implements FishDAO {
-    private SessionFactory sessionFactory;
 
     public FishDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory);

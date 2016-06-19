@@ -2,6 +2,8 @@ package modal.dbservice;
 
 import modal.dbservice.dao.*;
 import modal.dbservice.daoimpl.*;
+import modal.dbservice.daoimpl.joindao.LivedDAO;
+import modal.dbservice.daoimpl.joindao.PeckDAO;
 import org.hibernate.SessionFactory;
 
 public class DAOFactory {
@@ -11,6 +13,8 @@ public class DAOFactory {
     private static LureDAO lureDAO = null;
     private static FishDAO fishDAO = null;
     private static DAOFactory instance = null;
+    private static LivedDAO livedDAO = null;
+    private static PeckDAO peckDAO = null;
     private static SessionFactory sessionFactory = null;
 
     public static synchronized DAOFactory getInstance(SessionFactory sessionFactory) {
@@ -57,5 +61,19 @@ public class DAOFactory {
             fishDAO = new FishDAOImpl(sessionFactory);
         }
         return fishDAO;
+    }
+
+    public LivedDAO getLivedDAO() {
+        if (livedDAO == null) {
+            livedDAO = new LivedDAO(sessionFactory);
+        }
+        return livedDAO;
+    }
+
+    public PeckDAO getPeckDAO() {
+        if (peckDAO == null) {
+            peckDAO = new PeckDAO(sessionFactory);
+        }
+        return peckDAO;
     }
 }

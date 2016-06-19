@@ -15,7 +15,6 @@ import java.util.List;
  * Created by Алексей on 15.06.2016.
  */
 public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
-    private SessionFactory sessionFactory;
 
     public LakeDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory);

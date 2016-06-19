@@ -1,4 +1,6 @@
-package modal.dbservice;
+// так как это был пробный образец, не используемый ныне
+// я комментирую его, оставив лишь на всякий случай
+/*package modal.dbservice;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -44,5 +46,5 @@ public class DBWorker {
     public void sessionClose() {
         this.session.close();
     }
-}
+}*/
 

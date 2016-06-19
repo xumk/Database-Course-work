@@ -15,7 +15,6 @@ import java.util.List;
  * Created by Алексей on 15.06.2016.
  */
 public class LureDAOImpl extends GeneralDAO implements LureDAO {
-    private SessionFactory sessionFactory;
 
     public LureDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
