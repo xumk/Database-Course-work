@@ -40,7 +40,6 @@ public class UserLogicController {
         if (instance == null) {
             instance = new UserLogicController();
         }
-
         return instance;
     }
 

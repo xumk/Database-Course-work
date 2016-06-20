@@ -40,11 +40,6 @@
             <artifactId>poi-ooxml</artifactId>
             <version>3.12</version>
         </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>jcl-over-slf4j</artifactId>
-            <version>1.7.18</version>
-        </dependency>
     </dependencies>
 
 

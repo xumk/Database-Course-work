@@ -9,15 +9,20 @@ import modal.dbservice.DBService;
 import view.controller.SingUpController;
 
 import java.io.IOException;
+import java.util.logging.LogManager;
 
 /**
  * Created by Алексей on 13.06.2016.
  */
 public class RunApplication extends Application {
-    public RunApplication() {
-    }
 
     public static void main(String[] args) {
+        try {
+            LogManager.getLogManager().readConfiguration(
+                    RunApplication.class.getResourceAsStream("properties/logging.properties"));
+        } catch (IOException e) {
+            System.err.println("Could not setup logger configuration: " + e.toString());
+        }
         DBService service = DBService.instance();
         UserLogicController.service = service;
         UserLogicController.factory = DAOFactory.getInstance(service.getSessionFactory());

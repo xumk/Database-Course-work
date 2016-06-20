@@ -1,15 +1,7 @@
 package modal.dbservice;
 
-import modal.entity.Fish;
-import modal.entity.Fisher;
-import modal.entity.Lake;
-import modal.entity.Lure;
-import modal.entity.User;
-import modal.entity.joinentity.Availability;
-import modal.entity.joinentity.Distance;
-import modal.entity.joinentity.Lived;
-import modal.entity.joinentity.Peck;
-import modal.entity.joinentity.Prefers;
+import modal.entity.*;
+import modal.entity.joinentity.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
