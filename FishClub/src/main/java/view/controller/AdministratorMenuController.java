@@ -1,6 +1,5 @@
 package view.controller;
 
-import controllers.ConvertionHelper;
 import controllers.UserLogicController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
@@ -15,17 +14,17 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import modal.dbservice.dao.*;
-import modal.entity.*;
-import modal.entity.agregation.Gender;
+import modal.entity.Fish;
+import modal.entity.Lake;
+import modal.entity.Lure;
+import modal.entity.User;
 import modal.helpmodal.LivedFishLake;
-import view.AlertMessage;
 import view.controller.editcontroller.FishEditController;
 import view.controller.editcontroller.LakeEditController;
 import view.controller.editcontroller.LureEditController;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.Date;
 import java.util.ResourceBundle;
 
 import static javafx.collections.FXCollections.observableArrayList;
@@ -108,18 +107,9 @@ public class AdministratorMenuController implements Initializable {
     private Lake currentLake;
 
     private void fillInformationOnUserData(User user) {
-        Fisher fisher = user.getFisherman();
-        this.lastName.setText(fisher.getLastName());
-        this.userName.setText(user.getLogin());
-        this.firstName.setText(fisher.getName());
-        this.birthDate.setValue(ConvertionHelper.convertDataToLocalDate(fisher.getBirthDay()));
-        this.middleName.setText(fisher.getMiddleName());
-        this.password.setText(user.getPassword());
-        if (fisher.getGender() == Gender.MAN) {
-            genderComboBox.setValue("Мужской");
-        } else {
-            genderComboBox.setValue("Женский");
-        }
+        controller.fillInformUser(user, firstName, middleName, lastName,
+                userName, password, birthDate, genderComboBox);
+
     }
 
     public void exitProgramm() {
@@ -130,55 +120,14 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void editAction() {
-        this.lastName.setEditable(true);
-        this.userName.setEditable(true);
-        this.firstName.setEditable(true);
-        this.birthDate.setDisable(false);
-        this.middleName.setEditable(true);
-        this.password.setEditable(true);
-        this.genderComboBox.setDisable(false);
+        controller.edit(userName, password, firstName, middleName,
+                lastName, birthDate, genderComboBox);
     }
 
     public void saveAction() {
-        if (lastName.isEditable()) {
-            Fisher fisher = user.getFisherman();
-            Date birthDate = ConvertionHelper.convertLocalDateToDate(this.birthDate.getValue());
-            Gender gender = genderComboBox.getValue().equals("Мужской") ? Gender.MAN : Gender.WOMAN;
-            if (!user.getLogin().equals(userName.getText())
-                    || !user.getPassword().equals(password.getText())
-                    || !fisher.getName().equals(firstName.getText())
-                    || !fisher.getMiddleName().equals(middleName.getText())
-                    || !fisher.getLastName().equals(lastName.getText())
-                    || !fisher.getBirthDay().equals(birthDate)
-                    || !fisher.getGender().equals(gender)) {
-                user.setLogin(userName.getText());
-                user.setPassword(password.getText());
-                fisher.setName(firstName.getText());
-                fisher.setMiddleName(middleName.getText());
-                fisher.setLastName(lastName.getText());
-                fisher.setBirthDay(birthDate);
-                fisher.setGender(gender);
-
-                fisherDAO.updateFisher(fisher);
-                user.setFisherman(fisher);
-                userDAO.updateUser(user);
-
-                this.lastName.setEditable(false);
-                this.userName.setEditable(false);
-                this.firstName.setEditable(false);
-                this.birthDate.setDisable(true);
-                this.middleName.setEditable(false);
-                this.password.setEditable(false);
-                this.genderComboBox.setDisable(true);
-            } else {
-                new AlertMessage(
-                        "Системное сообщение",
-                        "Измененений не обнаружено",
-                        null,
-                        Alert.AlertType.INFORMATION
-                );
-            }
-        }
+        controller.updateInforUser(user, userName, password,
+                firstName, middleName,
+                lastName, this.birthDate, genderComboBox);
     }
 
     @Override

@@ -5,17 +5,17 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modal.dbservice.DAOFactory;
 import modal.dbservice.DBService;
 import modal.dbservice.daoimpl.joindao.LivedDAO;
-import modal.entity.Fish;
-import modal.entity.Lake;
-import modal.entity.Lure;
-import modal.entity.User;
+import modal.entity.*;
+import modal.entity.agregation.Gender;
 import modal.entity.joinentity.Lived;
 import modal.helpmodal.LivedFishLake;
+import view.AlertMessage;
 import view.controller.AdministratorMenuController;
 import view.controller.UserMenuController;
 import view.controller.editcontroller.FishEditController;
@@ -24,6 +24,7 @@ import view.controller.editcontroller.LureEditController;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class UserLogicController {
@@ -105,7 +106,7 @@ public class UserLogicController {
     public ObservableList<LivedFishLake> createLinkFish(List<Fish> fishs, Lake currentLake) {
         List<LivedFishLake> livedFishLakes = new ArrayList<>();
         LivedDAO dao = factory.getLivedDAO();
-        for (Fish fish: fishs) {
+        for (Fish fish : fishs) {
             LivedFishLake link = new LivedFishLake();
             link.setNameFish(fish.getName());
             link.setIdFish(fish.getId());
@@ -118,5 +119,81 @@ public class UserLogicController {
         }
         ObservableList<LivedFishLake> result = FXCollections.observableArrayList(livedFishLakes);
         return result;
+    }
+
+    public void edit(TextField userName, PasswordField password,
+                     TextField firstName, TextField middleName,
+                     TextField lastName, DatePicker birthDate,
+                     ComboBox genderComboBox) {
+        lastName.setEditable(true);
+        userName.setEditable(true);
+        firstName.setEditable(true);
+        birthDate.setDisable(false);
+        middleName.setEditable(true);
+        password.setEditable(true);
+        genderComboBox.setDisable(false);
+    }
+
+    public void fillInformUser(User user, TextField firstName,
+                               TextField middleName, TextField lastName,
+                               TextField userName, PasswordField password,
+                               DatePicker birthDate, ComboBox genderComboBox) {
+        Fisher fisher = user.getFisherman();
+        lastName.setText(fisher.getLastName());
+        userName.setText(user.getLogin());
+        firstName.setText(fisher.getName());
+        birthDate.setValue(ConvertionHelper.convertDataToLocalDate(fisher.getBirthDay()));
+        middleName.setText(fisher.getMiddleName());
+        password.setText(user.getPassword());
+        if (fisher.getGender() == Gender.MAN) {
+            genderComboBox.setValue("Мужской");
+        } else {
+            genderComboBox.setValue("Женский");
+        }
+    }
+
+    public void updateInforUser(User user, TextField userName,
+                                PasswordField password, TextField firstName,
+                                TextField middleName, TextField lastName,
+                                DatePicker birthDate, ComboBox genderComboBox) {
+        if (lastName.isEditable()) {
+            Fisher fisher = user.getFisherman();
+            Date birthDateConvert = ConvertionHelper.convertLocalDateToDate(birthDate.getValue());
+            Gender gender = genderComboBox.getValue().equals("Мужской") ? Gender.MAN : Gender.WOMAN;
+            if (!user.getLogin().equals(userName.getText())
+                    || !user.getPassword().equals(password.getText())
+                    || !fisher.getName().equals(firstName.getText())
+                    || !fisher.getMiddleName().equals(middleName.getText())
+                    || !fisher.getLastName().equals(lastName.getText())
+                    || !fisher.getBirthDay().equals(birthDateConvert)
+                    || !fisher.getGender().equals(gender)) {
+                user.setLogin(userName.getText());
+                user.setPassword(password.getText());
+                fisher.setName(firstName.getText());
+                fisher.setMiddleName(middleName.getText());
+                fisher.setLastName(lastName.getText());
+                fisher.setBirthDay(birthDateConvert);
+                fisher.setGender(gender);
+
+                factory.getFisherDAO().updateFisher(fisher);
+                user.setFisherman(fisher);
+                factory.getUserDAO().updateUser(user);
+
+                lastName.setEditable(false);
+                userName.setEditable(false);
+                firstName.setEditable(false);
+                birthDate.setDisable(true);
+                middleName.setEditable(false);
+                password.setEditable(false);
+                genderComboBox.setDisable(true);
+            } else {
+                new AlertMessage(
+                        "Системное сообщение",
+                        "Измененений не обнаружено",
+                        null,
+                        Alert.AlertType.INFORMATION
+                );
+            }
+        }
     }
 }
