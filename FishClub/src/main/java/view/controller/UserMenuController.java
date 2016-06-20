@@ -3,13 +3,19 @@ package view.controller;
 import controllers.UserLogicController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.Event;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import modal.entity.Fish;
+import modal.entity.Lake;
+import modal.entity.Lure;
 import modal.entity.User;
 
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -51,6 +57,9 @@ public class UserMenuController implements Initializable {
 
     private ObservableList<String> genders = FXCollections.observableArrayList("Мужской", "Женский");
     private UserLogicController controller;
+    private ObservableList lureData;
+    private ObservableList fishData;
+    private ObservableList lakeData;
 
     public UserMenuController() {
     }
@@ -61,6 +70,9 @@ public class UserMenuController implements Initializable {
         stage.setOnCloseRequest(we ->
                 UserLogicController.service.closeSessionFactory()
         );
+        initTableFishsForUser();
+        initTableLureForUser();
+        initTableLakeForUser();
         this.fillInformationOnUserData(user);
         this.logOut.setOnAction((event) -> {
             Stage stage = new Stage();
@@ -93,5 +105,33 @@ public class UserMenuController implements Initializable {
         controller.updateInforUser(user, userName, password,
                 firstName, middleName,
                 lastName, this.birthDate, genderComboBox);
+    }
+
+    private void initTableLureForUser() {
+        //Выбираем по таблице "Наличие"
+        List<Lure> lures =  user.getFisherman().getLures();
+        baitName.setCellValueFactory(new PropertyValueFactory<>("nameLure"));
+        baitCount.setCellValueFactory(new PropertyValueFactory<>("countLure"));
+        lureData = controller.createLinkAvailability(lures, user.getFisherman());
+        tableBait.setItems(lureData);
+        System.out.println(lures);
+    }
+
+    private void initTableFishsForUser() {
+        //Рыба
+        List<Fish> fishs = user.getFisherman().getFishs();
+        fishName.setCellValueFactory(new PropertyValueFactory<>("name"));
+        fishData = FXCollections.observableArrayList(fishs);
+        tableFish.setItems(fishData);
+    }
+
+    private void initTableLakeForUser() {
+        //Выбираем по таблице "Расстояние"
+        List<Lake> lakes =  user.getFisherman().getLakes();
+        lakeName.setCellValueFactory(new PropertyValueFactory<>("lakeName"));
+        lakeDistance.setCellValueFactory(new PropertyValueFactory<>("lakeDistance"));
+        lakeData = controller.createLinkDistance(lakes, user.getFisherman());
+        lakeTable.setItems(lakeData);
+        System.out.println(lakes);
     }
 }

@@ -10,10 +10,15 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modal.dbservice.DAOFactory;
 import modal.dbservice.DBService;
+import modal.dbservice.daoimpl.joindao.AvailabilityDAO;
+import modal.dbservice.daoimpl.joindao.DistanceDAO;
 import modal.dbservice.daoimpl.joindao.LivedDAO;
 import modal.entity.*;
 import modal.entity.agregation.Gender;
+import modal.entity.joinentity.Distance;
 import modal.entity.joinentity.Lived;
+import modal.helpmodal.AvailabilityFisherLure;
+import modal.helpmodal.DistanceLakeFisher;
 import modal.helpmodal.LivedFishLake;
 import view.AlertMessage;
 import view.controller.AdministratorMenuController;
@@ -213,5 +218,51 @@ public class UserLogicController {
                 );
             }
         }
+    }
+
+    /*public ObservableList<LivedFishLake> createLinkFish(List<Fish> fishs, Lake currentLake) {
+        List<LivedFishLake> livedFishLakes = new ArrayList<>();
+        LivedDAO dao = factory.getLivedDAO();
+        for (Fish fish: fishs) {
+            LivedFishLake link = new LivedFishLake();
+            link.setNameFish(fish.getName());
+            link.setIdFish(fish.getId());
+            Lived lived = dao.getLivedByFishAndLakeId(
+                    fish.getId(),
+                    currentLake.getId()
+            );
+            link.setCountFishLived(lived.getCountFish());
+            livedFishLakes.add(link);
+        }
+        ObservableList<LivedFishLake> result = FXCollections.observableArrayList(livedFishLakes);
+        return result;
+    }
+*/
+    public ObservableList<AvailabilityFisherLure> createLinkAvailability(List<Lure> lure, Fisher fisher) {
+        List<AvailabilityFisherLure> availabilityFishLakes = new ArrayList<>();
+        AvailabilityDAO dao = factory.getAvailabilityDAO();
+        for (Lure lures: lure) {
+            AvailabilityFisherLure link = new AvailabilityFisherLure();
+            link.setNameLure(lures.getName());
+            link.setCountLure(lures.getCountHooks());
+            dao.getAvailabilityByLureAndFisherId(fisher.getId(),lures.getId());
+            availabilityFishLakes.add(link);
+        }
+        ObservableList<AvailabilityFisherLure> result = FXCollections.observableArrayList(availabilityFishLakes);
+        return result;
+    }
+
+    public ObservableList<DistanceLakeFisher> createLinkDistance(List<Lake> lakes, Fisher fisher) {
+        List<DistanceLakeFisher> distanceLakeFish = new ArrayList<>();
+        DistanceDAO dao = factory.getDistanceDAO();
+        for (Lake lake: lakes) {
+            DistanceLakeFisher link = new DistanceLakeFisher();
+            link.setLakeName(lake.getName());
+            Distance distance = dao.getDistanceByLakeAndFisherId(fisher.getId(),lake.getId());
+            link.setLakeDistance(distance.getDistance());
+            distanceLakeFish.add(link);
+        }
+        ObservableList<DistanceLakeFisher> result = FXCollections.observableArrayList(distanceLakeFish);
+        return result;
     }
 }

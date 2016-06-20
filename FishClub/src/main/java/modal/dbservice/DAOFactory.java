@@ -2,6 +2,8 @@ package modal.dbservice;
 
 import modal.dbservice.dao.*;
 import modal.dbservice.daoimpl.*;
+import modal.dbservice.daoimpl.joindao.AvailabilityDAO;
+import modal.dbservice.daoimpl.joindao.DistanceDAO;
 import modal.dbservice.daoimpl.joindao.LivedDAO;
 import modal.dbservice.daoimpl.joindao.PeckDAO;
 import org.hibernate.SessionFactory;
@@ -15,6 +17,8 @@ public class DAOFactory {
     private static DAOFactory instance = null;
     private static LivedDAO livedDAO = null;
     private static PeckDAO peckDAO = null;
+    private static AvailabilityDAO availabilityDAO = null;
+    private static DistanceDAO distanceDAO = null;
     private static SessionFactory sessionFactory = null;
 
     public static synchronized DAOFactory getInstance(SessionFactory sessionFactory) {
@@ -76,4 +80,19 @@ public class DAOFactory {
         }
         return peckDAO;
     }
+
+    public AvailabilityDAO getAvailabilityDAO() {
+        if (availabilityDAO == null) {
+            availabilityDAO = new AvailabilityDAO(sessionFactory);
+        }
+        return availabilityDAO;
+    }
+
+    public DistanceDAO getDistanceDAO() {
+        if (distanceDAO == null) {
+            distanceDAO = new DistanceDAO(sessionFactory);
+        }
+        return distanceDAO;
+    }
+
 }
