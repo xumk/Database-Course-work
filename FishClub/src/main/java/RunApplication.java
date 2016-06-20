@@ -1,12 +1,8 @@
 import controllers.UserLogicController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import modal.dbservice.DAOFactory;
 import modal.dbservice.DBService;
-import view.controller.SingUpController;
 
 import java.io.IOException;
 import java.util.logging.LogManager;
@@ -15,6 +11,7 @@ import java.util.logging.LogManager;
  * Created by Алексей on 13.06.2016.
  */
 public class RunApplication extends Application {
+    private UserLogicController controller;
 
     public static void main(String[] args) {
         try {
@@ -24,22 +21,16 @@ public class RunApplication extends Application {
             System.err.println("Could not setup logger configuration: " + e.toString());
         }
         DBService service = DBService.instance();
+
         UserLogicController.service = service;
         UserLogicController.factory = DAOFactory.getInstance(service.getSessionFactory());
         launch(args);
     }
 
+    @Override
     public void start(Stage primaryStage) {
-        try {
-            SingUpController.stage = primaryStage;
-            Parent e = FXMLLoader.load(this.getClass().getResource("/fxml/SingUp.fxml"));
-            Scene scene = new Scene(e, 550.0D, 400.0D);
-            primaryStage.setTitle("Окно авторизации");
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException var4) {
-            var4.printStackTrace();
-        }
-
+        controller = UserLogicController.instance();
+        controller.openSingUpMenuScene(null, primaryStage,
+                "Окно авторизации", "/fxml/SingUp.fxml");
     }
 }

@@ -3,18 +3,12 @@ package view.controller;
 import controllers.UserLogicController;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import modal.dbservice.dao.FisherDAO;
-import modal.dbservice.dao.UserDAO;
 import modal.entity.User;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -56,8 +50,6 @@ public class UserMenuController implements Initializable {
     public TableColumn baitCount;
 
     private ObservableList<String> genders = FXCollections.observableArrayList("Мужской", "Женский");
-    private UserDAO userDAO;
-    private FisherDAO fisherDAO;
     private UserLogicController controller;
 
     public UserMenuController() {
@@ -65,27 +57,18 @@ public class UserMenuController implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         controller = UserLogicController.instance();
-        userDAO = UserLogicController.factory.getUserDAO();
-        fisherDAO = UserLogicController.factory.getFisherDAO();
         this.genderComboBox.setItems(this.genders);
         stage.setOnCloseRequest(we ->
                 UserLogicController.service.closeSessionFactory()
         );
         this.fillInformationOnUserData(user);
         this.logOut.setOnAction((event) -> {
-            Parent root = null;
-            try {
-                Stage stage = new Stage();
-                SingUpController.stage = stage;
-                root = FXMLLoader.load(this.getClass().getResource("/fxml/SingUp.fxml"));
-                Scene e = new Scene(root, 550.0D, 400.0D);
-                UserMenuController.stage.close();
-                stage.setTitle("Окно авторизации");
-                stage.setScene(e);
-                stage.show();
-            } catch (IOException var5) {
-                var5.printStackTrace();
-            }
+            Stage stage = new Stage();
+            SingUpController.stage = stage;
+            controller.openSingUpMenuScene(
+                    UserMenuController.stage, stage,
+                    "Окно авторизации", "/fxml/SingUp.fxml"
+            );
         });
     }
 

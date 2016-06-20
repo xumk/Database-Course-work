@@ -3,10 +3,7 @@ package view.controller;
 import controllers.UserLogicController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -23,7 +20,6 @@ import view.controller.editcontroller.FishEditController;
 import view.controller.editcontroller.LakeEditController;
 import view.controller.editcontroller.LureEditController;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -92,8 +88,6 @@ public class AdministratorMenuController implements Initializable {
     public TableView<Lure> linkTableLure;
 
     private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
-    private UserDAO userDAO;
-    private FisherDAO fisherDAO;
     private LakeDAO lakeDAO;
     private LureDAO lureDAO;
     private FishDAO fishDAO;
@@ -132,8 +126,6 @@ public class AdministratorMenuController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        userDAO = UserLogicController.factory.getUserDAO();
-        fisherDAO = UserLogicController.factory.getFisherDAO();
         lakeDAO = UserLogicController.factory.getLakeDAO();
         lureDAO = UserLogicController.factory.getLureDAO();
         fishDAO = UserLogicController.factory.getFishDAO();
@@ -178,19 +170,12 @@ public class AdministratorMenuController implements Initializable {
         initializeTableFish();
         this.fillInformationOnUserData(user);
         this.logOut.setOnAction((event) -> {
-            Parent root = null;
-            try {
-                Stage stage = new Stage();
-                SingUpController.stage = stage;
-                root = FXMLLoader.load(this.getClass().getResource("/fxml/SingUp.fxml"));
-                Scene e = new Scene(root, 550.0D, 400.0D);
-                AdministratorMenuController.stage.close();
-                stage.setTitle("Окно авторизации");
-                stage.setScene(e);
-                stage.show();
-            } catch (IOException var5) {
-                var5.printStackTrace();
-            }
+            Stage stage = new Stage();
+            SingUpController.stage = stage;
+            controller.openSingUpMenuScene(
+                    AdministratorMenuController.stage, stage,
+                    "Окно авторизации", "/fxml/SingUp.fxml"
+            );
         });
     }
 

@@ -17,6 +17,7 @@ import modal.entity.joinentity.Lived;
 import modal.helpmodal.LivedFishLake;
 import view.AlertMessage;
 import view.controller.AdministratorMenuController;
+import view.controller.SingUpController;
 import view.controller.UserMenuController;
 import view.controller.editcontroller.FishEditController;
 import view.controller.editcontroller.LakeEditController;
@@ -43,6 +44,24 @@ public class UserLogicController {
         return instance;
     }
 
+
+    public void openSingUpMenuScene(Stage parentStage, Stage stage, String title, String url) {
+        try {
+            if (stage != null) {
+                SingUpController.stage = stage;
+            }
+            Parent e = FXMLLoader.load(this.getClass().getResource(url));
+            Scene scene = new Scene(e, 550, 400);
+            stage.setTitle(title);
+            stage.setScene(scene);
+            if (parentStage != null) {
+                parentStage.close();
+            }
+            stage.show();
+        } catch (IOException var4) {
+            var4.printStackTrace();
+        }
+    }
 
     public void openUserMenuScene(Stage parentSatage, String title, String url, User user) {
         Stage stage = new Stage();
