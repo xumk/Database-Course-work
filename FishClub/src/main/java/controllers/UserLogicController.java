@@ -15,6 +15,7 @@ import modal.dbservice.daoimpl.joindao.DistanceDAO;
 import modal.dbservice.daoimpl.joindao.LivedDAO;
 import modal.entity.*;
 import modal.entity.agregation.Gender;
+import modal.entity.joinentity.Availability;
 import modal.entity.joinentity.Distance;
 import modal.entity.joinentity.Lived;
 import modal.helpmodal.AvailabilityFisherLure;
@@ -220,32 +221,14 @@ public class UserLogicController {
         }
     }
 
-    /*public ObservableList<LivedFishLake> createLinkFish(List<Fish> fishs, Lake currentLake) {
-        List<LivedFishLake> livedFishLakes = new ArrayList<>();
-        LivedDAO dao = factory.getLivedDAO();
-        for (Fish fish: fishs) {
-            LivedFishLake link = new LivedFishLake();
-            link.setNameFish(fish.getName());
-            link.setIdFish(fish.getId());
-            Lived lived = dao.getLivedByFishAndLakeId(
-                    fish.getId(),
-                    currentLake.getId()
-            );
-            link.setCountFishLived(lived.getCountFish());
-            livedFishLakes.add(link);
-        }
-        ObservableList<LivedFishLake> result = FXCollections.observableArrayList(livedFishLakes);
-        return result;
-    }
-*/
     public ObservableList<AvailabilityFisherLure> createLinkAvailability(List<Lure> lure, Fisher fisher) {
         List<AvailabilityFisherLure> availabilityFishLakes = new ArrayList<>();
         AvailabilityDAO dao = factory.getAvailabilityDAO();
         for (Lure lures: lure) {
             AvailabilityFisherLure link = new AvailabilityFisherLure();
             link.setNameLure(lures.getName());
-            link.setCountLure(lures.getCountHooks());
-            dao.getAvailabilityByLureAndFisherId(fisher.getId(),lures.getId());
+            Availability availability = dao.getAvailabilityByLureAndFisherId(fisher.getId(),lures.getId());
+            link.setCountLure(availability.getCountLure());
             availabilityFishLakes.add(link);
         }
         ObservableList<AvailabilityFisherLure> result = FXCollections.observableArrayList(availabilityFishLakes);
