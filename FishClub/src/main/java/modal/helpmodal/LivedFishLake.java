@@ -8,6 +8,16 @@ public class LivedFishLake {
     private Long idFish;
     private Integer countFishLived;
 
+    public LivedFishLake(Long idFish,  String name, Integer count) {
+        this.idFish = idFish;
+        countFishLived = count;
+        nameFish = name;
+    }
+
+    public LivedFishLake() {
+
+    }
+
     public String getNameFish() {
         return nameFish;
     }

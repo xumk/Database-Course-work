@@ -85,7 +85,7 @@ public class RegistryController implements Initializable {
             user.setLogin(userName.getText());
             user.setAdmin(false);
             fisherDAO.addFisher(fisher);
-            user.setFisherman(fisher);
+            user.setFisher(fisher);
             userDAO.addUser(user);
         } else {
             new AlertMessage(

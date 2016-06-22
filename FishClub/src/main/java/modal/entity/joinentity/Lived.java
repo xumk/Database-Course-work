@@ -1,51 +1,67 @@
 package modal.entity.joinentity;
 
+import modal.entity.Fish;
+import modal.entity.Lake;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Embeddable
-@Table(
-        name = "lived"
-)
+@Entity(name = "lived")
+@Table(name = "lived")
 public class Lived implements Serializable {
+
     @Id
-    @Column(
-            name = "fish_id"
-    )
-    private Long fishId;
-    @Id
-    @Column(
-            name = "lake_id"
-    )
-    private Long lakeId;
-    @Column(
-            name = "count_fish"
-    )
+    @GeneratedValue
+    @Column(name = "lived_id")
+    private long id;
+
+    @ManyToOne()
+    @JoinColumn(name = "fish_id")
+    private Fish fish;
+
+    @ManyToOne()
+    @JoinColumn(name = "lake_id")
+    private Lake lake;
+
+    @Column(name = "count_fish")
     private Integer countFish;
 
     public Lived() {
     }
 
-    public Lived(Long fishId, Long lakeId) {
-        this.fishId = fishId;
-        this.lakeId = lakeId;
+    public long getId() {
+        return id;
     }
 
-    public Long getFishId() {
-        return this.fishId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setFishId(Long fishId) {
-        this.fishId = fishId;
+    public Lived(Fish fish, Lake lake) {
+        this.fish = fish;
+        this.lake = lake;
     }
 
-    public Long getLakeId() {
-        return this.lakeId;
+    public Lived(Fish fish, Lake lake, Integer count) {
+        this.fish = fish;
+        this.lake = lake;
+        countFish = count;
     }
 
-    public void setLakeId(Long lakeId) {
-        this.lakeId = lakeId;
+    public Fish getFish() {
+        return this.fish;
+    }
+
+    public void setFish(Fish fish) {
+        this.fish = fish;
+    }
+
+    public Lake getLake() {
+        return this.lake;
+    }
+
+    public void setLake(Lake lake) {
+        this.lake = lake;
     }
 
     public Integer getCountFish() {
@@ -54,5 +70,12 @@ public class Lived implements Serializable {
 
     public void setCountFish(Integer countFish) {
         this.countFish = countFish;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Lived lived = (Lived) obj;
+        return fish.getId().equals(lived.getFish().getId())
+                && lake.getId().equals(lived.getLake().getId());
     }
 }

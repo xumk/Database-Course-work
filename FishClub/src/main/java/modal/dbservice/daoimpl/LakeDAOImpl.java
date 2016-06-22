@@ -37,7 +37,7 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
         Lake lake = null;
         try {
             session = this.sessionFactory.openSession();
-            lake = session.load(Lake.class, lakeId);
+            lake = session.get(Lake.class, lakeId);
             this.initializeFisherCollections(lake);
         } catch (Exception var8) {
             new AlertMessage(
@@ -83,6 +83,8 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
     }
     @Override
     public void deleteLake(Lake lake) {
+        lake.setFishs(null);
+        lake.setFishers(null);
         deleteObject(lake);
     }
 }

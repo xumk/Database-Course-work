@@ -37,7 +37,7 @@ public class FishDAOImpl extends GeneralDAO implements FishDAO {
         Fish fish = null;
         try {
             session = this.sessionFactory.openSession();
-            fish = session.load(Fish.class, fishId);
+            fish = session.get(Fish.class, fishId);
             this.initializeFisherCollections(fish);
         } catch (Exception var8) {
             new AlertMessage(
@@ -86,6 +86,9 @@ public class FishDAOImpl extends GeneralDAO implements FishDAO {
 
     @Override
     public void deleteFish(Fish fish) {
+        fish.setLakes(null);
+        fish.setLures(null);
+        fish.setFishers(null);
         deleteObject(fish);
     }
 }

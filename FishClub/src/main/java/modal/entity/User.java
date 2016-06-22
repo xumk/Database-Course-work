@@ -3,38 +3,29 @@ package modal.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Table(
-        name = "users"
-)
+@Entity(name = "user")
+@Table(name = "users")
 public class User implements Serializable {
+
     private static final long serialVersionUID = -8706689714326132798L;
+
     @Id
-    @Column(
-            name = "id"
-    )
-    @GeneratedValue(
-            strategy = GenerationType.IDENTITY
-    )
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(
-            name = "login",
-            unique = true
-    )
+
+    @Column(name = "login", unique = true)
     private String login;
-    @Column(
-            name = "password",
-            unique = false
-    )
+
+    @Column(name = "password", unique = false)
     private String password;
-    @OneToOne(
-            cascade = {CascadeType.ALL}
-    )
+
+    @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(
             name = "fk_fisherman_id",
             referencedColumnName = "id"
     )
-    private Fisher fisherman;
+    private Fisher fisher;
 
     @Column(name="isAdmin")
     private Boolean admin;
@@ -74,19 +65,19 @@ public class User implements Serializable {
         this.password = pass;
     }
 
-    public Fisher getFisherman() {
-        return this.fisherman;
+    public Fisher getFisher() {
+        return this.fisher;
     }
 
-    public void setFisherman(Fisher fisherman) {
-        this.fisherman = fisherman;
+    public void setFisher(Fisher fisher) {
+        this.fisher = fisher;
     }
 
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder("[");
         sb.append(login).append(", ");
-        sb.append(fisherman.toString()).append("]");
+        sb.append(fisher.toString()).append("]");
         return sb.toString();
     }
 }

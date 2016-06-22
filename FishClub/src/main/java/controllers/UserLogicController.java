@@ -1,8 +1,7 @@
 package controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -10,17 +9,8 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modal.dbservice.DAOFactory;
 import modal.dbservice.DBService;
-import modal.dbservice.daoimpl.joindao.AvailabilityDAO;
-import modal.dbservice.daoimpl.joindao.DistanceDAO;
-import modal.dbservice.daoimpl.joindao.LivedDAO;
 import modal.entity.*;
 import modal.entity.agregation.Gender;
-import modal.entity.joinentity.Availability;
-import modal.entity.joinentity.Distance;
-import modal.entity.joinentity.Lived;
-import modal.helpmodal.AvailabilityFisherLure;
-import modal.helpmodal.DistanceLakeFisher;
-import modal.helpmodal.LivedFishLake;
 import view.AlertMessage;
 import view.controller.AdministratorMenuController;
 import view.controller.SingUpController;
@@ -30,9 +20,8 @@ import view.controller.editcontroller.LakeEditController;
 import view.controller.editcontroller.LureEditController;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.net.URL;
 import java.util.Date;
-import java.util.List;
 
 public class UserLogicController {
     public static DBService service;
@@ -114,7 +103,7 @@ public class UserLogicController {
             Stage closeStage, Stage newStage, String title, String url,
             double width, double height) {
         try {
-            Parent root = FXMLLoader.load(this.getClass().getResource(url));
+            Parent root = constructFXMLLoader(url).load();
             Scene scene = new Scene(root, width, height);
             newStage.setTitle(title);
             newStage.setScene(scene);
@@ -127,23 +116,18 @@ public class UserLogicController {
         }
     }
 
-    public ObservableList<LivedFishLake> createLinkFish(List<Fish> fishs, Lake currentLake) {
-        List<LivedFishLake> livedFishLakes = new ArrayList<>();
-        LivedDAO dao = factory.getLivedDAO();
-        for (Fish fish : fishs) {
-            LivedFishLake link = new LivedFishLake();
-            link.setNameFish(fish.getName());
-            link.setIdFish(fish.getId());
-            Lived lived = dao.getLivedByFishAndLakeId(
-                    fish.getId(),
-                    currentLake.getId()
-            );
-            link.setCountFishLived(lived.getCountFish());
-            livedFishLakes.add(link);
-        }
-        ObservableList<LivedFishLake> result = FXCollections.observableArrayList(livedFishLakes);
-        return result;
+    private FXMLLoader constructFXMLLoader(String stageFXMLName) {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        fxmlLoader.setLocation(getURL(stageFXMLName));
+        fxmlLoader.setBuilderFactory(new JavaFXBuilderFactory());
+
+        return fxmlLoader;
     }
+
+    private URL getURL(String url) {
+        return UserLogicController.class.getResource(url);
+    }
+
 
     public void edit(TextField userName, PasswordField password,
                      TextField firstName, TextField middleName,
@@ -162,7 +146,7 @@ public class UserLogicController {
                                TextField middleName, TextField lastName,
                                TextField userName, PasswordField password,
                                DatePicker birthDate, ComboBox genderComboBox) {
-        Fisher fisher = user.getFisherman();
+        Fisher fisher = user.getFisher();
         lastName.setText(fisher.getLastName());
         userName.setText(user.getLogin());
         firstName.setText(fisher.getName());
@@ -181,7 +165,7 @@ public class UserLogicController {
                                 TextField middleName, TextField lastName,
                                 DatePicker birthDate, ComboBox genderComboBox) {
         if (lastName.isEditable()) {
-            Fisher fisher = user.getFisherman();
+            Fisher fisher = user.getFisher();
             Date birthDateConvert = ConvertionHelper.convertLocalDateToDate(birthDate.getValue());
             Gender gender = genderComboBox.getValue().equals("Мужской") ? Gender.MAN : Gender.WOMAN;
             if (!user.getLogin().equals(userName.getText())
@@ -200,7 +184,7 @@ public class UserLogicController {
                 fisher.setGender(gender);
 
                 factory.getFisherDAO().updateFisher(fisher);
-                user.setFisherman(fisher);
+                user.setFisher(fisher);
                 factory.getUserDAO().updateUser(user);
 
                 lastName.setEditable(false);
@@ -219,33 +203,5 @@ public class UserLogicController {
                 );
             }
         }
-    }
-
-    public ObservableList<AvailabilityFisherLure> createLinkAvailability(List<Lure> lure, Fisher fisher) {
-        List<AvailabilityFisherLure> availabilityFishLakes = new ArrayList<>();
-        AvailabilityDAO dao = factory.getAvailabilityDAO();
-        for (Lure lures: lure) {
-            AvailabilityFisherLure link = new AvailabilityFisherLure();
-            link.setNameLure(lures.getName());
-            Availability availability = dao.getAvailabilityByLureAndFisherId(fisher.getId(),lures.getId());
-            link.setCountLure(availability.getCountLure());
-            availabilityFishLakes.add(link);
-        }
-        ObservableList<AvailabilityFisherLure> result = FXCollections.observableArrayList(availabilityFishLakes);
-        return result;
-    }
-
-    public ObservableList<DistanceLakeFisher> createLinkDistance(List<Lake> lakes, Fisher fisher) {
-        List<DistanceLakeFisher> distanceLakeFish = new ArrayList<>();
-        DistanceDAO dao = factory.getDistanceDAO();
-        for (Lake lake: lakes) {
-            DistanceLakeFisher link = new DistanceLakeFisher();
-            link.setLakeName(lake.getName());
-            Distance distance = dao.getDistanceByLakeAndFisherId(fisher.getId(),lake.getId());
-            link.setLakeDistance(distance.getDistance());
-            distanceLakeFish.add(link);
-        }
-        ObservableList<DistanceLakeFisher> result = FXCollections.observableArrayList(distanceLakeFish);
-        return result;
     }
 }

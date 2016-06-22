@@ -1,88 +1,49 @@
 package modal.entity;
 
 import modal.entity.agregation.Gender;
+import modal.entity.joinentity.Availability;
+import modal.entity.joinentity.Distance;
+import modal.entity.joinentity.Prefers;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Entity(
-        name = "fisher"
-)
-@Table(
-        name = "fisher"
-)
+@Entity(name = "fisher")
+@Table(name = "fishers")
 public class Fisher {
+
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.AUTO
-    )
-    @Column(
-            name = "id"
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
-    @Column(
-            name = "first_name"
-    )
+
+    @Column(name = "first_name")
     private String name;
-    @Column(
-            name = "last_name"
-    )
+
+    @Column(name = "last_name")
     private String lastName;
-    @Column(
-            name = "middle_name"
-    )
+
+    @Column(name = "middle_name")
     private String middleName;
-    @Column(
-            name = "gender"
-    )
+
+    @Column(name = "gender")
     @Enumerated(EnumType.ORDINAL)
     private Gender gender;
+
     @Temporal(TemporalType.DATE)
-    @Column(
-            name = "birthday"
-    )
+    @Column(name = "birthday")
     private Date birthDay;
-    @ManyToMany(
-            cascade = {CascadeType.ALL}
-    )
-    @JoinTable(
-            name = "distance",
-            joinColumns = {@JoinColumn(
-                    name = "fisher_id"
-            )},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "lake_id"
-            )}
-    )
-    private List<Lake> lakes = new ArrayList();
-    @ManyToMany(
-            cascade = {CascadeType.ALL}
-    )
-    @JoinTable(
-            name = "availability",
-            joinColumns = {@JoinColumn(
-                    name = "fisher_id"
-            )},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "lure_id"
-            )}
-    )
-    private List<Lure> lures = new ArrayList();
-    @ManyToMany(
-            cascade = {CascadeType.ALL}
-    )
-    @JoinTable(
-            name = "prefers",
-            joinColumns = {@JoinColumn(
-                    name = "fisher_id"
-            )},
-            inverseJoinColumns = {@JoinColumn(
-                    name = "fish_id"
-            )}
-    )
-    private List<Fish> fishs = new ArrayList();
+
+    @OneToMany(mappedBy = "fisher", cascade = {CascadeType.ALL})
+    private List<Distance> lakes = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fisher", cascade = {CascadeType.ALL})
+    private List<Availability> lures = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fisher", cascade = {CascadeType.ALL})
+    private List<Prefers> fishs = new ArrayList<>();
 
     public Fisher() {
     }
@@ -115,11 +76,11 @@ public class Fisher {
         return this.middleName;
     }
 
-    public List<Fish> getFishs() {
+    public List<Prefers> getFishs() {
         return this.fishs;
     }
 
-    public void setFishs(List<Fish> fishs) {
+    public void setFishs(List<Prefers> fishs) {
         this.fishs = fishs;
     }
 
@@ -143,24 +104,20 @@ public class Fisher {
         this.birthDay = date;
     }
 
-    public List<Lake> getLakes() {
+    public List<Distance> getLakes() {
         return this.lakes;
     }
 
-    public void setLakes(List<Lake> lakes) {
+    public void setLakes(List<Distance> lakes) {
         this.lakes = lakes;
     }
 
-    public List<Lure> getLures() {
+    public List<Availability> getLures() {
         return this.lures;
     }
 
-    public void setLures(List<Lure> lures) {
+    public void setLures(List<Availability> lures) {
         this.lures = lures;
-    }
-
-    public void addLake(Lake lake) {
-        this.lakes.add(lake);
     }
 
     @Override

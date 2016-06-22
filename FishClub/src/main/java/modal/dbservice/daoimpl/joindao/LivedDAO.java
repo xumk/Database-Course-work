@@ -9,6 +9,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import view.AlertMessage;
 
+import java.util.List;
+
 /**
  * Created by Алексей on 20.06.2016.
  */
@@ -41,5 +43,9 @@ public class LivedDAO extends GeneralDAO {
 
         }
         return lived;
+    }
+
+    public void removeAll(List<Lived> fishs) {
+        fishs.stream().forEach(this::deleteObject);
     }
 }

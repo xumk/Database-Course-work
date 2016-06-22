@@ -1,69 +1,46 @@
 package modal.entity;
 
+import modal.entity.joinentity.Lived;
+import modal.entity.joinentity.Peck;
+import modal.entity.joinentity.Prefers;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(
-        name = "fish"
-)
-@Table(
-        name = "fish"
-)
+@Entity(name = "fish")
+@Table(name = "fishs")
 public class Fish {
+
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.AUTO
-    )
-    @Column(
-            name = "id"
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
 
-    @Column(
-            name = "name"
-    )
+    @Column(name = "name")
     private String name;
 
-    @Column(
-            name = "family"
-    )
+    @Column(name = "family")
     private String family;
 
-    @Column(
-            name = "min_weight"
-    )
+    @Column(name = "min_weight")
     private Double minWeight;
 
     @Column(name = "max_weight")
     private Double maxWeight;
 
 
-    @Column(
-            name = "depth_living"
-    )
+    @Column(name = "depth_living")
     private Double depthLiving;
-    @ManyToMany(
-            cascade = {CascadeType.ALL}
-    )
-    @JoinTable(
-            name = "peck",
-            joinColumns = {            @JoinColumn(
-                    name = "fish_id"
-            )},
-            inverseJoinColumns = {            @JoinColumn(
-                    name = "lure_id"
-            )}
-    )
-    private List<Lure> lures = new ArrayList();
-    @ManyToMany(
-            mappedBy = "fishs"
-    )
-    private List<Fisher> fishers = new ArrayList();
-    @ManyToMany(
-            mappedBy = "fishs"
-    )
-    private List<Lake> lakes = new ArrayList();
+
+    @OneToMany(mappedBy = "fish", cascade = CascadeType.ALL)
+    private List<Peck> lures = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fish", cascade = CascadeType.ALL)
+    private List<Prefers> fishers = new ArrayList<>();
+
+    @OneToMany(mappedBy = "fish", cascade = CascadeType.ALL)
+    private List<Lived> lakes = new ArrayList<>();
 
     public Fish() {
     }
@@ -100,27 +77,27 @@ public class Fish {
         this.depthLiving = depthLiving;
     }
 
-    public List<Lure> getLures() {
+    public List<Peck> getLures() {
         return this.lures;
     }
 
-    public List<Fisher> getFishers() {
+    public List<Prefers> getFishers() {
         return this.fishers;
     }
 
-    public void setFishers(List<Fisher> fishers) {
+    public void setFishers(List<Prefers> fishers) {
         this.fishers = fishers;
     }
 
-    public List<Lake> getLakes() {
+    public List<Lived> getLakes() {
         return this.lakes;
     }
 
-    public void setLakes(List<Lake> lakes) {
+    public void setLakes(List<Lived> lakes) {
         this.lakes = lakes;
     }
 
-    public void setLures(List<Lure> lures) {
+    public void setLures(List<Peck> lures) {
         this.lures = lures;
     }
 
@@ -138,5 +115,10 @@ public class Fish {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

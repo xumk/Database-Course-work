@@ -37,7 +37,7 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
         Fisher fisher = null;
         try {
             session = this.sessionFactory.openSession();
-            fisher = session.load(Fisher.class, id);
+            fisher = session.get(Fisher.class, id);
             this.initializeFisherCollections(fisher);
         } catch (Exception var8) {
             new AlertMessage(

@@ -36,7 +36,7 @@ public class LureDAOImpl extends GeneralDAO implements LureDAO {
         Lure lure = null;
         try {
             session = this.sessionFactory.openSession();
-            lure = session.load(Lure.class, lureId);
+            lure = session.get(Lure.class, lureId);
             this.initializeFisherCollections(lure);
         } catch (Exception var8) {
             new AlertMessage(
@@ -84,6 +84,8 @@ public class LureDAOImpl extends GeneralDAO implements LureDAO {
 
     @Override
     public void deleteLure(Lure lure) {
+        lure.setFishs(null);
+        lure.setFishers(null);
         deleteObject(lure);
     }
 }

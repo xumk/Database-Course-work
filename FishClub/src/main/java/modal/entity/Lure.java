@@ -1,54 +1,41 @@
 package modal.entity;
 
+import modal.entity.joinentity.Availability;
+import modal.entity.joinentity.Peck;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(
-        name = "lure"
-)
-@Table(
-        name = "lure"
-)
+@Entity(name = "lure")
+@Table(name = "lures")
 public class Lure {
+
     @Id
-    @GeneratedValue(
-            strategy = GenerationType.AUTO
-    )
-    @Column(
-            name = "id"
-    )
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;
-    @Column(
-            name = "name"
-    )
+
+    @Column(name = "name")
     private String name;
-    @Column(
-            name = "number_hooks"
-    )
+
+    @Column(name = "number_hooks")
     private Integer countHooks;
-    @Column(
-            name = "weight"
-    )
+
+    @Column(name = "weight")
     private Double weight;
-    @Column(
-            name = "diving_depth"
-    )
+
+    @Column(name = "diving_depth")
     private Double divingDepth;
 
-    @Column(
-            name = "is_imitation"
-    )
-    private Boolean isImitation;
+    @Column(name = "is_imitation")
+    private Boolean imitation;
 
-    @ManyToMany(
-            mappedBy = "lures"
-    )
-    private List<Fisher> fishers = new ArrayList();
-    @ManyToMany(
-            mappedBy = "lures"
-    )
-    private List<Fish> fishs = new ArrayList();
+    @OneToMany(mappedBy = "lure", cascade = CascadeType.ALL)
+    private List<Availability> fishers = new ArrayList();
+
+    @OneToMany(mappedBy = "lure", cascade = CascadeType.ALL)
+    private List<Peck> fishs = new ArrayList();
 
     public Lure() {
     }
@@ -78,11 +65,11 @@ public class Lure {
     }
 
     public Boolean isImitation() {
-        return this.isImitation;
+        return this.imitation;
     }
 
     public void setImitation(Boolean isImitation) {
-        this.isImitation = isImitation;
+        this.imitation = isImitation;
     }
 
     public Long getId() {
@@ -101,19 +88,24 @@ public class Lure {
         this.name = name;
     }
 
-    public List<Fisher> getFishers() {
+    public List<Availability> getFishers() {
         return this.fishers;
     }
 
-    public void setFishers(List<Fisher> fishers) {
+    public void setFishers(List<Availability> fishers) {
         this.fishers = fishers;
     }
 
-    public List<Fish> getFishs() {
+    public List<Peck> getFishs() {
         return this.fishs;
     }
 
-    public void setFishs(List<Fish> fishes) {
+    public void setFishs(List<Peck> fishes) {
         this.fishs = fishes;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }

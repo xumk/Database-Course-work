@@ -36,7 +36,7 @@ public class UserDAOImpl extends GeneralDAO implements UserDAO {
         User user = null;
         try {
             session = this.sessionFactory.openSession();
-            user = session.load(User.class, userId);
+            user = session.get(User.class, userId);
             this.initializeFisherCollections(user);
         } catch (Exception var8) {
             new AlertMessage(
@@ -81,9 +81,9 @@ public class UserDAOImpl extends GeneralDAO implements UserDAO {
     }
 
     private void initializeFisherCollections(User user) {
-        Hibernate.initialize(user.getFisherman().getFishs());
-        Hibernate.initialize(user.getFisherman().getLakes());
-        Hibernate.initialize(user.getFisherman().getLures());
+        Hibernate.initialize(user.getFisher().getFishs());
+        Hibernate.initialize(user.getFisher().getLakes());
+        Hibernate.initialize(user.getFisher().getLures());
     }
 
     @Override

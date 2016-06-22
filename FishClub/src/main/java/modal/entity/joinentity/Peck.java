@@ -1,46 +1,65 @@
 package modal.entity.joinentity;
 
+import modal.entity.Fish;
+import modal.entity.Lure;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Embeddable
-@Table(
-        name = "peck"
-)
+
+@Entity(name = "peck")
+@Table(name = "peck")
 public class Peck implements Serializable {
+
     @Id
-    @Column(
-            name = "fish_id"
-    )
-    private Long fishId;
-    @Id
-    @Column(
-            name = "lure_id"
-    )
-    private Long lureId;
+    @GeneratedValue
+    @Column(name = "peck_id")
+    private long id;
+
+    @ManyToOne()
+    @JoinColumn(name = "fish_id")
+    private Fish fish;
+
+    @ManyToOne()
+    @JoinColumn(name = "lure_id")
+    private Lure lure;
 
     public Peck() {
     }
 
-    public Peck(Long fishId, Long lureId) {
-        this.fishId = fishId;
-        this.lureId = lureId;
+    public Peck(Fish fishId, Lure lureId) {
+        this.fish = fishId;
+        this.lure = lureId;
     }
 
-    public Long getFishId() {
-        return this.fishId;
+    public Fish getFish() {
+        return this.fish;
     }
 
-    public void setFishId(Long fishId) {
-        this.fishId = fishId;
+    public void setFish(Fish fish) {
+        this.fish = fish;
     }
 
-    public Long getLureId() {
-        return this.lureId;
+    public Lure getLure() {
+        return this.lure;
     }
 
-    public void setLureId(Long lureId) {
-        this.lureId = lureId;
+    public void setLure(Lure lure) {
+        this.lure = lure;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Peck peck = (Peck) obj;
+        return fish.getId().equals(peck.getFish().getId())
+                && lure.getId().equals(peck.getLure().getId());
     }
 }

@@ -1,46 +1,64 @@
 package modal.entity.joinentity;
 
+import modal.entity.Fish;
+import modal.entity.Fisher;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
-@Entity
-@Embeddable
-@Table(
-        name = "Prefers"
-)
+@Entity(name = "prefers")
+@Table(name = "prefers")
 public class Prefers implements Serializable {
+
     @Id
-    @Column(
-            name = "fish_id"
-    )
-    private Long fishId;
-    @Id
-    @Column(
-            name = "fisher_id"
-    )
-    private Long fisherId;
+    @GeneratedValue
+    @Column(name = "prefers_id")
+    private long id;
+
+    @ManyToOne()
+    @JoinColumn(name = "fish_id")
+    private Fish fish;
+
+    @ManyToOne()
+    @JoinColumn(name = "fisher_id")
+    private Fisher fisher;
 
     public Prefers() {
     }
 
-    public Prefers(Long fishId, Long fisherId) {
-        this.fishId = fishId;
-        this.fisherId = fisherId;
+    public Prefers(Fish fish, Fisher fisher) {
+        this.fish = fish;
+        this.fisher = fisher;
     }
 
-    public Long getFisherId() {
-        return this.fisherId;
+    public Fisher getFisher() {
+        return this.fisher;
     }
 
-    public void setFisherId(Long fisherId) {
-        this.fisherId = fisherId;
+    public void setFisher(Fisher fisher) {
+        this.fisher = fisher;
     }
 
-    public Long getFishId() {
-        return this.fishId;
+    public Fish getFish() {
+        return this.fish;
     }
 
-    public void setFishId(Long fishId) {
-        this.fishId = fishId;
+    public void setFish(Fish fish) {
+        this.fish = fish;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        Prefers prefers = (Prefers) obj;
+        return fish.getId().equals(prefers.getFish().getId())
+                && fisher.getId().equals(prefers.getFisher().getId());
     }
 }

@@ -2,10 +2,7 @@ package modal.dbservice;
 
 import modal.dbservice.dao.*;
 import modal.dbservice.daoimpl.*;
-import modal.dbservice.daoimpl.joindao.AvailabilityDAO;
-import modal.dbservice.daoimpl.joindao.DistanceDAO;
-import modal.dbservice.daoimpl.joindao.LivedDAO;
-import modal.dbservice.daoimpl.joindao.PeckDAO;
+import modal.dbservice.daoimpl.joindao.*;
 import org.hibernate.SessionFactory;
 
 public class DAOFactory {
@@ -14,11 +11,14 @@ public class DAOFactory {
     private static LakeDAO lakeDAO = null;
     private static LureDAO lureDAO = null;
     private static FishDAO fishDAO = null;
+
     private static DAOFactory instance = null;
+
     private static LivedDAO livedDAO = null;
     private static PeckDAO peckDAO = null;
     private static AvailabilityDAO availabilityDAO = null;
     private static DistanceDAO distanceDAO = null;
+    private static PrefersDAO prefersDAO = null;
     private static SessionFactory sessionFactory = null;
 
     public static synchronized DAOFactory getInstance(SessionFactory sessionFactory) {
@@ -93,6 +93,13 @@ public class DAOFactory {
             distanceDAO = new DistanceDAO(sessionFactory);
         }
         return distanceDAO;
+    }
+
+    public PrefersDAO getPrefersDAO() {
+        if (prefersDAO == null) {
+            prefersDAO = new PrefersDAO(sessionFactory);
+        }
+        return prefersDAO;
     }
 
 }

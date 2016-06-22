@@ -3,19 +3,29 @@ package view.controller;
 import controllers.UserLogicController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
+import javafx.geometry.Pos;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.stage.WindowEvent;
-import modal.dbservice.dao.*;
+import modal.dbservice.dao.FishDAO;
+import modal.dbservice.dao.LakeDAO;
+import modal.dbservice.dao.LureDAO;
+import modal.dbservice.daoimpl.joindao.*;
 import modal.entity.Fish;
 import modal.entity.Lake;
 import modal.entity.Lure;
 import modal.entity.User;
-import modal.helpmodal.LivedFishLake;
+import modal.entity.joinentity.Lived;
+import modal.entity.joinentity.Peck;
 import view.controller.editcontroller.FishEditController;
 import view.controller.editcontroller.LakeEditController;
 import view.controller.editcontroller.LureEditController;
@@ -76,26 +86,29 @@ public class AdministratorMenuController implements Initializable {
     public Pane lakeLinkFishPane;
     public Button deleteLakeLinkFishButton;
     public Button addLakeLinkFishButton;
-    public TableColumn<Lure, Long> idLureLink;
     public TableColumn<Lure, String> nameLureLink;
     public ToggleButton openMasterDetailFishGridButton;
-    public TableView<LivedFishLake> fishLivedTable;
-    public TableColumn<LivedFishLake, Long> idFishLink;
-    public TableColumn<LivedFishLake, String> nameFishLink;
-    public TableColumn<LivedFishLake, Integer> countFishiLake;
+    public TableView<Lived> fishLivedTable;
+    public TableColumn<Lived, String> nameFishLink;
+    public TableColumn<Lived, Integer> countFishiLake;
     public Button editLakeLinkFishButton;
     public ToggleButton openMasterDetailLakeGridButton;
-    public TableView<Lure> linkTableLure;
+    public TableView<Peck> linkTableLure;
 
     private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
     private LakeDAO lakeDAO;
     private LureDAO lureDAO;
     private FishDAO fishDAO;
+    private LivedDAO livedDAO;
+    private PeckDAO peckDAO;
+    private PrefersDAO prefersDAO;
+    private AvailabilityDAO availabilityDAO;
+    private DistanceDAO distanceDAO;
     private ObservableList<Lake> lakeData;
     private ObservableList<Lure> lureData;
     private ObservableList<Fish> fishData;
-    private ObservableList<Lure> linkLureData;
-    private ObservableList<LivedFishLake> linkFishData;
+    private ObservableList<Peck> linkLureData;
+    private ObservableList<Lived> linkFishData;
     private UserLogicController controller;
     private Fish currentFish;
     private Lake currentLake;
@@ -129,6 +142,12 @@ public class AdministratorMenuController implements Initializable {
         lakeDAO = UserLogicController.factory.getLakeDAO();
         lureDAO = UserLogicController.factory.getLureDAO();
         fishDAO = UserLogicController.factory.getFishDAO();
+        livedDAO = UserLogicController.factory.getLivedDAO();
+        peckDAO = UserLogicController.factory.getPeckDAO();
+        distanceDAO = UserLogicController.factory.getDistanceDAO();
+        prefersDAO = UserLogicController.factory.getPrefersDAO();
+        availabilityDAO = UserLogicController.factory.getAvailabilityDAO();
+
         this.genderComboBox.setItems(this.genders);
         this.controller = UserLogicController.instance();
 
@@ -136,9 +155,9 @@ public class AdministratorMenuController implements Initializable {
             if (openMasterDetailFishGridButton.isSelected()
                     && tableFish.getSelectionModel().getSelectedItem() != null) {
                 currentFish = tableFish.getSelectionModel().getSelectedItem();
+                currentFish = fishDAO.getFishById(currentFish.getId());
                 linkLureData = observableArrayList(currentFish.getLures());
-                idLureLink.setCellValueFactory(new PropertyValueFactory<>("id"));
-                nameLureLink.setCellValueFactory(new PropertyValueFactory<>("name"));
+                nameLureLink.setCellValueFactory(new PropertyValueFactory<>("lure"));
                 linkTableLure.setItems(linkLureData);
                 fishLinkLurePane.setVisible(true);
             } else {
@@ -150,10 +169,11 @@ public class AdministratorMenuController implements Initializable {
             if (openMasterDetailLakeGridButton.isSelected()
                     && lakeTable.getSelectionModel().getSelectedItem() != null) {
                 currentLake = lakeTable.getSelectionModel().getSelectedItem();
-                linkFishData = controller.createLinkFish(currentLake.getFishs(), currentLake);
-                idFishLink.setCellValueFactory(new PropertyValueFactory<>("idFish"));
-                nameFishLink.setCellValueFactory(new PropertyValueFactory<>("nameFish"));
-                countFishiLake.setCellValueFactory(new PropertyValueFactory<>("countFishLived"));
+                currentLake = lakeDAO.getLakeById(currentLake.getId());
+                linkFishData = observableArrayList(currentLake.getFishs());
+                //controller.createLinkFish(currentLake.getFishs(), currentLake);
+                nameFishLink.setCellValueFactory(new PropertyValueFactory<>("fish"));
+                countFishiLake.setCellValueFactory(new PropertyValueFactory<>("countFish"));
                 fishLivedTable.setItems(linkFishData);
                 lakeLinkFishPane.setVisible(true);
             } else {
@@ -219,9 +239,12 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void deleteFishAction() {
-        Fish fish = tableFish.getSelectionModel().getSelectedItem();
+        Fish fish = fishDAO.getFishById(tableFish.getSelectionModel().getSelectedItem().getId());
         if (fish != null) {
-            fishData.remove(fish);
+            peckDAO.removeAll(fish.getLures());
+            livedDAO.removeAll(fish.getLakes());
+            prefersDAO.removeAll(fish.getFishers());
+            fishData.remove(tableFish.getSelectionModel().getSelectedItem());
             fishDAO.deleteFish(fish);
         }
     }
@@ -253,9 +276,11 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void deleteLakeAction() {
-        Lake lake = lakeTable.getSelectionModel().getSelectedItem();
+        Lake lake = lakeDAO.getLakeById(lakeTable.getSelectionModel().getSelectedItem().getId());
         if (lake != null) {
-            lakeData.remove(lake);
+            livedDAO.removeAll(lake.getFishs());
+            distanceDAO.removeAll(lake.getFishers());
+            lakeData.remove(lakeTable.getSelectionModel().getSelectedItem());
             lakeDAO.deleteLake(lake);
         }
     }
@@ -278,11 +303,166 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void deleteLureAction() {
-        Lure lure = tableBait.getSelectionModel().getSelectedItem();
+        Lure lure = lureDAO.getLureById(tableBait.getSelectionModel().getSelectedItem().getId());
         if (lure != null) {
-            lureData.remove(lure);
+            peckDAO.removeAll(lure.getFishs());
+            availabilityDAO.removeAll(lure.getFishers());
+            lureData.remove(tableBait.getSelectionModel().getSelectedItem());
             lureDAO.deleteLure(lure);
         }
     }
 
+    public void addLinkPeck() {
+        pane.setDisable(true);
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Окно добавления наживки");
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        HBox buttons = new HBox();
+        ComboBox<Lure> lureComboBox = new ComboBox<>();
+        lureComboBox.setItems(lureData);
+        buttons.setAlignment(Pos.CENTER);
+        Button buttonOk = new Button("Ok");
+        buttonOk.setDefaultButton(true);
+        buttonOk.setOnAction((ActionEvent evt) -> {
+            Lure lure = lureComboBox.getValue();
+            if (lure != null) {
+                Peck peck = new Peck(currentFish, lure);
+                if (!linkLureData.contains(peck)) {
+                    linkLureData.add(peck);
+                    peckDAO.addObject(peck);
+                    lure.getFishs().add(peck);
+                    currentFish.getLures().add(peck);
+                    fishDAO.updateFish(currentFish);
+                    lureDAO.updateLure(lure);
+                }
+            }
+            closeDialog(dialog);
+        });
+        Button buttonEx = new Button("Cancel");
+        buttonEx.setOnAction(evt -> {
+            closeDialog(dialog);
+        });
+        buttons.getChildren().addAll(buttonOk, buttonEx);
+        box.getChildren().addAll(new Label("Выберите наживку"), lureComboBox, buttons);
+        Scene scene = new Scene(box, 300, 100);
+        dialog.setScene(scene);
+        dialog.show();
+    }
+
+    public void addLinkLived() {
+        pane.setDisable(true);
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Окно добавления рыбы");
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        HBox buttons = new HBox();
+        ComboBox<Fish> fishComboBox = new ComboBox<>();
+        fishComboBox.setItems(fishData);
+        TextField countFish = new TextField();
+        buttons.setAlignment(Pos.CENTER);
+        Button buttonOk = new Button("Ok");
+        buttonOk.setDefaultButton(true);
+        buttonOk.setOnAction((ActionEvent evt) -> {
+            Fish fish = fishComboBox.getValue();
+            if (fish != null) {
+                int count = countFish.getText() != null
+                        && !countFish.getText().isEmpty() ?
+                        Integer.parseInt(countFish.getText())
+                        : 0;
+                Lived lived = new Lived(fish, currentLake, count);
+                if (!linkFishData.contains(lived)) {
+                    linkFishData.add(lived);
+                    livedDAO.addObject(lived);
+                    currentLake.getFishs().add(lived);
+                    fish.getLakes().add(lived);
+                    lakeDAO.updateLake(currentLake);
+                    fishDAO.updateFish(fish);
+                }
+            }
+            closeDialog(dialog);
+        });
+        Button buttonEx = new Button("Cancel");
+        buttonEx.setOnAction(evt -> {
+            closeDialog(dialog);
+        });
+        buttons.getChildren().addAll(buttonOk, buttonEx);
+        box.getChildren().addAll(
+                new Label("Выберите рыбу"), fishComboBox,
+                new Label("Популяция"), countFish, buttons
+        );
+        Scene scene = new Scene(box, 300, 150);
+        dialog.setScene(scene);
+        dialog.show();
+    }
+
+    public void deleteLinkPeck() {
+        Peck peck = linkTableLure.getSelectionModel().getSelectedItem();
+        if (peck != null) {
+            linkLureData.remove(peck);
+            currentFish.getLures().remove(peck);
+            fishDAO.updateFish(currentFish);
+        }
+    }
+
+    private void closeDialog(Stage dialog) {
+        dialog.fireEvent(new WindowEvent(
+                dialog,
+                WindowEvent.WINDOW_CLOSE_REQUEST
+        ));
+        pane.setDisable(false);
+    }
+
+    public void deleteLinkLived() {
+        Lived linkFish = fishLivedTable.getSelectionModel().getSelectedItem();
+        if (linkFish != null) {
+            linkFishData.remove(linkFish);
+            Fish fish = fishDAO.getFishById(linkFish.getFish().getId());
+            Lived lived = livedDAO.getLivedByFishAndLakeId(linkFish.getFish().getId(), currentLake.getId());
+            livedDAO.deleteObject(lived);
+            currentLake.getFishs().remove(fish);
+            lakeDAO.updateLake(currentLake);
+        }
+    }
+
+    public void editLinkLived() {
+        pane.setDisable(true);
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Окно редактирования рыбы");
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        HBox buttons = new HBox();
+        TextField countFish = new TextField();
+        countFish.setText(countFishiLake.getCellObservableValue(0).getValue().toString());
+        buttons.setAlignment(Pos.CENTER);
+        Button buttonOk = new Button("Ok");
+        buttonOk.setDefaultButton(true);
+        buttonOk.setOnAction((ActionEvent evt) -> {
+            Lived lived = fishLivedTable.getSelectionModel().getSelectedItem();
+            if (lived != null) {
+                int count = countFish.getText() != null
+                        && !countFish.getText().isEmpty() ?
+                        Integer.parseInt(countFish.getText())
+                        : 0;
+                lived.setCountFish(count);
+                linkFishData.set(linkFishData.indexOf(lived), lived);
+                livedDAO.updateObject(lived);
+            }
+            closeDialog(dialog);
+        });
+        Button buttonEx = new Button("Cancel");
+        buttonEx.setOnAction(evt -> {
+            closeDialog(dialog);
+        });
+        buttons.getChildren().addAll(buttonOk, buttonEx);
+        box.getChildren().addAll(
+                new Label("Популяция"), countFish, buttons
+        );
+        Scene scene = new Scene(box, 300, 100);
+        dialog.setScene(scene);
+        dialog.show();
+    }
 }
