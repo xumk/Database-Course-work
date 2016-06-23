@@ -30,6 +30,7 @@ import report.LureReport;
 import report.view.FishViewReport;
 import report.view.LakeAndFishViewReport;
 import report.view.LureViewReport;
+import view.listeners.NumericFormatListener;
 
 import java.net.URL;
 import java.util.List;
@@ -201,6 +202,9 @@ public class UserMenuController implements Initializable {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Окно добавления рыбы");
+        dialog.setOnCloseRequest(evt -> {
+            pane.setDisable(false);
+        });
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
@@ -241,12 +245,17 @@ public class UserMenuController implements Initializable {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Окно добавления наживки");
+        dialog.setOnCloseRequest(evt -> {
+            pane.setDisable(false);
+        });
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
         ComboBox<Lure> fishComboBox = new ComboBox<>();
         fishComboBox.setItems(allLure);
         TextField countLure = new TextField();
+        countLure.textProperty()
+                .addListener(new NumericFormatListener(countLure));
         buttons.setAlignment(Pos.CENTER);
         Button buttonOk = new Button("Ok");
         buttonOk.setDefaultButton(true);
@@ -287,12 +296,17 @@ public class UserMenuController implements Initializable {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Окно добавления озера");
+        dialog.setOnCloseRequest(evt -> {
+            pane.setDisable(false);
+        });
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
         ComboBox<Lake> lakeComboBox = new ComboBox<>();
         lakeComboBox.setItems(allLake);
         TextField distance = new TextField();
+        distance.textProperty()
+                .addListener(new NumericFormatListener(distance));
         buttons.setAlignment(Pos.CENTER);
         Button buttonOk = new Button("Ok");
         buttonOk.setDefaultButton(true);
@@ -333,11 +347,16 @@ public class UserMenuController implements Initializable {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Окно редактирования озера");
+        dialog.setOnCloseRequest(evt -> {
+            pane.setDisable(false);
+        });
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
         TextField distanceLake = new TextField();
         distanceLake.setText(lakeDistance.getCellObservableValue(0).getValue().toString());
+        distanceLake.textProperty()
+                .addListener(new NumericFormatListener(distanceLake));
         buttons.setAlignment(Pos.CENTER);
         Button buttonOk = new Button("Ok");
         buttonOk.setDefaultButton(true);
@@ -372,11 +391,17 @@ public class UserMenuController implements Initializable {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Окно редактирования наживки");
+        dialog.setOnCloseRequest(evt -> {
+            pane.setDisable(false);
+        });
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
         TextField countFish = new TextField();
+        countFish.textProperty()
+                .addListener(new NumericFormatListener(countFish));
         countFish.setText(baitCount.getCellObservableValue(0).getValue().toString());
+
         buttons.setAlignment(Pos.CENTER);
         Button buttonOk = new Button("Ok");
         buttonOk.setDefaultButton(true);
@@ -454,7 +479,8 @@ public class UserMenuController implements Initializable {
     }
 
     public void getInformLure() {
-        if (informLureButton.isSelected()) {
+        if (informLureButton.isSelected()
+                && tableBait.getSelectionModel().getSelectedItem() != null) {
             paneInformLure.setVisible(true);
             Availability availability = tableBait.getSelectionModel().getSelectedItem();
             countHook.setText(String.valueOf(availability.getLure().getCountHooks()));
@@ -470,7 +496,8 @@ public class UserMenuController implements Initializable {
     }
 
     public void getInformLake() {
-        if (informLakeButton.isSelected()) {
+        if (informLakeButton.isSelected()
+                && lakeTable.getSelectionModel().getSelectedItem() != null) {
             paneInformLake.setVisible(true);
             Distance distance = lakeTable.getSelectionModel().getSelectedItem();
             areaLake.setText(String.valueOf(distance.getLake().getArea()));
@@ -483,7 +510,8 @@ public class UserMenuController implements Initializable {
     }
 
     public void getInformFish() {
-        if (informFishButton.isSelected()) {
+        if (informFishButton.isSelected()
+                && tableFish.getSelectionModel().getSelectedItem() != null ) {
             paneInformFish.setVisible(true);
             Prefers prefers = tableFish.getSelectionModel().getSelectedItem();
             family.setText(prefers.getFish().getFamily());
@@ -533,7 +561,7 @@ public class UserMenuController implements Initializable {
             Lake lake = lakeComboBox.getValue();
             if (lake != null) {
                 LakeAndFishViewReport.createReport(new Stage(), lake);
-                }
+            }
             dialog.close();
         });
         Button buttonEx = new Button("Cancel");

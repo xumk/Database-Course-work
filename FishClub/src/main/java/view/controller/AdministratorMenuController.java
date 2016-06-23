@@ -31,6 +31,7 @@ import modal.entity.joinentity.Peck;
 import view.controller.editcontroller.FishEditController;
 import view.controller.editcontroller.LakeEditController;
 import view.controller.editcontroller.LureEditController;
+import view.listeners.NumericFormatListener;
 
 import java.io.IOException;
 import java.net.URL;
@@ -373,7 +374,10 @@ public class AdministratorMenuController implements Initializable {
             closeDialog(dialog);
         });
         buttons.getChildren().addAll(buttonOk, buttonEx);
-        box.getChildren().addAll(new Label("Выберите наживку"), lureComboBox, buttons);
+        box.getChildren().addAll(
+                new Label("Выберите наживку"),
+                lureComboBox, buttons
+        );
         Scene scene = new Scene(box, 300, 100);
         dialog.setScene(scene);
         dialog.show();
@@ -390,6 +394,8 @@ public class AdministratorMenuController implements Initializable {
         ComboBox<Fish> fishComboBox = new ComboBox<>();
         fishComboBox.setItems(fishData);
         TextField countFish = new TextField();
+        countFish.textProperty()
+                .addListener(new NumericFormatListener(countFish));
         buttons.setAlignment(Pos.CENTER);
         Button buttonOk = new Button("Ok");
         buttonOk.setDefaultButton(true);
@@ -450,7 +456,7 @@ public class AdministratorMenuController implements Initializable {
             Fish fish = fishDAO.getFishById(linkFish.getFish().getId());
             Lived lived = livedDAO.getLivedByFishAndLakeId(linkFish.getFish().getId(), currentLake.getId());
             livedDAO.deleteObject(lived);
-            currentLake.getFishs().remove(fish);
+            currentLake.getFishs().remove(lived);
             lakeDAO.updateLake(currentLake);
         }
     }
@@ -464,6 +470,8 @@ public class AdministratorMenuController implements Initializable {
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
         TextField countFish = new TextField();
+        countFish.textProperty()
+                .addListener(new NumericFormatListener(countFish));
         countFish.setText(countFishiLake.getCellObservableValue(0).getValue().toString());
         buttons.setAlignment(Pos.CENTER);
         Button buttonOk = new Button("Ok");
