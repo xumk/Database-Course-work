@@ -27,6 +27,9 @@ import modal.entity.joinentity.Distance;
 import modal.entity.joinentity.Prefers;
 import report.LakeReport;
 import report.LureReport;
+import report.view.FishViewReport;
+import report.view.LakeAndFishViewReport;
+import report.view.LureViewReport;
 
 import java.net.URL;
 import java.util.List;
@@ -504,5 +507,44 @@ public class UserMenuController implements Initializable {
     public void dowloadLakeReport() {
         ObservableList<Distance> reportData = lakeTable.getItems();
         LakeReport.writeIntoExcel(reportData);
+    }
+
+    public void openViewReportLure() {
+        LureViewReport.createReport(new Stage(), allLure);
+    }
+
+    public void openViewReportFish() {
+        FishViewReport.createReport(new Stage(), allFish);
+    }
+
+    public void openViewReportLakeAndFish() {
+        Stage dialog = new Stage();
+        dialog.initStyle(StageStyle.UTILITY);
+        dialog.setTitle("Окно выбора озера");
+        VBox box = new VBox();
+        box.setAlignment(Pos.CENTER);
+        HBox buttons = new HBox();
+        ComboBox<Lake> lakeComboBox = new ComboBox<>();
+        lakeComboBox.setItems(allLake);
+        buttons.setAlignment(Pos.CENTER);
+        Button buttonOk = new Button("Ok");
+        buttonOk.setDefaultButton(true);
+        buttonOk.setOnAction((ActionEvent evt) -> {
+            Lake lake = lakeComboBox.getValue();
+            if (lake != null) {
+                LakeAndFishViewReport.createReport(new Stage(), lake);
+                }
+            dialog.close();
+        });
+        Button buttonEx = new Button("Cancel");
+        buttonEx.setOnAction(evt -> {
+            dialog.close();
+        });
+        buttons.getChildren().addAll(buttonOk, buttonEx);
+        box.getChildren().addAll(new Label("Выберите озеро"),
+                lakeComboBox, buttons);
+        Scene scene = new Scene(box, 300, 100);
+        dialog.setScene(scene);
+        dialog.show();
     }
 }

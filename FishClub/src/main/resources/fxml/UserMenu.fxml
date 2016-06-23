@@ -342,7 +342,16 @@
                 </Tab>
                 <Tab text="Отчёты">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Button layoutX="24.0" layoutY="21.0" mnemonicParsing="false" onAction="#openViewReportLure" text="Самая глубоководная наживка" />
+                        <Button layoutX="24.0" layoutY="74.0" mnemonicParsing="false" onAction="#openViewReportFish" text="Отчт о весе рыб" />
+                        <Button layoutX="24.0" layoutY="128.0" mnemonicParsing="false" onAction="#openViewReportLakeAndFish" text="Отчет о рыбах и озерах">
+                           <tooltip>
+                              <Tooltip text="Сколько в конкртеном озере&#10;проживает рыб и каких" />
+                           </tooltip>
+                        </Button>
+                     </children></AnchorPane>
                     </content>
                 </Tab>
             </tabs>
