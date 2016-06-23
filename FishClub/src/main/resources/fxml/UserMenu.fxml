@@ -125,7 +125,7 @@
                                         <Tooltip text="Редактировать наживку" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="downloadLureButton" layoutX="171.0" mnemonicParsing="false">
+                                <Button fx:id="downloadLureButton" layoutX="171.0" mnemonicParsing="false" onAction="#dowloadLureReport">
                                     <graphic>
                                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -181,7 +181,7 @@
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                 </TableView>
-                                <Button fx:id="downloadFishButton" layoutX="126.0" mnemonicParsing="false">
+                                <Button fx:id="downloadFishButton" layoutX="126.0" mnemonicParsing="false" visible="false">
                                     <graphic>
                                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -217,7 +217,7 @@
                                         <Tooltip text="Добавить рыбу" />
                                     </tooltip>
                                 </Button>
-                        <ToggleButton fx:id="informFishButton" onAction="#getInformFish" layoutX="85.0" mnemonicParsing="false">
+                        <ToggleButton fx:id="informFishButton" layoutX="85.0" mnemonicParsing="false" onAction="#getInformFish">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
@@ -263,7 +263,7 @@
                                         <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                 </TableView>
-                                <Button fx:id="downloadLakeButton" layoutX="167.0" mnemonicParsing="false">
+                                <Button fx:id="downloadLakeButton" layoutX="167.0" mnemonicParsing="false" onAction="#dowloadLakeReport">
                                     <graphic>
                                         <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
@@ -311,7 +311,7 @@
                                         <Tooltip text="Добавить озеро" />
                                     </tooltip>
                                 </Button>
-                        <ToggleButton fx:id="informLakeButton" onAction="#getInformLake" layoutX="126.0" mnemonicParsing="false">
+                        <ToggleButton fx:id="informLakeButton" layoutX="126.0" mnemonicParsing="false" onAction="#getInformLake">
                            <graphic>
                               <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                  <image>

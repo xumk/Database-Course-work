@@ -25,6 +25,8 @@ import modal.entity.User;
 import modal.entity.joinentity.Availability;
 import modal.entity.joinentity.Distance;
 import modal.entity.joinentity.Prefers;
+import report.LakeReport;
+import report.LureReport;
 
 import java.net.URL;
 import java.util.List;
@@ -492,5 +494,15 @@ public class UserMenuController implements Initializable {
             maxWeight.setText(null);
             depthLiving.setText(null);
         }
+    }
+
+    public void dowloadLureReport() {
+        ObservableList<Availability> reportData = tableBait.getItems();
+        LureReport.writeIntoExcel(reportData);
+    }
+
+    public void dowloadLakeReport() {
+        ObservableList<Distance> reportData = lakeTable.getItems();
+        LakeReport.writeIntoExcel(reportData);
     }
 }
