@@ -268,32 +268,38 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void deleteFishAction() {
-        Fish fish = fishDAO.getFishById(tableFish.getSelectionModel().getSelectedItem().getId());
-        if (fish != null) {
-            peckDAO.removeAll(fish.getLures());
-            livedDAO.removeAll(fish.getLakes());
-            prefersDAO.removeAll(fish.getFishers());
-            fishData.remove(tableFish.getSelectionModel().getSelectedItem());
-            fishDAO.deleteFish(fish);
+        if (tableFish.getSelectionModel().getSelectedItem() != null) {
+            Fish fish = fishDAO.getFishById(tableFish.getSelectionModel().getSelectedItem().getId());
+            if (fish != null) {
+                peckDAO.removeAll(fish.getLures());
+                livedDAO.removeAll(fish.getLakes());
+                prefersDAO.removeAll(fish.getFishers());
+                fishData.remove(tableFish.getSelectionModel().getSelectedItem());
+                fishDAO.deleteFish(fish);
+            }
         }
     }
 
     public void editFishAction() {
         Fish fish = tableFish.getSelectionModel().getSelectedItem();
-        FishEditController.data = fishData;
-        controller.openAddAndEditFishTable(
-                fish, pane, "Окно редактирования рыбы",
-                "/fxml/editform/FishEditAdmin.fxml"
-        );
+        if (fish != null) {
+            FishEditController.data = fishData;
+            controller.openAddAndEditFishTable(
+                    fish, pane, "Окно редактирования рыбы",
+                    "/fxml/editform/FishEditAdmin.fxml"
+            );
+        }
     }
 
     public void editLakeAction() {
         Lake lake = lakeTable.getSelectionModel().getSelectedItem();
-        LakeEditController.data = lakeData;
-        controller.openAddAndEditLakeTable(
-                lake, pane, "Окно редактирования озера",
-                "/fxml/editform/LakeEditAdmin.fxml"
-        );
+        if (lake != null) {
+            LakeEditController.data = lakeData;
+            controller.openAddAndEditLakeTable(
+                    lake, pane, "Окно редактирования озера",
+                    "/fxml/editform/LakeEditAdmin.fxml"
+            );
+        }
     }
 
     public void addLakeAction() {
@@ -305,22 +311,26 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void deleteLakeAction() {
-        Lake lake = lakeDAO.getLakeById(lakeTable.getSelectionModel().getSelectedItem().getId());
-        if (lake != null) {
-            livedDAO.removeAll(lake.getFishs());
-            distanceDAO.removeAll(lake.getFishers());
-            lakeData.remove(lakeTable.getSelectionModel().getSelectedItem());
-            lakeDAO.deleteLake(lake);
+        if (lakeTable.getSelectionModel().getSelectedItem() != null) {
+            Lake lake = lakeDAO.getLakeById(lakeTable.getSelectionModel().getSelectedItem().getId());
+            if (lake != null) {
+                livedDAO.removeAll(lake.getFishs());
+                distanceDAO.removeAll(lake.getFishers());
+                lakeData.remove(lakeTable.getSelectionModel().getSelectedItem());
+                lakeDAO.deleteLake(lake);
+            }
         }
     }
 
     public void editLureAction() {
         Lure lure = tableBait.getSelectionModel().getSelectedItem();
-        LureEditController.data = lureData;
-        controller.openAddAndEditLureTable(
-                lure, pane, "Окно редактирования наживки",
-                "/fxml/editform/LureEditAdmin.fxml"
-        );
+        if (lure != null) {
+            LureEditController.data = lureData;
+            controller.openAddAndEditLureTable(
+                    lure, pane, "Окно редактирования наживки",
+                    "/fxml/editform/LureEditAdmin.fxml"
+            );
+        }
     }
 
     public void addLureAction() {
@@ -332,12 +342,14 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void deleteLureAction() {
-        Lure lure = lureDAO.getLureById(tableBait.getSelectionModel().getSelectedItem().getId());
-        if (lure != null) {
-            peckDAO.removeAll(lure.getFishs());
-            availabilityDAO.removeAll(lure.getFishers());
-            lureData.remove(tableBait.getSelectionModel().getSelectedItem());
-            lureDAO.deleteLure(lure);
+        if (tableBait.getSelectionModel().getSelectedItem() != null) {
+            Lure lure = lureDAO.getLureById(tableBait.getSelectionModel().getSelectedItem().getId());
+            if (lure != null) {
+                peckDAO.removeAll(lure.getFishs());
+                availabilityDAO.removeAll(lure.getFishers());
+                lureData.remove(tableBait.getSelectionModel().getSelectedItem());
+                lureDAO.deleteLure(lure);
+            }
         }
     }
 
@@ -346,6 +358,9 @@ public class AdministratorMenuController implements Initializable {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Окно добавления наживки");
+        dialog.setOnCloseRequest(evt -> {
+            pane.setDisable(false);
+        });
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
@@ -388,6 +403,9 @@ public class AdministratorMenuController implements Initializable {
         Stage dialog = new Stage();
         dialog.initStyle(StageStyle.UTILITY);
         dialog.setTitle("Окно добавления рыбы");
+        dialog.setOnCloseRequest(evt -> {
+            pane.setDisable(false);
+        });
         VBox box = new VBox();
         box.setAlignment(Pos.CENTER);
         HBox buttons = new HBox();
@@ -453,7 +471,6 @@ public class AdministratorMenuController implements Initializable {
         Lived linkFish = fishLivedTable.getSelectionModel().getSelectedItem();
         if (linkFish != null) {
             linkFishData.remove(linkFish);
-            Fish fish = fishDAO.getFishById(linkFish.getFish().getId());
             Lived lived = livedDAO.getLivedByFishAndLakeId(linkFish.getFish().getId(), currentLake.getId());
             livedDAO.deleteObject(lived);
             currentLake.getFishs().remove(lived);
@@ -462,43 +479,48 @@ public class AdministratorMenuController implements Initializable {
     }
 
     public void editLinkLived() {
-        pane.setDisable(true);
-        Stage dialog = new Stage();
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.setTitle("Окно редактирования рыбы");
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        HBox buttons = new HBox();
-        TextField countFish = new TextField();
-        countFish.textProperty()
-                .addListener(new NumericFormatListener(countFish));
-        countFish.setText(countFishiLake.getCellObservableValue(0).getValue().toString());
-        buttons.setAlignment(Pos.CENTER);
-        Button buttonOk = new Button("Ok");
-        buttonOk.setDefaultButton(true);
-        buttonOk.setOnAction((ActionEvent evt) -> {
-            Lived lived = fishLivedTable.getSelectionModel().getSelectedItem();
-            if (lived != null) {
-                int count = countFish.getText() != null
-                        && !countFish.getText().isEmpty() ?
-                        Integer.parseInt(countFish.getText())
-                        : 0;
-                lived.setCountFish(count);
-                linkFishData.set(linkFishData.indexOf(lived), lived);
-                livedDAO.updateObject(lived);
-            }
-            closeDialog(dialog);
-        });
-        Button buttonEx = new Button("Cancel");
-        buttonEx.setOnAction(evt -> {
-            closeDialog(dialog);
-        });
-        buttons.getChildren().addAll(buttonOk, buttonEx);
-        box.getChildren().addAll(
-                new Label("Популяция"), countFish, buttons
-        );
-        Scene scene = new Scene(box, 300, 100);
-        dialog.setScene(scene);
-        dialog.show();
+        if (fishLivedTable.getSelectionModel().getSelectedItem() != null) {
+            pane.setDisable(true);
+            Stage dialog = new Stage();
+            dialog.initStyle(StageStyle.UTILITY);
+            dialog.setTitle("Окно редактирования рыбы");
+            dialog.setOnCloseRequest(evt -> {
+                pane.setDisable(false);
+            });
+            VBox box = new VBox();
+            box.setAlignment(Pos.CENTER);
+            HBox buttons = new HBox();
+            TextField countFish = new TextField();
+            countFish.textProperty()
+                    .addListener(new NumericFormatListener(countFish));
+            countFish.setText(countFishiLake.getCellObservableValue(0).getValue().toString());
+            buttons.setAlignment(Pos.CENTER);
+            Button buttonOk = new Button("Ok");
+            buttonOk.setDefaultButton(true);
+            buttonOk.setOnAction((ActionEvent evt) -> {
+                Lived lived = fishLivedTable.getSelectionModel().getSelectedItem();
+                if (lived != null) {
+                    int count = countFish.getText() != null
+                            && !countFish.getText().isEmpty() ?
+                            Integer.parseInt(countFish.getText())
+                            : 0;
+                    lived.setCountFish(count);
+                    linkFishData.set(linkFishData.indexOf(lived), lived);
+                    livedDAO.updateObject(lived);
+                }
+                closeDialog(dialog);
+            });
+            Button buttonEx = new Button("Cancel");
+            buttonEx.setOnAction(evt -> {
+                closeDialog(dialog);
+            });
+            buttons.getChildren().addAll(buttonOk, buttonEx);
+            box.getChildren().addAll(
+                    new Label("Популяция"), countFish, buttons
+            );
+            Scene scene = new Scene(box, 300, 100);
+            dialog.setScene(scene);
+            dialog.show();
+        }
     }
 }

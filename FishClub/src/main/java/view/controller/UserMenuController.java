@@ -343,130 +343,146 @@ public class UserMenuController implements Initializable {
     }
 
     public void editLake() {
-        pane.setDisable(true);
-        Stage dialog = new Stage();
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.setTitle("Окно редактирования озера");
-        dialog.setOnCloseRequest(evt -> {
-            pane.setDisable(false);
-        });
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        HBox buttons = new HBox();
-        TextField distanceLake = new TextField();
-        distanceLake.setText(lakeDistance.getCellObservableValue(0).getValue().toString());
-        distanceLake.textProperty()
-                .addListener(new NumericFormatListener(distanceLake));
-        buttons.setAlignment(Pos.CENTER);
-        Button buttonOk = new Button("Ok");
-        buttonOk.setDefaultButton(true);
-        buttonOk.setOnAction((ActionEvent evt) -> {
-            Distance distance = lakeTable.getSelectionModel().getSelectedItem();
-            if (distance != null) {
-                double count = distanceLake.getText() != null
-                        && !distanceLake.getText().isEmpty() ?
-                        Double.parseDouble(distanceLake.getText())
-                        : 0d;
-                distance.setDistance(count);
-                lakeData.set(lakeData.indexOf(distance), distance);
-                distanceDAO.updateObject(distance);
-            }
-            closeDialog(dialog);
-        });
-        Button buttonEx = new Button("Cancel");
-        buttonEx.setOnAction(evt -> {
-            closeDialog(dialog);
-        });
-        buttons.getChildren().addAll(buttonOk, buttonEx);
-        box.getChildren().addAll(
-                new Label("Расстояние"), distanceLake, buttons
-        );
-        Scene scene = new Scene(box, 300, 100);
-        dialog.setScene(scene);
-        dialog.show();
+        if (lakeTable.getSelectionModel().getSelectedItem() != null) {
+            pane.setDisable(true);
+            Stage dialog = new Stage();
+            dialog.initStyle(StageStyle.UTILITY);
+            dialog.setTitle("Окно редактирования озера");
+            dialog.setOnCloseRequest(evt -> {
+                pane.setDisable(false);
+            });
+            VBox box = new VBox();
+            box.setAlignment(Pos.CENTER);
+            HBox buttons = new HBox();
+            TextField distanceLake = new TextField();
+            distanceLake.setText(lakeDistance.getCellObservableValue(0).getValue().toString());
+            distanceLake.textProperty()
+                    .addListener(new NumericFormatListener(distanceLake));
+            buttons.setAlignment(Pos.CENTER);
+            Button buttonOk = new Button("Ok");
+            buttonOk.setDefaultButton(true);
+            buttonOk.setOnAction((ActionEvent evt) -> {
+                Distance distance = lakeTable.getSelectionModel().getSelectedItem();
+                if (distance != null) {
+                    double count = distanceLake.getText() != null
+                            && !distanceLake.getText().isEmpty() ?
+                            Double.parseDouble(distanceLake.getText())
+                            : 0d;
+                    distance.setDistance(count);
+                    lakeData.set(lakeData.indexOf(distance), distance);
+                    distanceDAO.updateObject(distance);
+                }
+                closeDialog(dialog);
+            });
+            Button buttonEx = new Button("Cancel");
+            buttonEx.setOnAction(evt -> {
+                closeDialog(dialog);
+            });
+            buttons.getChildren().addAll(buttonOk, buttonEx);
+            box.getChildren().addAll(
+                    new Label("Расстояние"), distanceLake, buttons
+            );
+            Scene scene = new Scene(box, 300, 100);
+            dialog.setScene(scene);
+            dialog.show();
+        }
     }
 
     public void editLure() {
-        pane.setDisable(true);
-        Stage dialog = new Stage();
-        dialog.initStyle(StageStyle.UTILITY);
-        dialog.setTitle("Окно редактирования наживки");
-        dialog.setOnCloseRequest(evt -> {
-            pane.setDisable(false);
-        });
-        VBox box = new VBox();
-        box.setAlignment(Pos.CENTER);
-        HBox buttons = new HBox();
-        TextField countFish = new TextField();
-        countFish.textProperty()
-                .addListener(new NumericFormatListener(countFish));
-        countFish.setText(baitCount.getCellObservableValue(0).getValue().toString());
+        if (tableBait.getSelectionModel().getSelectedItem() != null) {
+            pane.setDisable(true);
+            Stage dialog = new Stage();
+            dialog.initStyle(StageStyle.UTILITY);
+            dialog.setTitle("Окно редактирования наживки");
+            dialog.setOnCloseRequest(evt -> {
+                pane.setDisable(false);
+            });
+            VBox box = new VBox();
+            box.setAlignment(Pos.CENTER);
+            HBox buttons = new HBox();
+            TextField countFish = new TextField();
+            countFish.textProperty()
+                    .addListener(new NumericFormatListener(countFish));
+            countFish.setText(baitCount.getCellObservableValue(0).getValue().toString());
 
-        buttons.setAlignment(Pos.CENTER);
-        Button buttonOk = new Button("Ok");
-        buttonOk.setDefaultButton(true);
-        buttonOk.setOnAction((ActionEvent evt) -> {
-            Availability availability = tableBait.getSelectionModel().getSelectedItem();
-            if (availability != null) {
-                int count = countFish.getText() != null
-                        && !countFish.getText().isEmpty() ?
-                        Integer.parseInt(countFish.getText())
-                        : 0;
-                availability.setCountLure(count);
-                lureData.set(lureData.indexOf(availability), availability);
-                availabilityDAO.updateObject(availability);
-            }
-            closeDialog(dialog);
-        });
-        Button buttonEx = new Button("Cancel");
-        buttonEx.setOnAction(evt -> {
-            closeDialog(dialog);
-        });
-        buttons.getChildren().addAll(buttonOk, buttonEx);
-        box.getChildren().addAll(
-                new Label("Количество"), countFish, buttons
-        );
-        Scene scene = new Scene(box, 300, 100);
-        dialog.setScene(scene);
-        dialog.show();
+            buttons.setAlignment(Pos.CENTER);
+            Button buttonOk = new Button("Ok");
+            buttonOk.setDefaultButton(true);
+            buttonOk.setOnAction((ActionEvent evt) -> {
+                Availability availability = tableBait.getSelectionModel().getSelectedItem();
+                if (availability != null) {
+                    int count = countFish.getText() != null
+                            && !countFish.getText().isEmpty() ?
+                            Integer.parseInt(countFish.getText())
+                            : 0;
+                    availability.setCountLure(count);
+                    lureData.set(lureData.indexOf(availability), availability);
+                    availabilityDAO.updateObject(availability);
+                }
+                closeDialog(dialog);
+            });
+            Button buttonEx = new Button("Cancel");
+            buttonEx.setOnAction(evt -> {
+                closeDialog(dialog);
+            });
+            buttons.getChildren().addAll(buttonOk, buttonEx);
+            box.getChildren().addAll(
+                    new Label("Количество"), countFish, buttons
+            );
+            Scene scene = new Scene(box, 300, 100);
+            dialog.setScene(scene);
+            dialog.show();
+        }
     }
 
     public void deleteFish() {
-        Prefers prefers = prefersDAO.getById(tableFish.getSelectionModel().getSelectedItem().getId());
-        if (prefers != null) {
-            fishData.remove(prefers);
-            user.getFisher().getFishs().remove(prefers);
-            prefers.getFish().getFishers().remove(prefers);
-            prefersDAO.deleteObject(prefers);
-            fishDAO.updateFish(prefers.getFish());
-            fisherDAO.updateFisher(user.getFisher());
-            userDAO.updateUser(user);
+        if (tableFish.getSelectionModel().getSelectedItem() != null) {
+            Prefers prefers = prefersDAO.getById(
+                    tableFish.getSelectionModel().getSelectedItem().getId()
+            );
+            if (prefers != null) {
+                fishData.remove(prefers);
+                user.getFisher().getFishs().remove(prefers);
+                prefers.getFish().getFishers().remove(prefers);
+                prefersDAO.deleteObject(prefers);
+                fishDAO.updateFish(prefers.getFish());
+                fisherDAO.updateFisher(user.getFisher());
+                userDAO.updateUser(user);
+            }
         }
     }
 
     public void deleteLure() {
-        Availability availability = availabilityDAO.getById(tableBait.getSelectionModel().getSelectedItem().getId());
-        if (availability != null) {
-            lureData.remove(availability);
-            user.getFisher().getLures().remove(availability);
-            availability.getLure().getFishers().remove(availability);
-            availabilityDAO.deleteObject(availability);
-            lureDAO.updateLure(availability.getLure());
-            fisherDAO.updateFisher(user.getFisher());
-            userDAO.updateUser(user);
+        if (tableBait.getSelectionModel().getSelectedItem() != null) {
+            Availability availability = availabilityDAO.getById(
+                    tableBait.getSelectionModel().getSelectedItem().getId()
+            );
+            if (availability != null) {
+                lureData.remove(availability);
+                user.getFisher().getLures().remove(availability);
+                availability.getLure().getFishers().remove(availability);
+                availabilityDAO.deleteObject(availability);
+                lureDAO.updateLure(availability.getLure());
+                fisherDAO.updateFisher(user.getFisher());
+                userDAO.updateUser(user);
+            }
         }
     }
 
     public void deleteLake() {
-        Distance distance = distanceDAO.getById(lakeTable.getSelectionModel().getSelectedItem().getId());
-        if (distance != null) {
-            lakeData.remove(distance);
-            user.getFisher().getLakes().remove(distance);
-            distance.getLake().getFishers().remove(distance);
-            distanceDAO.deleteObject(distance);
-            lakeDAO.updateLake(distance.getLake());
-            fisherDAO.updateFisher(user.getFisher());
-            userDAO.updateUser(user);
+        if (lakeTable.getSelectionModel().getSelectedItem() != null) {
+            Distance distance = distanceDAO.getById(
+                    lakeTable.getSelectionModel().getSelectedItem().getId()
+            );
+            if (distance != null) {
+                lakeData.remove(distance);
+                user.getFisher().getLakes().remove(distance);
+                distance.getLake().getFishers().remove(distance);
+                distanceDAO.deleteObject(distance);
+                lakeDAO.updateLake(distance.getLake());
+                fisherDAO.updateFisher(user.getFisher());
+                userDAO.updateUser(user);
+            }
         }
     }
 
