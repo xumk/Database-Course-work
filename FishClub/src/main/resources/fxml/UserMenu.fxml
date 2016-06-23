@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -10,6 +11,7 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -18,9 +20,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0"
-      prefWidth="698.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="view.controller.UserMenuController">
+<Pane fx:id="pane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="454.0" prefWidth="698.0" xmlns="http://javafx.com/javafx/8.0.91" xmlns:fx="http://javafx.com/fxml/1" fx:controller="view.controller.UserMenuController">
     <children>
         <TabPane layoutX="7.0" layoutY="48.0" prefHeight="400.0" prefWidth="692.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
@@ -28,59 +28,50 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="694.0">
                             <children>
-                                <TextField fx:id="userName" editable="false" layoutX="14.0" layoutY="37.0"
-                                           prefHeight="26.0" prefWidth="236.0"/>
-                                <PasswordField fx:id="password" alignment="TOP_LEFT" editable="false" layoutX="290.0"
-                                               layoutY="37.0" prefHeight="26.0" prefWidth="236.0"/>
+                                <TextField fx:id="userName" editable="false" layoutX="14.0" layoutY="37.0" prefHeight="26.0" prefWidth="236.0" />
+                                <PasswordField fx:id="password" alignment="TOP_LEFT" editable="false" layoutX="290.0" layoutY="37.0" prefHeight="26.0" prefWidth="236.0" />
                                 <Label layoutX="20.0" layoutY="21.0" text="Логин">
                                     <font>
-                                        <Font name="System Bold" size="13.0"/>
+                                        <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
                                 <Label layoutX="290.0" layoutY="21.0" text="Пароль">
                                     <font>
-                                        <Font name="System Bold" size="13.0"/>
+                                        <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
-                                <TextField fx:id="firstName" editable="false" layoutX="14.0" layoutY="92.0"
-                                           prefHeight="26.0" prefWidth="236.0"/>
-                                <TextField fx:id="lastName" editable="false" layoutX="14.0" layoutY="146.0"
-                                           prefHeight="26.0" prefWidth="236.0"/>
-                                <TextField fx:id="middleName" editable="false" layoutX="290.0" layoutY="92.0"
-                                           prefHeight="26.0" prefWidth="236.0"/>
+                                <TextField fx:id="firstName" editable="false" layoutX="14.0" layoutY="92.0" prefHeight="26.0" prefWidth="236.0" />
+                                <TextField fx:id="lastName" editable="false" layoutX="14.0" layoutY="146.0" prefHeight="26.0" prefWidth="236.0" />
+                                <TextField fx:id="middleName" editable="false" layoutX="290.0" layoutY="92.0" prefHeight="26.0" prefWidth="236.0" />
                                 <Label layoutX="20.0" layoutY="73.0" text="Имя">
                                     <font>
-                                        <Font name="System Bold" size="13.0"/>
+                                        <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
                                 <Label layoutX="20.0" layoutY="130.0" text="Фамилия">
                                     <font>
-                                        <Font name="System Bold" size="13.0"/>
+                                        <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
                                 <Label layoutX="290.0" layoutY="73.0" text="Отчество">
                                     <font>
-                                        <Font name="System Bold" size="13.0"/>
+                                        <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
-                                <DatePicker fx:id="birthDate" disable="true" layoutX="290.0" layoutY="146.0"
-                                            prefHeight="26.0" prefWidth="236.0"/>
+                                <DatePicker fx:id="birthDate" disable="true" layoutX="290.0" layoutY="146.0" prefHeight="26.0" prefWidth="236.0" />
                                 <Label layoutX="290.0" layoutY="130.0" text="Дата рождения">
                                     <font>
-                                        <Font name="System Bold" size="13.0"/>
+                                        <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="editButton" layoutX="347.0" layoutY="268.0" mnemonicParsing="false"
-                                        onAction="#editAction" text="Редактировать"/>
-                                <ComboBox fx:id="genderComboBox" disable="true" editable="true" layoutX="14.0"
-                                          layoutY="194.0" prefHeight="25.0" prefWidth="236.0"/>
+                                <Button fx:id="editButton" layoutX="347.0" layoutY="268.0" mnemonicParsing="false" onAction="#editAction" text="Редактировать" />
+                                <ComboBox fx:id="genderComboBox" disable="true" editable="true" layoutX="14.0" layoutY="194.0" prefHeight="25.0" prefWidth="236.0" />
                                 <Label layoutX="20.0" layoutY="176.0" text="Пол">
                                     <font>
-                                        <Font name="System Bold" size="13.0"/>
+                                        <Font name="System Bold" size="13.0" />
                                     </font>
                                 </Label>
-                                <Button fx:id="saveButton" defaultButton="true" layoutX="80.0" layoutY="268.0"
-                                        mnemonicParsing="false" onAction="#saveAction" text="Сохранить изменения"/>
+                                <Button fx:id="saveButton" defaultButton="true" layoutX="80.0" layoutY="268.0" mnemonicParsing="false" onAction="#saveAction" text="Сохранить изменения" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -89,81 +80,91 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="tableBait" editable="true" layoutY="33.0" prefHeight="148.0"
-                                           prefWidth="692.0" tableMenuButtonVisible="true">
+                                <TableView fx:id="tableBait" editable="true" layoutY="33.0" prefHeight="148.0" prefWidth="692.0" tableMenuButtonVisible="true">
                                     <columns>
-                                        <TableColumn fx:id="baitName" prefWidth="104.0" text="Название&#10;наживки"/>
-                                        <TableColumn fx:id="baitCount" prefWidth="103.0" text="Количество&#10;наживки"/>
+                                        <TableColumn fx:id="baitName" prefWidth="104.0" text="Название&#10;наживки" />
+                                        <TableColumn fx:id="baitCount" prefWidth="103.0" text="Количество&#10;наживки" />
                                     </columns>
                                     <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                 </TableView>
-                                <Button fx:id="addLureButton" onAction="#addLure" layoutX="7.0" mnemonicParsing="false">
+                                <Button fx:id="addLureButton" layoutX="7.0" mnemonicParsing="false" onAction="#addLure">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/add.png"/>
+                                                <Image url="@images/add.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Добавить наживку"/>
+                                        <Tooltip text="Добавить наживку" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="deleteLureButton" onAction="#deleteLure" layoutX="48.0" mnemonicParsing="false">
+                                <Button fx:id="deleteLureButton" layoutX="48.0" mnemonicParsing="false" onAction="#deleteLure">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/del.png"/>
+                                                <Image url="@images/del.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Удалить наживку"/>
+                                        <Tooltip text="Удалить наживку" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="editLureButton" onAction="#editLure" layoutX="89.0" mnemonicParsing="false">
+                                <Button fx:id="editLureButton" layoutX="89.0" mnemonicParsing="false" onAction="#editLure">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/edit.png"/>
+                                                <Image url="@images/edit.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Редактировать наживку"/>
+                                        <Tooltip text="Редактировать наживку" />
                                     </tooltip>
                                 </Button>
                                 <Button fx:id="downloadLureButton" layoutX="171.0" mnemonicParsing="false">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/down.png"/>
+                                                <Image url="@images/down.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Скачать отчет"/>
+                                        <Tooltip text="Скачать отчет" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="informLureButton" layoutX="130.0" mnemonicParsing="false">
-                                    <tooltip>
-                                        <Tooltip text="Получить дополнительную информацию"/>
-                                    </tooltip>
-                                    <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
-                                            <image>
-                                                <Image url="@images/inform.png"/>
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                </Button>
+                        <ToggleButton fx:id="informLureButton" layoutX="130.0" mnemonicParsing="false" onAction="#getInformLure">
+                           <tooltip>
+                              <Tooltip text="Получить дополнительную информацию" />
+                           </tooltip>
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/inform.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </ToggleButton>
+                        <Pane fx:id="paneInformLure" layoutY="181.0" prefHeight="129.0" prefWidth="286.0" visible="false">
+                           <children>
+                              <Text layoutX="7.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дополнительная информация о наживке" textAlignment="CENTER" underline="true">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Label layoutX="6.0" layoutY="28.0" text="Количество крючков: " />
+                              <Label layoutX="7.0" layoutY="53.0" text="Вес: " />
+                              <Label layoutX="7.0" layoutY="77.0" text="Глубина погружения: " />
+                              <Label fx:id="countHook" layoutX="140.0" layoutY="28.0" />
+                              <Label fx:id="weight" layoutX="140.0" layoutY="53.0" />
+                              <Label fx:id="depthDown" layoutX="140.0" layoutY="77.0" />
+                              <CheckBox fx:id="isLife" disable="true" layoutX="6.0" layoutY="98.0" mnemonicParsing="false" opacity="0.99" prefHeight="17.0" prefWidth="196.0" text="Наживка является не живой" />
+                           </children>
+                        </Pane>
                             </children>
                         </AnchorPane>
                     </content>
@@ -172,67 +173,79 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                             <children>
-                                <TableView fx:id="tableFish" layoutX="3.0" layoutY="33.0" prefHeight="200.0"
-                                           prefWidth="686.0" tableMenuButtonVisible="true">
+                                <TableView fx:id="tableFish" layoutX="3.0" layoutY="33.0" prefHeight="149.0" prefWidth="686.0" tableMenuButtonVisible="true">
                                     <columns>
-                                        <TableColumn fx:id="fishName" prefWidth="75.0" text="Название рыбы"/>
+                                        <TableColumn fx:id="fishName" prefWidth="75.0" text="Название рыбы" />
                                     </columns>
                                     <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                 </TableView>
                                 <Button fx:id="downloadFishButton" layoutX="126.0" mnemonicParsing="false">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/down.png"/>
+                                                <Image url="@images/down.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Скачать отчет"/>
+                                        <Tooltip text="Скачать отчет" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="deleteFishButton" onAction="#deleteFish" layoutX="44.0" mnemonicParsing="false">
+                                <Button fx:id="deleteFishButton" layoutX="44.0" mnemonicParsing="false" onAction="#deleteFish">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/del.png"/>
+                                                <Image url="@images/del.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Удалить рыбу"/>
+                                        <Tooltip text="Удалить рыбу" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="addFishButton" onAction="#addFish" layoutX="3.0" mnemonicParsing="false">
+                                <Button fx:id="addFishButton" layoutX="3.0" mnemonicParsing="false" onAction="#addFish">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/add.png"/>
+                                                <Image url="@images/add.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Добавить рыбу"/>
+                                        <Tooltip text="Добавить рыбу" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="informFishButton" layoutX="85.0" mnemonicParsing="false">
-                                    <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
-                                            <image>
-                                                <Image url="@images/inform.png"/>
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <tooltip>
-                                        <Tooltip text="Дополнительная информация"/>
-                                    </tooltip>
-                                </Button>
+                        <ToggleButton fx:id="informFishButton" onAction="#getInformFish" layoutX="85.0" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/inform.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Дополнительная информация" />
+                           </tooltip>
+                        </ToggleButton>
+                        <Pane fx:id="paneInformFish" layoutX="4.0" layoutY="182.0" prefHeight="121.0" prefWidth="286.0" visible="false">
+                           <children>
+                              <Text layoutX="3.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дополнительная информация о рыбе" textAlignment="CENTER" underline="true" wrappingWidth="280.494140625">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Label layoutX="14.0" layoutY="32.0" text="Семейство: " />
+                              <Label layoutX="14.0" layoutY="53.0" text="Минимальный вес: " />
+                              <Label layoutX="14.0" layoutY="77.0" text="Максимальный вес: " />
+                              <Label layoutX="14.0" layoutY="99.0" text="Глубина обитания: " />
+                              <Label fx:id="family" layoutX="143.0" layoutY="32.0" />
+                              <Label fx:id="minWeight" layoutX="143.0" layoutY="53.0" />
+                              <Label fx:id="maxWeight" layoutX="143.0" layoutY="77.0" />
+                              <Label fx:id="depthLiving" layoutX="143.0" layoutY="99.0" />
+                           </children>
+                        </Pane>
                             </children>
                         </AnchorPane>
                     </content>
@@ -241,100 +254,105 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="412.0">
                             <children>
-                                <TableView fx:id="lakeTable" layoutX="3.0" layoutY="33.0" prefHeight="200.0"
-                                           prefWidth="686.0" tableMenuButtonVisible="true">
+                                <TableView fx:id="lakeTable" layoutX="3.0" layoutY="33.0" prefHeight="143.0" prefWidth="686.0" tableMenuButtonVisible="true">
                                     <columns>
-                                        <TableColumn fx:id="lakeName" prefWidth="75.0" text="Название"/>
-                                        <TableColumn fx:id="lakeDistance" prefWidth="75.0" text="Расстояние"/>
+                                        <TableColumn fx:id="lakeName" prefWidth="75.0" text="Название" />
+                                        <TableColumn fx:id="lakeDistance" prefWidth="75.0" text="Расстояние" />
                                     </columns>
                                     <columnResizePolicy>
-                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
+                                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
                                     </columnResizePolicy>
                                 </TableView>
                                 <Button fx:id="downloadLakeButton" layoutX="167.0" mnemonicParsing="false">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/down.png"/>
+                                                <Image url="@images/down.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Скачать отчет"/>
+                                        <Tooltip text="Скачать отчет" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="editLakeButton"  onAction="#editLake" layoutX="85.0" mnemonicParsing="false">
+                                <Button fx:id="editLakeButton" layoutX="85.0" mnemonicParsing="false" onAction="#editLake">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/edit.png"/>
+                                                <Image url="@images/edit.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Редактировать информацию об озере"/>
+                                        <Tooltip text="Редактировать информацию об озере" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="deleteLakeButton" onAction="#deleteLake" layoutX="44.0" mnemonicParsing="false">
+                                <Button fx:id="deleteLakeButton" layoutX="44.0" mnemonicParsing="false" onAction="#deleteLake">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/del.png"/>
+                                                <Image url="@images/del.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Удалить озеро"/>
+                                        <Tooltip text="Удалить озеро" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="addLakeButton" onAction="#addLake" layoutX="3.0" mnemonicParsing="false">
+                                <Button fx:id="addLakeButton" layoutX="3.0" mnemonicParsing="false" onAction="#addLake">
                                     <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
+                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                                             <image>
-                                                <Image url="@images/add.png"/>
+                                                <Image url="@images/add.png" />
                                             </image>
                                         </ImageView>
                                     </graphic>
                                     <tooltip>
-                                        <Tooltip text="Добавить озеро"/>
+                                        <Tooltip text="Добавить озеро" />
                                     </tooltip>
                                 </Button>
-                                <Button fx:id="informLakeButton" layoutX="126.0" mnemonicParsing="false">
-                                    <graphic>
-                                        <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true"
-                                                   preserveRatio="true">
-                                            <image>
-                                                <Image url="@images/inform.png"/>
-                                            </image>
-                                        </ImageView>
-                                    </graphic>
-                                    <tooltip>
-                                        <Tooltip text="Дополнительная информация"/>
-                                    </tooltip>
-                                </Button>
+                        <ToggleButton fx:id="informLakeButton" onAction="#getInformLake" layoutX="126.0" mnemonicParsing="false">
+                           <graphic>
+                              <ImageView fitHeight="25.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@images/inform.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                           <tooltip>
+                              <Tooltip text="Дополнительная информация" />
+                           </tooltip>
+                        </ToggleButton>
+                        <Pane fx:id="paneInformLake" layoutX="6.0" layoutY="178.0" prefHeight="117.0" prefWidth="307.0" visible="false">
+                           <children>
+                              <Text layoutX="13.0" layoutY="19.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Дополнительная информация об озере" textAlignment="CENTER" underline="true" wrappingWidth="280.494140625">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Text>
+                              <Label layoutX="13.0" layoutY="42.0" text="Площадь озера: " />
+                              <Label layoutX="13.0" layoutY="74.0" text="Глубина озера: " />
+                              <Label fx:id="areaLake" layoutX="154.0" layoutY="42.0" />
+                              <Label fx:id="depthLake" layoutX="154.0" layoutY="74.0" />
+                           </children>
+                        </Pane>
                             </children>
                         </AnchorPane>
                     </content>
                 </Tab>
                 <Tab text="Отчёты">
                     <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0"/>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
                     </content>
                 </Tab>
             </tabs>
         </TabPane>
-        <Button fx:id="exit" layoutX="559.0" layoutY="11.0" mnemonicParsing="false" onAction="#exitProgramm"
-                prefHeight="26.0" prefWidth="125.0" text="Выход"/>
-        <Text fill="#9a70cd" fontSmoothingType="LCD" layoutX="14.0" layoutY="31.0" stroke="#8117b0" strokeType="INSIDE"
-              strokeWidth="0.0" text="Система &quot;Любительский клуб рыбаловов&quot;">
+        <Button fx:id="exit" layoutX="559.0" layoutY="11.0" mnemonicParsing="false" onAction="#exitProgramm" prefHeight="26.0" prefWidth="125.0" text="Выход" />
+        <Text fill="#9a70cd" fontSmoothingType="LCD" layoutX="14.0" layoutY="31.0" stroke="#8117b0" strokeType="INSIDE" strokeWidth="0.0" text="Система &quot;Любительский клуб рыбаловов&quot;">
             <font>
-                <Font name="System Bold" size="18.0"/>
+                <Font name="System Bold" size="18.0" />
             </font>
         </Text>
-        <Button fx:id="logOut" layoutX="450.0" layoutY="11.0" mnemonicParsing="false" text="Разлогиниться"/>
+        <Button fx:id="logOut" layoutX="450.0" layoutY="11.0" mnemonicParsing="false" text="Разлогиниться" />
     </children>
 </Pane>

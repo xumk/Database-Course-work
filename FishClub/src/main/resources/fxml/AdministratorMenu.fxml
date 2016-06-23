@@ -26,7 +26,7 @@
     <children>
         <TabPane layoutX="7.0" layoutY="48.0" prefHeight="400.0" prefWidth="692.0" tabClosingPolicy="UNAVAILABLE">
             <tabs>
-                <Tab text="Основная информация пользователя">
+                <Tab fx:id="userInformTab" text="Основная информация пользователя">
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="367.0" prefWidth="694.0">
                             <children>

@@ -67,11 +67,14 @@ public class SingUpController implements Initializable {
                 this.errorText.setText("Не верный пароль");
             }
         } else {
-            this.errorText.setText("Данного пользователя не существует");
-        }
-
-        if(userName.equals("system") && password.equals("masterkey")) {
-            ;
+            if(userName.equals("system") && password.equals("masterkey")) {
+                controller.openAdministratorMenuScene(
+                        stage, "Любительский клуб рыбаловов",
+                        "/fxml/AdministratorMenu.fxml", null
+                );
+            } else {
+                this.errorText.setText("Данного пользователя не существует");
+            }
         }
 
     }
@@ -79,12 +82,12 @@ public class SingUpController implements Initializable {
     public void registryAction() {
         Stage stage = new Stage();
         Parent root = null;
-
         try {
-            root = FXMLLoader.load(this.getClass().getResource("/fxml/Registry.fxml"));
-            Scene e = new Scene(root, 550.0D, 400.0D);
             RegistryController.STAGE = stage;
             RegistryController.parentPane = this.singUpPane;
+            RegistryController.isSystem = false;
+            root = FXMLLoader.load(this.getClass().getResource("/fxml/Registry.fxml"));
+            Scene e = new Scene(root, 550.0D, 400.0D);
             this.singUpPane.setDisable(true);
             stage.setTitle("Окно регистрации");
             stage.initStyle(StageStyle.UNDECORATED);

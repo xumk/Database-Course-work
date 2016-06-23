@@ -4,8 +4,10 @@ import controllers.UserLogicController;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.CheckBoxTableCell;
@@ -30,6 +32,7 @@ import view.controller.editcontroller.FishEditController;
 import view.controller.editcontroller.LakeEditController;
 import view.controller.editcontroller.LureEditController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -94,6 +97,7 @@ public class AdministratorMenuController implements Initializable {
     public Button editLakeLinkFishButton;
     public ToggleButton openMasterDetailLakeGridButton;
     public TableView<Peck> linkTableLure;
+    public Tab userInformTab;
 
     private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
     private LakeDAO lakeDAO;
@@ -184,11 +188,35 @@ public class AdministratorMenuController implements Initializable {
         stage.setOnCloseRequest(we ->
                 UserLogicController.service.closeSessionFactory()
         );
-
         initializeTableLake();
         initializeTableLure();
         initializeTableFish();
-        this.fillInformationOnUserData(user);
+        if (user != null) {
+            this.fillInformationOnUserData(user);
+        } else {
+            userInformTab.setText("Регистрация администраторов");
+            userInformTab.getContent().setVisible(false);
+            Button button = new Button("Зарегистрировать");
+            userInformTab.setContent(button);
+            button.setOnAction(evt -> {
+                Stage stage = new Stage();
+                Parent root = null;
+                try {
+                    RegistryController.STAGE = stage;
+                    RegistryController.parentPane = this.pane;
+                    RegistryController.isSystem = true;
+                    root = FXMLLoader.load(this.getClass().getResource("/fxml/Registry.fxml"));
+                    Scene e = new Scene(root, 550.0D, 400.0D);
+                    this.pane.setDisable(true);
+                    stage.setTitle("Окно добавления администратора");
+                    stage.initStyle(StageStyle.UNDECORATED);
+                    stage.setScene(e);
+                    stage.show();
+                } catch (IOException var5) {
+                    var5.printStackTrace();
+                }
+            });
+        }
         this.logOut.setOnAction((event) -> {
             Stage stage = new Stage();
             SingUpController.stage = stage;

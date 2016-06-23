@@ -69,10 +69,23 @@ public class UserMenuController implements Initializable {
     public Button deleteLakeButton;
     public Button addLakeButton;
     public TableColumn<Availability, Integer> baitCount;
-    public Button informLureButton;
-    public Button informFishButton;
-    public Button informLakeButton;
+    public ToggleButton informLureButton;
+    public ToggleButton informFishButton;
+    public ToggleButton informLakeButton;
     public Pane pane;
+    public Pane paneInformLure;
+    public Label countHook;
+    public Label weight;
+    public Label depthDown;
+    public CheckBox isLife;
+    public Pane paneInformFish;
+    public Label family;
+    public Label minWeight;
+    public Label maxWeight;
+    public Label depthLiving;
+    public Pane paneInformLake;
+    public Label areaLake;
+    public Label depthLake;
 
     private ObservableList<String> genders = observableArrayList("Мужской", "Женский");
     private UserLogicController controller;
@@ -433,5 +446,51 @@ public class UserMenuController implements Initializable {
                 WindowEvent.WINDOW_CLOSE_REQUEST
         ));
         pane.setDisable(false);
+    }
+
+    public void getInformLure() {
+        if (informLureButton.isSelected()) {
+            paneInformLure.setVisible(true);
+            Availability availability = tableBait.getSelectionModel().getSelectedItem();
+            countHook.setText(String.valueOf(availability.getLure().getCountHooks()));
+            weight.setText(String.valueOf(availability.getLure().getWeight()));
+            depthDown.setText(String.valueOf(availability.getLure().getDivingDepth()));
+            isLife.setSelected(availability.getLure().isImitation());
+        } else {
+            paneInformLure.setVisible(false);
+            countHook.setText(null);
+            weight.setText(null);
+            depthDown.setText(null);
+        }
+    }
+
+    public void getInformLake() {
+        if (informLakeButton.isSelected()) {
+            paneInformLake.setVisible(true);
+            Distance distance = lakeTable.getSelectionModel().getSelectedItem();
+            areaLake.setText(String.valueOf(distance.getLake().getArea()));
+            depthLake.setText(String.valueOf(distance.getLake().getDepth()));
+        } else {
+            paneInformLake.setVisible(false);
+            areaLake.setText(null);
+            depthLake.setText(null);
+        }
+    }
+
+    public void getInformFish() {
+        if (informFishButton.isSelected()) {
+            paneInformFish.setVisible(true);
+            Prefers prefers = tableFish.getSelectionModel().getSelectedItem();
+            family.setText(prefers.getFish().getFamily());
+            minWeight.setText(String.valueOf(prefers.getFish().getMinWeight()));
+            maxWeight.setText(String.valueOf(prefers.getFish().getMaxWeight()));
+            depthLiving.setText(String.valueOf(prefers.getFish().getDepthLiving()));
+        } else {
+            paneInformFish.setVisible(false);
+            family.setText(null);
+            minWeight.setText(null);
+            maxWeight.setText(null);
+            depthLiving.setText(null);
+        }
     }
 }

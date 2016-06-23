@@ -25,6 +25,7 @@ import java.util.ResourceBundle;
 public class RegistryController implements Initializable {
     public static Stage STAGE;
     public static Pane parentPane;
+    public static boolean isSystem;
 
     public Button reset;
     public Button signUp;
@@ -36,6 +37,7 @@ public class RegistryController implements Initializable {
     public DatePicker birthDate;
     public Button back;
     public ComboBox gender;
+
     private ObservableList<String> genders = FXCollections.observableArrayList("Мужской", "Женский");
 
     private static UserDAO userDAO;
@@ -83,10 +85,11 @@ public class RegistryController implements Initializable {
             user = new User();
             user.setPassword(this.password.getText());
             user.setLogin(userName.getText());
-            user.setAdmin(false);
+            user.setAdmin(isSystem);
             fisherDAO.addFisher(fisher);
             user.setFisher(fisher);
             userDAO.addUser(user);
+            backAction();
         } else {
             new AlertMessage(
                     "Информационное окно",
