@@ -42,7 +42,7 @@ public class FishEditController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         fishDAO = UserLogicController.factory.getFishDAO();
-        fishDepth.textProperty().addListener(new DoubleFormatListener(fishDepth));
+        fishDepth.textProperty().addListener(new DoubleFormatListener(fishDepth));;
         fishMin.textProperty().addListener(new DoubleFormatListener(fishMin));
         fishMax.textProperty().addListener(new DoubleFormatListener(fishMax));
         stage.setOnCloseRequest(we ->

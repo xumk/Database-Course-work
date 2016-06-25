@@ -9,14 +9,22 @@ import org.apache.poi.ss.usermodel.*;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.logging.Logger;
 
 /**
- * Created by Алексей on 23.06.2016.
+ * Класс для создания xsl отчета о наживках
  */
 public class LureReport {
     private static final String FILE_PATH = "./download/";
     private static final String FILE_NAME = "Lure Report.xls";
+    private static Logger logger = Logger.getLogger(LureReport.class.getName());
 
+    /**
+     * Записать данные в xsl файл
+     *
+     * @param data данные отчета
+     */
     @SuppressWarnings("deprecation")
     public static void writeIntoExcel(ObservableList<Availability> data) {
         Workbook book = new HSSFWorkbook();
@@ -24,6 +32,7 @@ public class LureReport {
 
         Font font = book.createFont();
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
+        // создать стиль ячейки
         CellStyle style = book.createCellStyle();
         style.setFont(font);
 
@@ -35,12 +44,14 @@ public class LureReport {
         name.setCellValue("Название наживки");
         name.setCellStyle(style);
         Cell countHook = row.createCell(1);
+        // задать значений ячейки
         countHook.setCellValue("Количество крючков");
         countHook.setCellStyle(style);
         Cell weight = row.createCell(2);
         weight.setCellValue("Вес наживки");
         weight.setCellStyle(style);
         Cell depthDown = row.createCell(3);
+        // задать значение ячейки
         depthDown.setCellValue("Глубина погружения");
         depthDown.setCellStyle(style);
         Cell isLive = row.createCell(4);
@@ -51,16 +62,19 @@ public class LureReport {
         count.setCellStyle(style);
 
         ++i;
+        // пройти по всем данным и созать строки с ними в отчете
         for (Availability avail : data) {
             row = sheet.createRow(i);
             Lure lure = avail.getLure();
             name = row.createCell(0);
             name.setCellValue(lure.getName());
+            // создание новой ячейки
             countHook = row.createCell(1);
             countHook.setCellValue(lure.getCountHooks());
             weight = row.createCell(2);
             weight.setCellValue(lure.getWeight());
             depthDown = row.createCell(3);
+            // задание значений ячейки
             depthDown.setCellValue(lure.getDivingDepth());
             isLive = row.createCell(4);
             isLive.setCellValue(lure.isImitation() ? "Искусственная" : "Живая");
@@ -69,6 +83,7 @@ public class LureReport {
             ++i;
         }
 
+        // получение суммы количество всех наживок
         double sumLure = data.stream()
                 .map(Availability::getCountLure)
                 .mapToDouble(s -> s)
@@ -77,6 +92,7 @@ public class LureReport {
 
         Cell all = row.createCell(4);
         all.setCellStyle(style);
+        // вывод результатов
         all.setCellValue("Всего наживки");
         Cell allValue = row.createCell(5);
         allValue.setCellValue(sumLure);
@@ -94,7 +110,7 @@ public class LureReport {
             book.write(fio);
             book.close();
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe(Arrays.toString(e.getStackTrace()));
         }
     }
 }

@@ -5,7 +5,8 @@ import modal.entity.Lake;
 import java.util.List;
 
 /**
- * Created by Алексей on 15.06.2016.
+ * Интерфейс для работы с таблицей Наживки
+ * создан для сокрытия реализации
  */
 public interface LakeDAO {
     void addLake(Lake lake);

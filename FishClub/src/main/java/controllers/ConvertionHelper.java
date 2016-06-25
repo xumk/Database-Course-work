@@ -7,21 +7,32 @@ import java.time.ZoneId;
 import java.util.Date;
 
 /**
- * Created by Алексей on 14.06.2016.
+ * Класс для конвертации одних данных в другии,
+ * создан для уменьшения дублирования в коде
  */
 public class ConvertionHelper {
 
+    /**
+     * Метод для преобразования тип LocalDate в Date
+     *
+     * @param localDate приминает дату
+     * @return возвращает тоже значение с типом Date
+     */
     public static Date convertLocalDateToDate(LocalDate localDate) {
         Instant instant = localDate.atStartOfDay()
                 .atZone(ZoneId.systemDefault())
                 .toInstant();
-        Date res = Date.from(instant);
-        return res;
+        return Date.from(instant);
     }
 
+    /**
+     * Метод для преобразования типа Date в тип LocalDate
+     *
+     * @param date примимает дату
+     * @return возвращает LocalDate
+     */
     public static LocalDate convertDataToLocalDate(Date date) {
         Instant instant = Instant.ofEpochMilli(date.getTime());
-        LocalDate res = LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
-        return res;
+        return LocalDateTime.ofInstant(instant, ZoneId.systemDefault()).toLocalDate();
     }
 }

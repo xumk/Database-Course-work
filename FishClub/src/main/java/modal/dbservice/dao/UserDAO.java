@@ -4,6 +4,10 @@ import modal.entity.User;
 
 import java.util.List;
 
+/**
+ * Интерфейс для работы с таблицей Пользователи
+ * создан для сокрытия реализации
+ */
 public interface UserDAO {
     void addUser(User var1);
 

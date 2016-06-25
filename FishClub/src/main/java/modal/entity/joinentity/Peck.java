@@ -6,20 +6,33 @@ import modal.entity.Lure;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
+/**
+ * Класс-сущность таблицы Клюет, является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "peck")
 @Table(name = "peck")
 public class Peck implements Serializable {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue
     @Column(name = "peck_id")
     private long id;
 
+    /**
+     * Рыба
+     */
     @ManyToOne()
     @JoinColumn(name = "fish_id")
     private Fish fish;
 
+    /**
+     * Наживка
+     */
     @ManyToOne()
     @JoinColumn(name = "lure_id")
     private Lure lure;

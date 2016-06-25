@@ -6,19 +6,33 @@ import modal.entity.Fisher;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Класс-сущность таблицы Предпочитает, является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "prefers")
 @Table(name = "prefers")
 public class Prefers implements Serializable {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue
     @Column(name = "prefers_id")
     private long id;
 
+    /**
+     * Рыба
+     */
     @ManyToOne()
     @JoinColumn(name = "fish_id")
     private Fish fish;
 
+    /**
+     * Рыбак
+     */
     @ManyToOne()
     @JoinColumn(name = "fisher_id")
     private Fisher fisher;

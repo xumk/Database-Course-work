@@ -5,9 +5,18 @@ import javafx.scene.control.Alert;
 import static javafx.scene.control.Alert.*;
 
 /**
- * Created by Алексей on 14.06.2016.
+ * Класс для визуально отображения ошибок или
+ * сообщений для пользователя
  */
 public class AlertMessage {
+    /**
+     * Конструктор класса
+     *
+     * @param title  Заголовок
+     * @param header сообщение
+     * @param contet расшифровка сообщения
+     * @param type   тип сообщения
+     */
     public AlertMessage(String title, String header, String contet, AlertType type) {
         Alert alert = new Alert(type);
         alert.setTitle(title);

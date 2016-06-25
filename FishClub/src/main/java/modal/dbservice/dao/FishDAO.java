@@ -5,7 +5,8 @@ import modal.entity.Fish;
 import java.util.List;
 
 /**
- * Created by Алексей on 15.06.2016.
+ * Интерфейс для работы с таблицей Рыбы
+ * создан для сокрытия реализации
  */
 public interface FishDAO {
     void addFish(Fish fish);

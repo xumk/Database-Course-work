@@ -6,23 +6,40 @@ import modal.entity.Lure;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Класс-сущность таблицы Наличие является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "availability")
 @Table(name = "availability")
 public class Availability implements Serializable {
 
+    /**
+     * Идентиыикатор
+     */
     @Id
     @GeneratedValue
     @Column(name = "availability_id")
     private long id;
 
+    /**
+     * Рыбак
+     */
     @ManyToOne()
     @JoinColumn(name = "fisher_id")
     private Fisher fisher;
 
+    /**
+     * Наживка
+     */
     @ManyToOne()
     @JoinColumn(name = "lure_id")
     private Lure lure;
 
+    /**
+     * Количество наживки
+     */
     @Column(name = "count_lure")
     private Integer countLure;
 

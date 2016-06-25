@@ -5,7 +5,8 @@ import modal.entity.Fisher;
 import java.util.List;
 
 /**
- * Created by Алексей on 13.06.2016.
+ * Интерфейс для работы с таблицей Рыбаки
+ * создан для сокрытия реализации
  */
 public interface FisherDAO {
     void addFisher(Fisher fisher);

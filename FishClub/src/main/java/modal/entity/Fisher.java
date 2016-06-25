@@ -6,42 +6,77 @@ import modal.entity.joinentity.Distance;
 import modal.entity.joinentity.Prefers;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Класс-сущность таблицы Рыбаки, является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "fisher")
 @Table(name = "fishers")
-public class Fisher {
+public class Fisher implements Serializable {
 
+    /**
+     * Идентификатор рыбака
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Имя рыбака
+     */
     @Column(name = "first_name")
     private String name;
 
+    /**
+     * Фамилия рыбака
+     */
     @Column(name = "last_name")
     private String lastName;
 
+    /**
+     * Отчество рыбака (может отсутсвовать)
+     */
     @Column(name = "middle_name")
     private String middleName;
 
+    /**
+     * Пол рыбака
+     */
     @Column(name = "gender")
     @Enumerated(EnumType.ORDINAL)
     private Gender gender;
 
+    /**
+     * Дата рождения рыбака
+     */
     @Temporal(TemporalType.DATE)
     @Column(name = "birthday")
     private Date birthDay;
 
+    /**
+     * Список связей, сообщающий на каком расстоянии от какого озера
+     * проживает данный рыбак
+     */
     @OneToMany(mappedBy = "fisher", cascade = {CascadeType.ALL})
     private List<Distance> lakes = new ArrayList<>();
 
+    /**
+     * Список связей, сообщающий какую наживку и в каком количестве
+     * имеет рыбак
+     */
     @OneToMany(mappedBy = "fisher", cascade = {CascadeType.ALL})
     private List<Availability> lures = new ArrayList<>();
 
+    /**
+     * Список связей сообщающий какую рыбу предпочитает рыбак
+     */
     @OneToMany(mappedBy = "fisher", cascade = {CascadeType.ALL})
     private List<Prefers> fishs = new ArrayList<>();
 

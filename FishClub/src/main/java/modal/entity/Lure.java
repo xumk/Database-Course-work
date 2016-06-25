@@ -4,36 +4,66 @@ import modal.entity.joinentity.Availability;
 import modal.entity.joinentity.Peck;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс-сущность таблицы Наживки, является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "lure")
 @Table(name = "lures")
-public class Lure {
+public class Lure implements Serializable {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Название наживки
+     */
     @Column(name = "name")
     private String name;
 
+    /**
+     * Количество крючков у наживки
+     */
     @Column(name = "number_hooks")
     private Integer countHooks;
 
+    /**
+     * Вес наживки
+     */
     @Column(name = "weight")
     private Double weight;
 
+    /**
+     * Глубина погружения
+     */
     @Column(name = "diving_depth")
     private Double divingDepth;
 
+    /**
+     * Является ли наживка искусственно?
+     */
     @Column(name = "is_imitation")
     private Boolean imitation;
 
+    /**
+     * Связь сообщающая о том какие рыбаки предпочитают эту наживку
+     */
     @OneToMany(mappedBy = "lure", cascade = CascadeType.ALL)
     private List<Availability> fishers = new ArrayList();
 
+    /**
+     * Связь сообщающая о том какие рыбы клюет на эту наживку
+     */
     @OneToMany(mappedBy = "lure", cascade = CascadeType.ALL)
     private List<Peck> fishs = new ArrayList();
 

@@ -3,23 +3,38 @@ package modal.entity;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Класс-сущность таблицы Пользователи, является простым
+ * аннотированым классом с методами get(получить) и set (изменить)
+ */
 @Entity(name = "user")
 @Table(name = "users")
 public class User implements Serializable {
-
     private static final long serialVersionUID = -8706689714326132798L;
 
+    /**
+     * Идентификатор
+     */
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    /**
+     * Логин пользователя
+     */
     @Column(name = "login", unique = true)
     private String login;
 
+    /**
+     * Пароль пользователя
+     */
     @Column(name = "password", unique = false)
     private String password;
 
+    /**
+     * Рыбак связанный с этим пользователем
+     */
     @OneToOne(cascade = {CascadeType.ALL})
     @JoinColumn(
             name = "fk_fisherman_id",
@@ -27,7 +42,10 @@ public class User implements Serializable {
     )
     private Fisher fisher;
 
-    @Column(name="isAdmin")
+    /**
+     * Роль пользователя в системе
+     */
+    @Column(name = "isAdmin")
     private Boolean admin;
 
     public boolean isAdmin() {

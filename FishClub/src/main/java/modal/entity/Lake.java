@@ -4,30 +4,56 @@ import modal.entity.joinentity.Distance;
 import modal.entity.joinentity.Lived;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс-сущность таблицы Озера, является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "lake")
 @Table(name = "lakes")
-public class Lake {
+public class Lake implements Serializable {
 
+    /**
+     * Идентификатор озера
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Название озера
+     */
     @Column(name = "name")
     private String name;
 
+    /**
+     * Глубина озера, самая глубокая его точка
+     */
     @Column(name = "depth")
     private Double depth;
 
+    /**
+     * Занимаемая озером площадь
+     */
     @Column(name = "area")
     private Double area;
 
+    /**
+     * Связь сообщающая о том какие рыбаки и на каком
+     * расстоянии от озера проживают
+     */
     @OneToMany(mappedBy = "lake", cascade = CascadeType.ALL)
     private List<Distance> fishers = new ArrayList<>();
 
+    /**
+     * Связь сообщающая о том какие рыбы и
+     * в каком количеств обитают в озере
+     */
     @OneToMany(mappedBy = "lake", cascade = CascadeType.ALL)
     private List<Lived> fishs = new ArrayList<>();
 

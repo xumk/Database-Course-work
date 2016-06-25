@@ -6,23 +6,40 @@ import modal.entity.Lake;
 import javax.persistence.*;
 import java.io.Serializable;
 
+/**
+ * Класс-сущность таблицы Обитает, является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "lived")
 @Table(name = "lived")
 public class Lived implements Serializable {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue
     @Column(name = "lived_id")
     private long id;
 
+    /**
+     * Рыба
+     */
     @ManyToOne()
     @JoinColumn(name = "fish_id")
     private Fish fish;
 
+    /**
+     * Озеро
+     */
     @ManyToOne()
     @JoinColumn(name = "lake_id")
     private Lake lake;
 
+    /**
+     * Популяция особей
+     */
     @Column(name = "count_fish")
     private Integer countFish;
 

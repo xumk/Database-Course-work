@@ -5,40 +5,72 @@ import modal.entity.joinentity.Peck;
 import modal.entity.joinentity.Prefers;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Класс-сущность таблицы Рыбы, является простым
+ * аннотированым классом с методами get(получить)
+ * и set (изменить)
+ */
 @Entity(name = "fish")
 @Table(name = "fishs")
-public class Fish {
+public class Fish implements Serializable {
 
+    /**
+     * Идентификатор
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 
+    /**
+     * Имя рыбы
+     */
     @Column(name = "name")
     private String name;
 
+    /**
+     * Семейство в которое входит рыба
+     */
     @Column(name = "family")
     private String family;
 
+    /**
+     * Минимальный вес рыбы
+     */
     @Column(name = "min_weight")
     private Double minWeight;
 
+    /**
+     * Максимальный вес рыбы
+     */
     @Column(name = "max_weight")
     private Double maxWeight;
 
-
+    /**
+     * Глубина обитания рыбы
+     */
     @Column(name = "depth_living")
     private Double depthLiving;
 
+    /**
+     * Список связей, сообщающей на какие наживки эта рыба клюёт
+     */
     @OneToMany(mappedBy = "fish", cascade = CascadeType.ALL)
     private List<Peck> lures = new ArrayList<>();
 
+    /**
+     * Список связей, сообщающий какые рыбаки предпочитают эту рыбу
+     */
     @OneToMany(mappedBy = "fish", cascade = CascadeType.ALL)
     private List<Prefers> fishers = new ArrayList<>();
 
+    /**
+     * Список связей, сообщающий в каких озерах обитает эта рыба
+     */
     @OneToMany(mappedBy = "fish", cascade = CascadeType.ALL)
     private List<Lived> lakes = new ArrayList<>();
 

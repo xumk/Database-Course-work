@@ -11,9 +11,16 @@ import modal.entity.Fish;
 import java.util.List;
 
 /**
- * Created by Алексей on 23.06.2016.
+ * Класс для создания визуального отчета о рыбах
  */
 public class FishViewReport {
+
+    /**
+     * Метод создания отчета
+     *
+     * @param stage сцена, на которой нужно создать отчет
+     * @param data  данные по которы нужно создать отчет
+     */
     public static void createReport(Stage stage, List<Fish> data) {
         stage.setTitle("Вес рыб");
         final CategoryAxis xAxis = new CategoryAxis();
@@ -21,6 +28,7 @@ public class FishViewReport {
         final BarChart<String, Number> bc =
                 new BarChart<>(xAxis, yAxis);
         bc.setTitle("Вес рыб");
+        //задаем название осям
         xAxis.setLabel("Рыба");
         yAxis.setLabel("Вес");
 
@@ -29,17 +37,19 @@ public class FishViewReport {
         XYChart.Series<String, Number> series2 = new XYChart.Series<>();
         series2.setName("Минимальный вес");
         for (Fish fish : data) {
+            // добавляем данные в серии
             series1.getData().add(
                     new XYChart.Data<>(fish.getName(), fish.getMaxWeight())
             );
             series2.getData().add(
-              new XYChart.Data<>(fish.getName(), fish.getMinWeight())
+                    new XYChart.Data<>(fish.getName(), fish.getMinWeight())
             );
         }
 
         Scene scene = new Scene(bc, 400, 400);
         bc.getData().addAll(series1, series2);
         stage.setScene(scene);
+        // показываем сцену
         stage.show();
     }
 }
