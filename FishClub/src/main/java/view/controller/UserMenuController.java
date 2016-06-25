@@ -83,7 +83,7 @@ public class UserMenuController implements Initializable {
     public Label countHook;
     public Label weight;
     public Label depthDown;
-    public CheckBox isLife;
+    public Label isLife;
     public Pane paneInformFish;
     public Label family;
     public Label minWeight;
@@ -502,7 +502,9 @@ public class UserMenuController implements Initializable {
             countHook.setText(String.valueOf(availability.getLure().getCountHooks()));
             weight.setText(String.valueOf(availability.getLure().getWeight()));
             depthDown.setText(String.valueOf(availability.getLure().getDivingDepth()));
-            isLife.setSelected(availability.getLure().isImitation());
+            isLife.setText(availability.getLure().isImitation() ?
+                    "Искусственная" : "Живая"
+            );
         } else {
             paneInformLure.setVisible(false);
             countHook.setText(null);
@@ -527,7 +529,7 @@ public class UserMenuController implements Initializable {
 
     public void getInformFish() {
         if (informFishButton.isSelected()
-                && tableFish.getSelectionModel().getSelectedItem() != null ) {
+                && tableFish.getSelectionModel().getSelectedItem() != null) {
             paneInformFish.setVisible(true);
             Prefers prefers = tableFish.getSelectionModel().getSelectedItem();
             family.setText(prefers.getFish().getFamily());

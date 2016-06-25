@@ -90,7 +90,7 @@
                                         <TableColumn fx:id="baitCountHooks" prefWidth="103.0" text="Количество&#10;крючков" />
                                         <TableColumn fx:id="bairWeight" prefWidth="50.0" text="Вес" />
                                         <TableColumn fx:id="baitDepth" prefWidth="140.0" text="Глубина&#10;погружения" />
-                                        <TableColumn fx:id="isLive" editable="false" prefWidth="131.0" text="Не живая">
+                                        <TableColumn fx:id="isLive" editable="false" prefWidth="131.0" text="Тип наживки">
                                         </TableColumn>
                                     </columns>
                                 </TableView>
@@ -355,7 +355,7 @@
             </tabs>
         </TabPane>
         <Button fx:id="exit" layoutX="559.0" layoutY="11.0" mnemonicParsing="false" onAction="#exitProgramm" prefHeight="26.0" prefWidth="125.0" text="Выход" />
-        <Text fill="#9a70cd" fontSmoothingType="LCD" layoutX="14.0" layoutY="31.0" stroke="#8117b0" strokeType="INSIDE" strokeWidth="0.0" text="Система &quot;Любительский клуб рыбаловов&quot;">
+        <Text fill="#5eae62" fontSmoothingType="LCD" layoutX="14.0" layoutY="31.0" stroke="#8117b0" strokeType="INSIDE" strokeWidth="0.0" text="Система &quot;Любительский клуб рыболовов&quot;">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>

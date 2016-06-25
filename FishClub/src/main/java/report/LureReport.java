@@ -22,7 +22,7 @@ public class LureReport {
         Workbook book = new HSSFWorkbook();
         Sheet sheet = book.createSheet("Наживки");
 
-        Font font= book.createFont();
+        Font font = book.createFont();
         font.setBoldweight(Font.BOLDWEIGHT_BOLD);
         CellStyle style = book.createCellStyle();
         style.setFont(font);
@@ -44,7 +44,7 @@ public class LureReport {
         depthDown.setCellValue("Глубина погружения");
         depthDown.setCellStyle(style);
         Cell isLive = row.createCell(4);
-        isLive.setCellValue("Не живая");
+        isLive.setCellValue("Тип наживки");
         isLive.setCellStyle(style);
         Cell count = row.createCell(5);
         count.setCellValue("Количество");
@@ -63,7 +63,7 @@ public class LureReport {
             depthDown = row.createCell(3);
             depthDown.setCellValue(lure.getDivingDepth());
             isLive = row.createCell(4);
-            isLive.setCellValue(lure.isImitation());
+            isLive.setCellValue(lure.isImitation() ? "Искусственная" : "Живая");
             count = row.createCell(5);
             count.setCellValue(avail.getCountLure());
             ++i;
@@ -75,10 +75,10 @@ public class LureReport {
                 .sum();
         row = sheet.createRow(i);
 
-        Cell  all = row.createCell(4);
+        Cell all = row.createCell(4);
         all.setCellStyle(style);
         all.setCellValue("Всего наживки");
-        Cell  allValue = row.createCell(5);
+        Cell allValue = row.createCell(5);
         allValue.setCellValue(sumLure);
         allValue.setCellStyle(style);
 
@@ -90,7 +90,7 @@ public class LureReport {
         // Записываем всё в файл
         File file = new File(FILE_PATH);
         file.mkdirs();
-        try(FileOutputStream fio = new FileOutputStream(FILE_PATH + FILE_NAME)) {
+        try (FileOutputStream fio = new FileOutputStream(FILE_PATH + FILE_NAME)) {
             book.write(fio);
             book.close();
         } catch (IOException e) {
