@@ -7,7 +7,8 @@ import org.hibernate.Transaction;
 import view.AlertMessage;
 
 /**
- * Created by Алексей on 15.06.2016.
+ * Абстрактный класс DAO, куда вынесены все типичные функции
+ * для работы с сущностями базы данных
  */
 public abstract class GeneralDAO {
     protected SessionFactory sessionFactory;
@@ -16,12 +17,18 @@ public abstract class GeneralDAO {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Метод добавление объекта (записи) в базу данных
+     *
+     * @param object запись, которую следует добавить
+     */
     public void addObject(Object object) {
         Session session = null;
         try {
             session = this.sessionFactory.openSession();
             Transaction e = session.beginTransaction();
             session.save(object);
+            // заносим изменениния в базу
             e.commit();
         } catch (Exception var7) {
             new AlertMessage(
@@ -37,12 +44,18 @@ public abstract class GeneralDAO {
         }
     }
 
+    /**
+     * Метод обновления записи базы данных
+     *
+     * @param object запись которую следует обновить
+     */
     public void updateObject(Object object) {
         Session session = null;
         try {
             session = this.sessionFactory.openSession();
             Transaction e = session.beginTransaction();
             session.update(object);
+            // заносим изменения в базу
             e.commit();
         } catch (Exception var7) {
             new AlertMessage(
@@ -58,12 +71,18 @@ public abstract class GeneralDAO {
         }
     }
 
+    /**
+     * Метод удаления записи из базы данных
+     *
+     * @param object запись, которую следует удалить
+     */
     public void deleteObject(Object object) {
         Session session = null;
         try {
             session = this.sessionFactory.openSession();
             Transaction e = session.beginTransaction();
             session.delete(object);
+            // сохраняем изменения в базе
             e.commit();
         } catch (Exception var7) {
             new AlertMessage(

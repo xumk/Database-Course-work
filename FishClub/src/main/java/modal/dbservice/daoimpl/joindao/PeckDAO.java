@@ -7,13 +7,24 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 /**
- * Created by Алексей on 20.06.2016.
+ * DAO класс для работы с таблицей-отношеним Клюёт
  */
 public class PeckDAO extends GeneralDAO {
+
+    /**
+     * Конструктор класса
+     *
+     * @param sessionFactory объект для создания сессий
+     */
     public PeckDAO(SessionFactory sessionFactory) {
         super(sessionFactory);
     }
 
+    /**
+     * Метод для удаления информации о всех связях
+     *
+     * @param pecks список связей на удаление
+     */
     public void removeAll(List<Peck> pecks) {
         pecks.stream().forEach(this::deleteObject);
     }

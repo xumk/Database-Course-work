@@ -12,25 +12,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Алексей on 13.06.2016.
+ * DAO класс для работы с таблицей рыбаков
  */
 public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
 
+    /**
+     * Конструктор класса
+     *
+     * @param sessionFactory объект для открытия сессий
+     */
     public FisherDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Метод добавления рыбака в базу
+     *
+     * @param fisher рыбак
+     */
     @Override
     public void addFisher(Fisher fisher) {
         addObject(fisher);
     }
 
+    /**
+     * Метод обновления рыбак
+     *
+     * @param fisher рыбак
+     */
     @Override
     public void updateFisher(Fisher fisher) {
-      updateObject(fisher);
+        updateObject(fisher);
     }
 
+    /**
+     * Метод получения рыбака по идентификатору
+     *
+     * @param id идентификатор
+     * @return рыбак
+     */
     @Override
     public Fisher getFisherById(Long id) {
         Session session = null;
@@ -38,6 +59,7 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
         try {
             session = this.sessionFactory.openSession();
             fisher = session.get(Fisher.class, id);
+            // инициализация всех списков-связей рыбака
             this.initializeFisherCollections(fisher);
         } catch (Exception var8) {
             new AlertMessage(
@@ -55,12 +77,22 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
         return fisher;
     }
 
+    /**
+     * Метод инициализации списков-связей рыбака
+     *
+     * @param fisher рыбак
+     */
     private void initializeFisherCollections(Fisher fisher) {
         Hibernate.initialize(fisher.getFishs());
         Hibernate.initialize(fisher.getLakes());
         Hibernate.initialize(fisher.getLures());
     }
 
+    /**
+     * Метод получени всех рыбаков из таблицы базы данных
+     *
+     * @return список рыбаков
+     */
     @Override
     public List getAllFishers() {
         Session session = null;
@@ -68,7 +100,9 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
         try {
             session = this.sessionFactory.openSession();
             fishers = session.createCriteria(Fisher.class).list();
-            fishers.stream().forEach(this::initializeFisherCollections);
+            // инициализация у всех рыбаков их списков-связей
+            fishers.stream()
+                    .forEach(this::initializeFisherCollections);
         } catch (Exception var7) {
             new AlertMessage(
                     "Ошибка",
@@ -84,6 +118,11 @@ public class FisherDAOImpl extends GeneralDAO implements FisherDAO {
         return fishers;
     }
 
+    /**
+     * Метод удаления рыбака
+     *
+     * @param fisher рыбак
+     */
     @Override
     public void deleteFisher(Fisher fisher) {
         deleteObject(fisher);

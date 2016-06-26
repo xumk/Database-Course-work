@@ -12,25 +12,46 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Алексей on 15.06.2016.
+ * DAO класс для работы с таблицей Озера
  */
 public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
 
+    /**
+     * Конструктор класса
+     *
+     * @param sessionFactory объект для создания сессий
+     */
     public LakeDAOImpl(SessionFactory sessionFactory) {
         super(sessionFactory);
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Метод добавления озера в базу данных
+     *
+     * @param lake озеро
+     */
     @Override
     public void addLake(Lake lake) {
         addObject(lake);
     }
 
+    /**
+     * метод обновления озера в базе даннхы
+     *
+     * @param lake озеро
+     */
     @Override
     public void updateLake(Lake lake) {
         updateObject(lake);
     }
 
+    /**
+     * Метод получения озера по идентификатору
+     *
+     * @param lakeId идентификатор озера
+     * @return озеро
+     */
     @Override
     public Lake getLakeById(Long lakeId) {
         Session session = null;
@@ -38,6 +59,7 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
         try {
             session = this.sessionFactory.openSession();
             lake = session.get(Lake.class, lakeId);
+            // инициализация всех списков-связей озеро
             this.initializeFisherCollections(lake);
         } catch (Exception var8) {
             new AlertMessage(
@@ -54,6 +76,11 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
         return lake;
     }
 
+    /**
+     * Метод получения информации о всех озерах из базы данных
+     *
+     * @return список озер
+     */
     @Override
     public List<Lake> getAllLake() {
         Session session = null;
@@ -61,7 +88,9 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
         try {
             session = this.sessionFactory.openSession();
             lakes = session.createCriteria(Lake.class).list();
-            lakes.stream().forEach(this::initializeFisherCollections);
+            // инициализация всех списков-связей каждого озера
+            lakes.stream()
+                    .forEach(this::initializeFisherCollections);
         } catch (Exception var7) {
             new AlertMessage(
                     "Ошибка",
@@ -77,10 +106,21 @@ public class LakeDAOImpl extends GeneralDAO implements LakeDAO {
         return lakes;
     }
 
+    /**
+     * Метод инициализации списков-связей озера
+     *
+     * @param lake
+     */
     private void initializeFisherCollections(Lake lake) {
         Hibernate.initialize(lake.getFishs());
         Hibernate.initialize(lake.getFishers());
     }
+
+    /**
+     * Мето удаления озера из базы данных
+     *
+     * @param lake озеро
+     */
     @Override
     public void deleteLake(Lake lake) {
         lake.setFishs(null);
